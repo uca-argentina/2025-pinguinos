@@ -11,12 +11,22 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
-DiceSet class >> withDice: diceSet [
+{ #category : 'testing' }
+DiceSet class >> areAllDice: anArrayOfObjects [
 
-	diceSet ifEmpty: [Error signal: 'Dice set must contain at least 1 die!'].
+	^ anArrayOfObjects allSatisfy: [ :object | object isKindOf: Die ]
+]
+
+{ #category : 'instance creation' }
+DiceSet class >> withDice: aSetOfDice [
+
+	(self areAllDice: aSetOfDice) ifFalse: [
+		Error signal: 'Dice set must contain only dice!' ].
 	
-	^ (self new) initializeWith: diceSet.
+	aSetOfDice ifEmpty: [
+		Error signal: 'Dice set must contain at least 1 die!' ].
+
+	^ self new initializeWith: aSetOfDice
 ]
 
 { #category : 'initialization' }

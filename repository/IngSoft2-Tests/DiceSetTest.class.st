@@ -47,6 +47,15 @@ DiceSetTest >> testCreatingADiceSetWithASingle6SidedDieAndThenRollingYieldsResul
 ]
 
 { #category : 'running' }
+DiceSetTest >> testTryingToCreateADiceSetWithObjectsOtherThanDiceResultsInAnErrorBeingThrown [
+
+	self
+		should: [ DiceSet withDice: { 'Not a die' } ]
+		raise: Error
+		withMessageText: 'Dice set must contain only dice!'
+]
+
+{ #category : 'running' }
 DiceSetTest >> testTryingToCreateAnEmptyDiceSetResultsInAnErrorBeingThrown [
 
 	self
