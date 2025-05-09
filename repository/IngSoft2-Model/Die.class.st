@@ -14,7 +14,11 @@ Class {
 { #category : 'testing' }
 Die class >> isAPositiveInteger: numberOfSides [
 
-	numberOfSides > 0 ifFalse: [
+	| isPositive isAnInteger |
+	isPositive := numberOfSides > 0.
+	isAnInteger := numberOfSides isInteger.
+
+	(isPositive and: isAnInteger) ifFalse: [
 		Error signal: 'Number of sides should be a positive integer!' ]
 ]
 
@@ -23,7 +27,7 @@ Die class >> withSides: numberOfSides [
 
 	self isAPositiveInteger: numberOfSides.
 
-	^ self new initializeWith: numberOfSides
+	^ (self new) initializeWith: numberOfSides
 ]
 
 { #category : 'initialization' }
