@@ -1,5 +1,5 @@
 "
-implementation of a die, that responds to the message: 'roll', and returns a random integer value between 1 and N.
+Implementation of a die, that responds to the message: 'roll', and returns a random integer value between 1 and N.
 "
 Class {
 	#name : 'Die',

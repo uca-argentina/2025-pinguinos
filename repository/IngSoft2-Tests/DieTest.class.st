@@ -16,20 +16,30 @@ DieTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessag
 
 { #category : 'tests' }
 DieTest >> test10SidedDieCanOnlyRollValuesBetween1And10 [
-
-	| a10SidedDie |
+	
+	| a10SidedDie resultsOf50Rolls |
+	
+	resultsOf50Rolls := OrderedCollection new.
 	a10SidedDie := Die withSides: 10.
+	
+	50 timesRepeat: [ resultsOf50Rolls add: a10SidedDie roll ].
 
-	self assert: (a10SidedDie roll between: 1 and: 10)
+	self assert:
+		(resultsOf50Rolls allSatisfy: [ :result | result between: 1 and: 10 ])
 ]
 
 { #category : 'tests' }
 DieTest >> test6SidedDieCanOnlyRollValuesBetween1And6 [
 
-	| aDie |
-	aDie := Die new.
+	| a6SidedDie resultsOf50Rolls |
+	
+	resultsOf50Rolls := OrderedCollection new.
+	a6SidedDie := Die new.
+	
+	50 timesRepeat: [ resultsOf50Rolls add: a6SidedDie roll ].
 
-	self assert: (aDie roll between: 1 and: 6)
+	self assert:
+		(resultsOf50Rolls allSatisfy: [ :result | result between: 1 and: 6 ])
 ]
 
 { #category : 'running' }
