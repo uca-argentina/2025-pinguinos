@@ -29,6 +29,20 @@ DieTest >> test10SidedDieCanOnlyRollValuesBetween1And10 [
 ]
 
 { #category : 'tests' }
+DieTest >> test1SidedDieCanOnlyRoll1 [
+
+	| a1SidedDie resultsOf50Rolls |
+	
+	resultsOf50Rolls := OrderedCollection new.
+	a1SidedDie := Die withSides: 1.
+	
+	50 timesRepeat: [ resultsOf50Rolls add: a1SidedDie roll ].
+
+	self assert:
+		(resultsOf50Rolls allSatisfy: [ :result | result = 1 ])
+]
+
+{ #category : 'tests' }
 DieTest >> test6SidedDieCanOnlyRollValuesBetween1And6 [
 
 	| a6SidedDie resultsOf50Rolls |
@@ -42,7 +56,7 @@ DieTest >> test6SidedDieCanOnlyRollValuesBetween1And6 [
 		(resultsOf50Rolls allSatisfy: [ :result | result between: 1 and: 6 ])
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 DieTest >> testAfterRollingA6SidedDie1000TimesTheDistributionOfResultingNumbersIsUniform [
 
 	| aDie resultsOf1000Rolls partialResult |
@@ -64,7 +78,7 @@ DieTest >> testAfterRollingA6SidedDie1000TimesTheDistributionOfResultingNumbersI
 		self assert: count > 100 ].
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 DieTest >> testTryingToCreateADieWith0SidesResultsInError [
 
 	self
@@ -73,7 +87,7 @@ DieTest >> testTryingToCreateADieWith0SidesResultsInError [
 		withMessageText: 'Number of sides should be a positive integer!'
 ]
 
-{ #category : 'running' }
+{ #category : 'tests' }
 DieTest >> testTryingToCreateADieWithANonIntegerNumberOfSidesResultsInError [
 
 	self

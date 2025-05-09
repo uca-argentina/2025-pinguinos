@@ -15,6 +15,7 @@ Class {
 Die class >> isAPositiveInteger: numberOfSides [
 
 	| isPositive isAnInteger |
+	
 	isPositive := numberOfSides > 0.
 	isAnInteger := numberOfSides isInteger.
 
@@ -32,15 +33,18 @@ Die class >> withSides: numberOfSides [
 
 { #category : 'initialization' }
 Die >> initialize [
-	self initializeWith: 6.
+
+	self initializeWith: 6
 ]
 
 { #category : 'initialization' }
-Die >> initializeWith: numberOfSides [ 
-	sideNumber := numberOfSides.
+Die >> initializeWith: numberOfSides [
+
+	sideNumber := numberOfSides
 ]
 
 { #category : 'random' }
 Die >> roll [
- ^ (1 to: sideNumber) atRandom
+
+	^ (1 to: sideNumber) atRandom
 ]

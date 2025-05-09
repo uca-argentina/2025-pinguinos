@@ -5,6 +5,15 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+DiceSetTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error | self assert: error messageText equals: errorMessage ]
+]
+
 { #category : 'running' }
 DiceSetTest >> testCreatingADiceSetWithA6SidedDieAndA10SidedDieAndThenRollingThemYieldsResultsInTheExpectedRange [
 
@@ -35,4 +44,13 @@ DiceSetTest >> testCreatingADiceSetWithASingle6SidedDieAndThenRollingYieldsResul
 
 	self assert:
 		(resultsOf50Rolls allSatisfy: [ :result | result between: 1 and: 6 ])
+]
+
+{ #category : 'running' }
+DiceSetTest >> testTryingToCreateAnEmptyDiceSetResultsInAnErrorBeingThrown [
+
+	self
+		should: [ DiceSet withDice: { } ]
+		raise: Error
+		withMessageText: 'Dice set must contain at least 1 die!'
 ]

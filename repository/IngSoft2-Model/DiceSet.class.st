@@ -13,22 +13,21 @@ Class {
 
 { #category : 'instance creation' }
 DiceSet class >> withDice: diceSet [
+
+	diceSet ifEmpty: [Error signal: 'Dice set must contain at least 1 die!'].
 	
 	^ (self new) initializeWith: diceSet.
 ]
 
 { #category : 'initialization' }
 DiceSet >> initializeWith: diceSet [
+
 	setOfDice := diceSet.
 ]
 
 { #category : 'random' }
 DiceSet >> roll [
-	| finalSum |
-	
-	finalSum := 0.
-	
-	setOfDice do: [ :die | finalSum := finalSum + (die roll) ].
-	
-	^ finalSum
+
+	^ setOfDice inject: 0 into: [ :sum :die | sum + (die roll) ]
+
 ]
