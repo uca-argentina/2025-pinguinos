@@ -6,6 +6,6 @@ Class {
 
 { #category : #tests }
 DummyTest >> testDummy [
-
+	"Initial commit test"
 	self assert: Dummy new isDummy
 ]
