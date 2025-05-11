@@ -5,28 +5,51 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'running' }
+ShipTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMessage [
+
+	self
+		should: anErrorBlock 
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+			self assert: ( error messageText ) 
+			equals: aMessage ]
+]
+
 { #category : 'tests' }
 ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn0 [
 
-	| aShip |
-
+	| aShip aBoard aDie aGame |
+	
+	aBoard := Board withGridSize: 5.
+	aDie := Die withSides: 4.
 	aShip := Ship new.
+	aGame := Game in: aBoard with: aDie and: aShip.
 
-	self assert: aShip position equals: 0
+	self assert: (aBoard positionOf: aShip) equals: 0
+]
+
+{ #category : 'running' }
+ShipTest >> testWhenAShipIsNotOnTheBoardThenIsInvalid [
+
+
+	self
+		should: [ (Board withGridSize:8) moveShip: Ship new by: 5. ] 
+		raise: Error
+		withErrorMessage: 'Ship is not on the board'
 ]
 
 { #category : 'running' }
 ShipTest >> testWhenAShipRollsADieThenIsRepositioned [
 
-	| aShip a3SidedDie aRolledNumber |
-
+	| aShip aBoard aDie aGame |
+	
+	aBoard := Board withGridSize: 5.
+	aDie := Die withSides: 4.
 	aShip := Ship new.
-	
-	a3SidedDie := Die withSides: 4.
+	aGame := Game in: aBoard with: aDie and: aShip.
 
-	aRolledNumber := a3SidedDie roll.
-	
-	aShip move: aRolledNumber.
+	aBoard moveShip: aShip by: aDie roll.
 
-	self assert: aShip position equals: aRolledNumber.
+	self deny: (aBoard positionOf: aShip) equals: 0
 ]

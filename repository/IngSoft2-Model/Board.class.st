@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'gridSize',
-		'squareMap'
+		'squareMap',
+		'ships'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -29,10 +30,39 @@ Board >> initializeWithGridSize: aSize [
 	gridSize:= aSize.
 	
    squareMap := OrderedCollection new.
-
    0 to: gridSize do: [:x | squareMap add: (Square x: x)].
 
+	ships := Dictionary new.
 
+
+
+]
+
+{ #category : 'movement' }
+Board >> moveShip: aShip by: aRolledNumber [
+
+    | currentPos newPos |
+    
+    currentPos := self positionOf: aShip.
+    currentPos ifNil: [ Error signal: 'Ship is not on the board' ].
+
+    newPos := currentPos + aRolledNumber.
+    newPos >= gridSize ifTrue: [ newPos := gridSize - 1 ]. 
+
+    ships removeKey: currentPos.
+    ships at: newPos put: aShip.
+
+]
+
+{ #category : 'initialization' }
+Board >> placeShip: aShip at: aPosition [
+    ships at: aPosition put: aShip.
+
+]
+
+{ #category : 'accessing' }
+Board >> positionOf: aShip [
+    ^ ships keyAtValue: aShip ifAbsent: [ nil ].
 
 ]
 

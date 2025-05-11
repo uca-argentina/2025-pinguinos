@@ -11,21 +11,8 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'initialization' }
-Ship >> initialize [
-    super initialize. 
-    position := 0.
-    ^ self.
-
-]
-
 { #category : 'accessing' }
 Ship >> move: aRolledNumber [
 
 	position:= aRolledNumber.
-]
-
-{ #category : 'accessing' }
-Ship >> position [
-	^ position.
 ]
