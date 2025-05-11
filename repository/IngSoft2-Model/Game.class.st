@@ -35,3 +35,10 @@ Game >> start [
 	
 	
 ]
+
+{ #category : 'validation' }
+Game >> validateElements [
+	board ifNil: [ ^false ].
+	die ifNil: [ ^false ].
+	^ true
+]
