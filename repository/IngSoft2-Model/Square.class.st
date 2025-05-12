@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'status',
-		'x'
+		'x',
+		'finalDestination'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -46,16 +47,22 @@ Square >> initializeX: aXPosition [
 	self setStatus: 'Free'.
 ]
 
-{ #category : 'testing' }
+{ #category : 'setter' }
 Square >> occupy [ 
 	
 	status:= 'Occupied'.
 ]
 
+{ #category : 'setter' }
+Square >> pointTo: whereToPoint [
+	
+	finalDestination := whereToPoint.
+]
+
 { #category : 'accessing' }
 Square >> pointsTo [
 
-	^ x
+	^ finalDestination
 ]
 
 { #category : 'initialization' }

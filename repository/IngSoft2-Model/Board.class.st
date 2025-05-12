@@ -20,7 +20,7 @@ Board class >> is: startPoint and: endPoint withinBoundsOf: size [
 	((range includes: startPoint) and: (range includes: endPoint))
 		ifFalse: [
 			Error signal:
-				'WormHole must have both its ends inside the limits of the board!' ]
+				'WormHole must have both its ends leading to valid positions inside the limits of the board!' ]
 ]
 
 { #category : 'validation' }
@@ -41,9 +41,21 @@ Board class >> withSize: aSize [
 Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
-	(self withSize: aSize)
+	^ (self withSize: aSize)
 		initializeWithWormHoleFrom: wormHoleOrigin
 		to: wormHoleEnd
+]
+
+{ #category : 'accessing' }
+Board >> getSquare: aPosition [
+
+	^ (map at: aPosition)
+]
+
+{ #category : 'accessing' }
+Board >> getSquareAt: aPosition [
+
+	^ (map at: aPosition)
 ]
 
 { #category : 'initialization' }
@@ -62,9 +74,8 @@ Board >> initializeWithSize: aSize [
 { #category : 'initialization' }
 Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 	
-	| aWormHole |
-	aWormHole := Wormhole y: wormHoleOrigin z: wormHoleEnd.
-
+	(map at: wormHoleOrigin) pointTo: wormHoleEnd.
+	(map at: wormHoleEnd ) pointTo: wormHoleOrigin.
 
 
 ]
