@@ -52,6 +52,12 @@ Square >> occupy [
 	status:= 'Occupied'.
 ]
 
+{ #category : 'accessing' }
+Square >> pointsTo [
+
+	^ x
+]
+
 { #category : 'initialization' }
 Square >> setStatus: aStatus [
 

@@ -41,6 +41,12 @@ Wormhole >> initializeY: aYPosition z: aZPosition [
 ]
 
 { #category : 'accessing' }
+Wormhole >> pointsTo [
+
+	^ z
+]
+
+{ #category : 'accessing' }
 Wormhole >> y [
 	^y.
 ]

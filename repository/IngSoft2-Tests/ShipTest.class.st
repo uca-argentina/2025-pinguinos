@@ -6,13 +6,13 @@ Class {
 }
 
 { #category : 'tests' }
-ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn0 [
+ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn1 [
 
 	| aShip |
 
 	aShip := Ship new.
 
-	self assert: aShip position equals: 0
+	self assert: aShip position equals: 1
 ]
 
 { #category : 'running' }
@@ -25,5 +25,5 @@ ShipTest >> testWhenAShipRollsADieThenIsRepositioned [
 	
 	aShip move: numberToMove.
 
-	self assert: aShip position equals: numberToMove.
+	self assert: aShip position equals: numberToMove + 1.
 ]

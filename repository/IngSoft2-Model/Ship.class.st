@@ -14,7 +14,7 @@ Class {
 { #category : 'initialization' }
 Ship >> initialize [
     super initialize. 
-    position := 0.
+    position := 1.
     ^ self.
 
 ]
@@ -22,7 +22,7 @@ Ship >> initialize [
 { #category : 'accessing' }
 Ship >> move: aRolledNumber [
 
-	position:= aRolledNumber.
+	position:= position + aRolledNumber.
 ]
 
 { #category : 'accessing' }
