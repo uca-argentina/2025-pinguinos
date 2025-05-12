@@ -51,6 +51,15 @@ BoardTest >> testCreatingBoardWithWormHoleLeadingOutsideItsLimitsResultsInError 
 ]
 
 { #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleStartingAndEndingInTheSamePlaceResultsInError [
+	
+	self
+		should: [Board withSize: 8 withWormHoleFrom: 2 to: 2]
+		raise: Error 
+		withErrorMessage: 'Wormhole cannot lead to itself!'
+]
+
+{ #category : 'tests' }
 BoardTest >> testCreatingBoardWithWormHoleStartingAndEndingOutsideItsLimitsResultsInError [
 	
 	self

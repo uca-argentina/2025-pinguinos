@@ -12,6 +12,13 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'validation' }
+Board class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
+
+	wormHoleOrigin = wormHoleEnd ifTrue: [
+		Error signal: 'Wormhole cannot lead to itself!' ]
+]
+
 { #category : 'testing' }
 Board class >> is: startPoint and: endPoint withinBoundsOf: size [
 
@@ -41,6 +48,8 @@ Board class >> withSize: aSize [
 Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
+	self areEndsDistinct: wormHoleOrigin and: wormHoleEnd.
+	
 	^ (self withSize: aSize)
 		initializeWithWormHoleFrom: wormHoleOrigin
 		to: wormHoleEnd
@@ -82,13 +91,11 @@ Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 { #category : 'process' }
 Board >> resolveMovementOf: anIntendedPosition [
+
+	| anIntendedPositionWithinBounds |
 	
-	| returnValue |
-	
-	returnValue := anIntendedPosition.
-	anIntendedPosition > boardSize ifTrue: [ returnValue := boardSize ].
-	
-	^ returnValue
+	anIntendedPositionWithinBounds := anIntendedPosition min: boardSize.
+	^ ((map at: anIntendedPositionWithinBounds) pointsTo)
 ]
 
 { #category : 'accessing' }

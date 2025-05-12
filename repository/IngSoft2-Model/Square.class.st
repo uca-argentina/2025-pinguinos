@@ -43,7 +43,9 @@ Square >> checkStatus [
 { #category : 'initialization' }
 Square >> initializeX: aXPosition [
 
-	x:= aXPosition.	
+	x := aXPosition.	
+	finalDestination := x.
+	
 	self setStatus: 'Free'.
 ]
 
