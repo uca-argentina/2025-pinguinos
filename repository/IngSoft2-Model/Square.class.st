@@ -13,14 +13,23 @@ Class {
 }
 
 { #category : 'validation' }
+Square class >> validateXIsInteger: anXPosition [
+	
+	anXPosition isInteger ifFalse: [ Error signal: 'X position must be an integer.' ]
+]
+
+{ #category : 'validation' }
 Square class >> validateXIsPositive: aXPosition [
-	aXPosition < 0 ifTrue: [ Error signal: 'X position must be positive.' ]
+
+	aXPosition < 0 ifTrue: [
+		Error signal: 'X position must be positive.' ]
 ]
 
 { #category : 'creation' }
 Square class >> x: aXPosition [
 		
 	self validateXIsPositive: aXPosition.
+	self validateXIsInteger: aXPosition.
 		
 	^self new initializeX: aXPosition.
 ]
@@ -38,9 +47,9 @@ Square >> initializeX: aXPosition [
 ]
 
 { #category : 'testing' }
-Square >> isOccupied [ 
+Square >> occupy [ 
 	
-	status:= 'Occupied'
+	status:= 'Occupied'.
 ]
 
 { #category : 'initialization' }

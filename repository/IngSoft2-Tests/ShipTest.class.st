@@ -18,15 +18,12 @@ ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn0 [
 { #category : 'running' }
 ShipTest >> testWhenAShipRollsADieThenIsRepositioned [
 
-	| aShip a3SidedDie aRolledNumber |
+	| aShip numberToMove |
 
 	aShip := Ship new.
+	numberToMove := 2.
 	
-	a3SidedDie := Die withSides: 4.
+	aShip move: numberToMove.
 
-	aRolledNumber := a3SidedDie roll.
-	
-	aShip move: aRolledNumber.
-
-	self assert: aShip position equals: aRolledNumber.
+	self assert: aShip position equals: numberToMove.
 ]

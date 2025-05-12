@@ -21,7 +21,7 @@ BoardTest >> testWhenBoardIsCreatedWithSize8ThenSizeIs8 [
 	
 	| aBoard |
 	
-	aBoard:= Board withGridSize: 8.
+	aBoard:= Board withSize: 8.
 	
 	self assert: (aBoard size) equals: 8.
 ]
@@ -31,7 +31,7 @@ BoardTest >> testWhenBoardIsCreatedWithSquareListThenSquareIsOccupied [
 
 	| aBoard |
 	
-	aBoard:= Board withGridSize: 8.
+	aBoard:= Board withSize: 8.
 	
 	self deny: (aBoard squareStatus: 6) equals: 'Occupied'
 ]
@@ -40,7 +40,7 @@ BoardTest >> testWhenBoardIsCreatedWithSquareListThenSquareIsOccupied [
 BoardTest >> testWhenXIsNegativeThenCreationFails [
 
 	self
-		should: [ Board withGridSize: -8 ]
+		should: [ Board withSize: -8 ]
 		raise:  Error
 		withErrorMessage: 'Size for the grid must be positive.'
 ]

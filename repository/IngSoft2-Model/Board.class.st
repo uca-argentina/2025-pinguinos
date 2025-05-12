@@ -5,8 +5,8 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
-		'gridSize',
-		'squareMap'
+		'boardSize',
+		'map'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,19 +18,19 @@ Board class >> validateSizeIsPositive: aSize [
 ]
 
 { #category : 'creation' }
-Board class >> withGridSize: aSize [ 
+Board class >> withSize: aSize [ 
 	self validateSizeIsPositive: aSize.
-	^self new initializeWithGridSize: aSize.
+	^self new initializeWithSize: aSize.
 ]
 
 { #category : 'initialization' }
-Board >> initializeWithGridSize: aSize [ 
+Board >> initializeWithSize: aSize [ 
 	
-	gridSize:= aSize.
+	boardSize := aSize.
 	
-   squareMap := OrderedCollection new.
+   map := OrderedCollection new.
 
-   0 to: gridSize do: [:x | squareMap add: (Square x: x)].
+   0 to: boardSize do: [:x | map add: (Square x: x)].
 
 
 
@@ -38,7 +38,7 @@ Board >> initializeWithGridSize: aSize [
 
 { #category : 'accessing' }
 Board >> size [ 
-	^ gridSize.
+	^ boardSize
 ]
 
 { #category : 'squareMethods' }
@@ -46,7 +46,7 @@ Board >> squareStatus: aPosition [
 
 	| aSquare |
 
-	aSquare:= squareMap at: aPosition.
+	aSquare:= map at: aPosition.
 
 	^ aSquare checkStatus.
 ]
