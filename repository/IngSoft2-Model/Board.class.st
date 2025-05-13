@@ -13,6 +13,15 @@ Class {
 }
 
 { #category : 'validation' }
+Board class >> areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize [
+	
+	((wormHoleOrigin = aSize) or: (wormHoleEnd = aSize))
+		ifTrue: [
+			Error signal:
+				'Wormhole cannot lead out of/into last square!' ]
+]
+
+{ #category : 'validation' }
 Board class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
 
 	wormHoleOrigin = wormHoleEnd ifTrue: [
@@ -49,6 +58,7 @@ Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd 
 
 	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
 	self areEndsDistinct: wormHoleOrigin and: wormHoleEnd.
+	self areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize.
 	
 	^ (self withSize: aSize)
 		initializeWithWormHoleFrom: wormHoleOrigin

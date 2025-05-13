@@ -15,6 +15,25 @@ GameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 ]
 
 { #category : 'running' }
+GameTest >> testWhenShipReacheGoalThenGameEndsAndWinnerIsDeclared [
+	
+	| aGameFactory newGame expectedResult |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 2 to: 7.
+	aGameFactory ships: 1.
+	aGameFactory withDice: { Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 7.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
 GameTest >> testWhenStartingGameThenAllShipsAreInSquare1 [
 	
 	| aGameFactory newGame expectedResult |

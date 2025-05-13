@@ -26,12 +26,21 @@ BoardTest >> testCreatingBoardWithWormHoleEndBeingANonIntegerResultsInError [
 ]
 
 { #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleEndingInLastSquareResultsInError [
+	
+	self
+		should: [Board withSize: 8 withWormHoleFrom: 2 to: 8]
+		raise: Error 
+		withErrorMessage: 'Wormhole cannot lead out of/into last square!'
+]
+
+{ #category : 'tests' }
 BoardTest >> testCreatingBoardWithWormHoleInsideItsLimitsIsSuccesful [
 		
 	| aBoard entrance exit wormHoleOrigin wormHoleEnd |
 	
 	entrance := 1.
-	exit := 8.
+	exit := 7.
 	aBoard := Board withSize: 8 withWormHoleFrom: entrance to: exit.
 	
 	wormHoleOrigin := aBoard getSquareAt: entrance.
@@ -66,6 +75,15 @@ BoardTest >> testCreatingBoardWithWormHoleStartingAndEndingOutsideItsLimitsResul
 		should: [Board withSize: 8 withWormHoleFrom: -1 to: 14]
 		raise: Error 
 		withErrorMessage: 'WormHole must have both its ends leading to valid positions inside the limits of the board!'
+]
+
+{ #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleStartingInLastSquareResultsInError [
+	
+	self
+		should: [Board withSize: 8 withWormHoleFrom: 8 to: 2]
+		raise: Error 
+		withErrorMessage: 'Wormhole cannot lead out of/into last square!'
 ]
 
 { #category : 'tests' }
