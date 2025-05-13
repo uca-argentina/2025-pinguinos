@@ -22,7 +22,7 @@ Game class >> in: aBoard with: dice and: ships [
 	^self new initializeIn: aBoard with: dice and: ships
 ]
 
-{ #category : 'accessing - structure variables' }
+{ #category : 'getter' }
 Game >> boardState [
 	
 	| currentGameState |
@@ -32,10 +32,10 @@ Game >> boardState [
 	^ currentGameState 
 ]
 
-{ #category : 'testing' }
+{ #category : 'validation' }
 Game >> canIKeepPlaying [
 
-	gameOver ifTrue: [ Error signal: gameWinner , ' has won, game over!' ]
+	gameOver ifTrue: [ Error signal: gameWinner , ' has won, game over!' ].
 ]
 
 { #category : 'initialization' }
@@ -50,7 +50,7 @@ Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 	gameWinner := nil.
 ]
 
-{ #category : 'testing' }
+{ #category : 'getter' }
 Game >> isGameOver [
 
 	^ gameOver 
@@ -76,20 +76,4 @@ Game >> nextTurn [
 
 	shipToMove := shipToMove \\ ships size + 1.
 	^ winner
-]
-
-{ #category : 'accessing' }
-Game >> start [
-	self validateElements.
-	
-	^true
-	
-	
-]
-
-{ #category : 'validation' }
-Game >> validateElements [
-	board ifNil: [ ^false ].
-	diceSet ifNil: [ ^false ].
-	^ true
 ]

@@ -65,7 +65,7 @@ Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd 
 		to: wormHoleEnd
 ]
 
-{ #category : 'accessing' }
+{ #category : 'getter' }
 Board >> getSquareAt: aPosition [
 
 	^ (map at: aPosition)
@@ -93,7 +93,7 @@ Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 ]
 
-{ #category : 'testing' }
+{ #category : 'squareMethods' }
 Board >> isThisSquareTheGoal: aSquareNumber [
 
 	^ aSquareNumber = boardSize
@@ -103,9 +103,8 @@ Board >> isThisSquareTheGoal: aSquareNumber [
 Board >> resolveMovementOf: anIntendedPosition [
 
 	| anIntendedPositionWithinBounds |
-	
 	anIntendedPositionWithinBounds := anIntendedPosition min: boardSize.
-	^ ((map at: anIntendedPositionWithinBounds) pointsTo)
+	^ (map at: anIntendedPositionWithinBounds) pointsTo
 ]
 
 { #category : 'accessing' }
@@ -114,11 +113,10 @@ Board >> size [
 ]
 
 { #category : 'squareMethods' }
-Board >> squareStatus: aPosition [ 
+Board >> squareStatus: aPosition [
 
 	| aSquare |
+	aSquare := map at: aPosition.
 
-	aSquare:= map at: aPosition.
-
-	^ aSquare checkStatus.
+	^ aSquare checkStatus
 ]

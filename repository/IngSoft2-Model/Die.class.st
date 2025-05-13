@@ -40,7 +40,8 @@ Die >> customizeMinimum: minimumToRoll [
 
 { #category : 'initialization' }
 Die >> initialize [
-
+	
+	super initialize. 
 	self initializeWith: 6
 ]
 

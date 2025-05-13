@@ -15,18 +15,13 @@ Class {
 { #category : 'initialization' }
 Ship >> initialize [
 
-    super initialize. 
-    position := 1.
-    ^ self.
+	super initialize.
+	position := 1.
+
+	^ self
 ]
 
-{ #category : 'accessing' }
-Ship >> move: aRolledNumber [
-
-	position:= position + aRolledNumber.
-]
-
-{ #category : 'accessing' }
+{ #category : 'actions' }
 Ship >> moveBy: aRolledNumber on: aBoard [
 	
 	| intendedPosition |
@@ -35,20 +30,20 @@ Ship >> moveBy: aRolledNumber on: aBoard [
 	position := aBoard resolveMovementOf: intendedPosition.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'getter' }
 Ship >> name [
 	
 	^ shipName
 ]
 
-{ #category : 'setter' }
-Ship >> playerNumber: aPlayerNumber [
-	
-	shipName := 'player ' , aPlayerNumber asString.
-]
-
-{ #category : 'accessing' }
+{ #category : 'getter' }
 Ship >> position [
 	
 	^ position
+]
+
+{ #category : 'setter' }
+Ship >> setPlayerNumber: aPlayerNumber [
+	
+	shipName := 'player ' , aPlayerNumber asString.
 ]

@@ -35,9 +35,10 @@ Square class >> x: aXPosition [
 	^self new initializeX: aXPosition.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'getter' }
 Square >> checkStatus [
-	^status.
+
+	^ status
 ]
 
 { #category : 'initialization' }
@@ -61,13 +62,13 @@ Square >> pointTo: whereToPoint [
 	finalDestination := whereToPoint.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'getter' }
 Square >> pointsTo [
 
 	^ finalDestination
 ]
 
-{ #category : 'initialization' }
+{ #category : 'setter' }
 Square >> setStatus: aStatus [
 
 	status:= aStatus.

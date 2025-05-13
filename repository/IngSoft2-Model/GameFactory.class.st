@@ -26,13 +26,14 @@ GameFactory >> build [
 { #category : 'initialization' }
 GameFactory >> initialize [
 	
+	super initialize. 
 	ships := OrderedCollection new.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'instance creation' }
 GameFactory >> ships: aNumberOfShips [ 
 	
-	1 to: aNumberOfShips do: [:shipNumber | ships add: ((Ship new) playerNumber: shipNumber)].
+	1 to: aNumberOfShips do: [:shipNumber | ships add: ((Ship new) setPlayerNumber: shipNumber)].
 ]
 
 { #category : 'instance creation' }
