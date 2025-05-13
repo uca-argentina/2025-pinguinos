@@ -26,7 +26,7 @@ ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn0 [
 	aShip := Ship new.
 	aGame := Game in: aBoard with: aDie and: aShip.
 
-	self assert: (aBoard positionOf: aShip) equals: 0
+	self assert: aShip position equals: 1
 ]
 
 { #category : 'running' }

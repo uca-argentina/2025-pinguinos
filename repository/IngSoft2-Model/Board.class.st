@@ -38,34 +38,6 @@ Board >> initializeWithGridSize: aSize [
 
 ]
 
-{ #category : 'movement' }
-Board >> moveShip: aShip by: aRolledNumber [
-
-    | currentPos newPos |
-    
-    currentPos := self positionOf: aShip.
-    currentPos ifNil: [ Error signal: 'Ship is not on the board' ].
-
-    newPos := currentPos + aRolledNumber.
-    newPos >= gridSize ifTrue: [ newPos := gridSize - 1 ]. 
-
-    ships removeKey: currentPos.
-    ships at: newPos put: aShip.
-
-]
-
-{ #category : 'initialization' }
-Board >> placeShip: aShip at: aPosition [
-    ships at: aPosition put: aShip.
-
-]
-
-{ #category : 'accessing' }
-Board >> positionOf: aShip [
-    ^ ships keyAtValue: aShip ifAbsent: [ nil ].
-
-]
-
 { #category : 'accessing' }
 Board >> size [ 
 	^ gridSize.
