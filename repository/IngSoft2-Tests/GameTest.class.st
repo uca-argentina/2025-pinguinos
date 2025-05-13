@@ -15,22 +15,41 @@ GameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 ]
 
 { #category : 'running' }
-GameTest >> testWhenShipReacheGoalThenGameEndsAndWinnerIsDeclared [
+GameTest >> testWhenShipReachesGoalThenGameEndsAndWinnerIsDeclared [
 	
-	| aGameFactory newGame expectedResult |
+	| aGameFactory newGame aWeighedDie |
+	
+	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
 	
 	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 2 to: 7.
+	aGameFactory withBoardSize: 4 withWormHoleFrom: 2 to: 3.
 	aGameFactory ships: 1.
-	aGameFactory withDice: { Die withSides: 1 }.
+	aGameFactory withDice: { aWeighedDie }.
 	
 	newGame := aGameFactory build.
+	
+	self assert: newGame nextTurn equals: 'player 1 has won the game!' 
+]
+
+{ #category : 'running' }
+GameTest >> testWhenShipReachesGoalThenGameEndsCorrectlyAndTryingToPlayNextTurnResultsInError [
+
+	| aGameFactory newGame aWeighedDie |
+	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
+
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 4 withWormHoleFrom: 2 to: 3.
+	aGameFactory ships: 1.
+	aGameFactory withDice: { aWeighedDie }.
+
+	newGame := aGameFactory build.
 	newGame nextTurn.
-	
-	expectedResult := Dictionary new.
-	expectedResult at: 'player 1' put: 7.
-	
-	self assert: newGame state equals: expectedResult 
+
+	self assert: newGame isGameOver.
+	self
+		should: [ newGame nextTurn ]
+		raise: Error
+		withMessageText: 'player 1 has won, game over!'
 ]
 
 { #category : 'running' }
@@ -49,7 +68,7 @@ GameTest >> testWhenStartingGameThenAllShipsAreInSquare1 [
 	expectedResult at: 'player 1' put: 1.
 	expectedResult at: 'player 2' put: 1.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
@@ -68,7 +87,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd1ShipAfterPlayingTurnTheShipCorr
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 7.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
@@ -88,7 +107,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying1TurnThenShipsEn
 	expectedResult at: 'player 1' put: 2.
 	expectedResult at: 'player 2' put: 1.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
@@ -109,7 +128,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying2TurnsThenShipsE
 	expectedResult at: 'player 1' put: 2.
 	expectedResult at: 'player 2' put: 2.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
@@ -130,7 +149,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd3ShipsAndPlaying4TurnsThenShipsE
 	expectedResult at: 'player 2' put: 2.
 	expectedResult at: 'player 3' put: 2.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
@@ -149,7 +168,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAndPlayingTurnThenShipEndsOneSquare
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 2.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
@@ -168,7 +187,7 @@ GameTest >> testWhenStartingGameWithTwo1SidedDiceAndPlayingTurnThenShipEndsTwoSq
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 3.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
@@ -189,7 +208,7 @@ GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCor
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 5.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
@@ -210,7 +229,7 @@ GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCor
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 2.
 	
-	self assert: newGame state equals: expectedResult 
+	self assert: newGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }

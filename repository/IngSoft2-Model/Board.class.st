@@ -93,6 +93,12 @@ Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 ]
 
+{ #category : 'testing' }
+Board >> isThisSquareTheGoal: aSquareNumber [
+
+	^ aSquareNumber = boardSize
+]
+
 { #category : 'process' }
 Board >> resolveMovementOf: anIntendedPosition [
 
