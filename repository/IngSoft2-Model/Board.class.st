@@ -61,7 +61,6 @@ Board >> getSquareAt: aPosition [
 	^ (map at: aPosition)
 ]
 
-
 { #category : 'initialization' }
 Board >> initializeWithSize: aSize [ 
 	

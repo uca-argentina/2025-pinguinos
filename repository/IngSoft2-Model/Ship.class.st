@@ -32,3 +32,9 @@ Ship >> moveBy: aRolledNumber on: aBoard [
 	intendedPosition := position + aRolledNumber.
 	position := aBoard resolveMovementOf: intendedPosition.
 ]
+
+{ #category : 'accessing' }
+Ship >> position [
+	
+	^ position
+]
