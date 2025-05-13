@@ -38,6 +38,11 @@ Game >> canIKeepPlaying [
 	gameOver ifTrue: [ Error signal: gameWinner , ' has won, game over!' ].
 ]
 
+{ #category : 'getter' }
+Game >> getWinner [
+	^ gameWinner 
+]
+
 { #category : 'initialization' }
 Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 

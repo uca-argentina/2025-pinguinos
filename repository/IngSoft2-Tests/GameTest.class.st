@@ -15,6 +15,46 @@ GameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 ]
 
 { #category : 'running' }
+GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetFinalBoardPositions [
+	
+	| aGameFactory newGame aWeighedDie expectedResult |
+	
+	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 4 withWormHoleFrom: 2 to: 3.
+	aGameFactory ships: 2.
+	aGameFactory withDice: { aWeighedDie }.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 4.
+	expectedResult at: 'player 2' put: 1.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	self assert: newGame boardState equals: expectedResult
+]
+
+{ #category : 'running' }
+GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetWinner [
+	
+	| aGameFactory newGame aWeighedDie |
+	
+	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 4 withWormHoleFrom: 2 to: 3.
+	aGameFactory ships: 1.
+	aGameFactory withDice: { aWeighedDie }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	self assert: newGame getWinner equals: 'player 1'
+]
+
+{ #category : 'running' }
 GameTest >> testWhenShipReachesGoalThenGameEndsAndWinnerIsDeclared [
 	
 	| aGameFactory newGame aWeighedDie |
