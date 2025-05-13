@@ -19,6 +19,8 @@ GameFactory >> build [
 	board ifNil: [ Error signal: 'Cannot build a game without a board!' ].
 	ships ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
 	diceSet ifNil: [ Error signal: 'Cannot build a game without any dice!' ].
+	
+	^ Game in: board with: diceSet and: ships
 ]
 
 { #category : 'initialization' }
@@ -30,7 +32,7 @@ GameFactory >> initialize [
 { #category : 'accessing' }
 GameFactory >> ships: aNumberOfShips [ 
 	
-	1 to: aNumberOfShips do: [:ship | ships add: (Ship new)].
+	1 to: aNumberOfShips do: [:shipNumber | ships add: ((Ship new) playerNumber: shipNumber)].
 ]
 
 { #category : 'instance creation' }
@@ -41,5 +43,6 @@ GameFactory >> withBoardSize: aSize withWormHoleFrom: aSquare to: anotherSquare 
 
 { #category : 'instance creation' }
 GameFactory >> withDice: aSetOfDice [ 
-	^ true
+	
+	diceSet := DiceSet withDice: aSetOfDice.
 ]

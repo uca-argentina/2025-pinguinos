@@ -5,7 +5,8 @@ Class {
 	#name : 'Ship',
 	#superclass : 'Object',
 	#instVars : [
-		'position'
+		'position',
+		'shipName'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -13,6 +14,7 @@ Class {
 
 { #category : 'initialization' }
 Ship >> initialize [
+
     super initialize. 
     position := 1.
     ^ self.
@@ -31,6 +33,12 @@ Ship >> moveBy: aRolledNumber on: aBoard [
 	
 	intendedPosition := position + aRolledNumber.
 	position := aBoard resolveMovementOf: intendedPosition.
+]
+
+{ #category : 'accessing' }
+Ship >> name [
+	
+	^ shipName
 ]
 
 { #category : 'accessing' }

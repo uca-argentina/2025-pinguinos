@@ -6,25 +6,32 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'board',
-		'die'
+		'diceSet',
+		'ships'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'instance creation' }
-Game class >> in: aBoard with: aDie and: aShip [
+Game class >> in: aBoard with: dice and: ships [
 
-	^self new initializeIn: aBoard with: aDie and: aShip
+	^self new initializeIn: aBoard with: dice and: ships
 ]
 
 { #category : 'initialization' }
-Game >> initializeIn: aBoard with: aDie and: aShip [
+Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 
 	board:= aBoard.
-	die:= aDie.
+	diceSet := aDiceSet.
+	ships := aSetOfShips.
+]
+
+{ #category : 'game controls' }
+Game >> nextTurn [
 	
-	board placeShip: aShip at: 0.
+	(ships at: 1) moveBy: diceSet roll on: board.
+	 
 ]
 
 { #category : 'accessing' }
@@ -36,9 +43,19 @@ Game >> start [
 	
 ]
 
+{ #category : 'accessing - structure variables' }
+Game >> state [
+	
+	| currentGameState |
+	currentGameState := Dictionary new.
+	ships do: [ :ship | currentGameState at: (ship name) put: (ship position) ].
+	
+	^ currentGameState 
+]
+
 { #category : 'validation' }
 Game >> validateElements [
 	board ifNil: [ ^false ].
-	die ifNil: [ ^false ].
+	diceSet ifNil: [ ^false ].
 	^ true
 ]

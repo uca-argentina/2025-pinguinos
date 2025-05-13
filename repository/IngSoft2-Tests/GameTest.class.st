@@ -15,6 +15,44 @@ GameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 ]
 
 { #category : 'running' }
+GameTest >> testWhenStartingGameThenAllShipsAreInSquare1 [
+	
+	| aGameFactory newGame expectedResult |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
+	aGameFactory ships: 2.
+	aGameFactory withDice: { Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 1.
+	expectedResult at: 'player 2' put: 1.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
+GameTest >> testWhenStartingGameWith1SidedDieAndPlayingTurnThenShipEndsOneSquareAhead [
+	
+	| aGameFactory newGame expectedResult |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
+	aGameFactory ships: 1.
+	aGameFactory withDice: { Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 2.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
 GameTest >> testWhenTryingToCreateGameWithoutBoardAnErrorIsRaised [
 
 	| aGameFactory |
