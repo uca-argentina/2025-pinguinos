@@ -33,9 +33,9 @@ SquareTest >> testWhenSquareIsOccupiedThenItIsNotFree [
 	
 	aSquare:= Square x: 8.
 	
-	aSquare isOccupied.
+	aSquare occupy.
 	
-	self deny: (aSquare checkStatus) equals: 'Free'
+	self assert: (aSquare checkStatus) equals: 'Occupied'
 ]
 
 { #category : 'running' }
@@ -45,4 +45,13 @@ SquareTest >> testWhenXIsNegativeThenCreationFails [
 		should: [ Square x: -8 ]
 		raise:  Error
 		withErrorMessage: 'X position must be positive.'
+]
+
+{ #category : 'running' }
+SquareTest >> testWhenXIsNotAnIntegerThenCreationFails [
+
+	self
+		should: [ Square x: 0.4 ]
+		raise:  Error
+		withErrorMessage: 'X position must be an integer.'
 ]

@@ -17,7 +17,7 @@ ShipTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMessage 
 ]
 
 { #category : 'tests' }
-ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn0 [
+ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn1 [
 
 	| aShip aBoard aDie aGame |
 	
@@ -31,8 +31,7 @@ ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn0 [
 
 { #category : 'running' }
 ShipTest >> testWhenAShipIsNotOnTheBoardThenIsInvalid [
-
-
+  
 	self
 		should: [ (Board withGridSize:8) moveShip: Ship new by: 5. ] 
 		raise: Error

@@ -11,8 +11,24 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'initialization' }
+Ship >> initialize [
+    super initialize. 
+    position := 1.
+    ^ self.
+]
+
 { #category : 'accessing' }
 Ship >> move: aRolledNumber [
 
-	position:= aRolledNumber.
+	position:= position + aRolledNumber.
+]
+
+{ #category : 'accessing' }
+Ship >> moveBy: aRolledNumber on: aBoard [
+	
+	| intendedPosition |
+	
+	intendedPosition := position + aRolledNumber.
+	position := aBoard resolveMovementOf: intendedPosition.
 ]

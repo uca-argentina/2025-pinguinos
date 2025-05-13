@@ -16,12 +16,89 @@ BoardTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMessage
 			equals: aMessage ]
 ]
 
+{ #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleEndBeingANonIntegerResultsInError [
+	
+	self
+		should: [Board withSize: 8 withWormHoleFrom: -1 to: 5]
+		raise: Error 
+		withErrorMessage: 'WormHole must have both its ends leading to valid positions inside the limits of the board!'
+]
+
+{ #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleInsideItsLimitsIsSuccesful [
+		
+	| aBoard entrance exit wormHoleOrigin wormHoleEnd |
+	
+	entrance := 1.
+	exit := 8.
+	aBoard := Board withSize: 8 withWormHoleFrom: entrance to: exit.
+	
+	wormHoleOrigin := aBoard getSquareAt: entrance.
+	wormHoleEnd := aBoard getSquareAt: exit.
+	
+	self assert: (wormHoleOrigin pointsTo) equals: (exit).
+	self assert: (wormHoleEnd pointsTo) equals: (entrance).
+]
+
+{ #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleLeadingOutsideItsLimitsResultsInError [
+	
+	self
+		should: [Board withSize: 8 withWormHoleFrom: 2 to: 10]
+		raise: Error 
+		withErrorMessage: 'WormHole must have both its ends leading to valid positions inside the limits of the board!'
+]
+
+{ #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleStartingAndEndingInTheSamePlaceResultsInError [
+	
+	self
+		should: [Board withSize: 8 withWormHoleFrom: 2 to: 2]
+		raise: Error 
+		withErrorMessage: 'Wormhole cannot lead to itself!'
+]
+
+{ #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleStartingAndEndingOutsideItsLimitsResultsInError [
+	
+	self
+		should: [Board withSize: 8 withWormHoleFrom: -1 to: 14]
+		raise: Error 
+		withErrorMessage: 'WormHole must have both its ends leading to valid positions inside the limits of the board!'
+]
+
+{ #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleStartingOutsideItsLimitsResultsInError [
+	
+	self
+		should: [Board withSize: 8 withWormHoleFrom: -1 to: 5]
+		raise: Error 
+		withErrorMessage: 'WormHole must have both its ends leading to valid positions inside the limits of the board!'
+]
+
+{ #category : 'tests' }
+BoardTest >> testCreatingBoardWithWormHoleWithinLimitsWithEntranceBeingAfterExitIsSuccesful [
+		
+	| aBoard entrance exit wormHoleOrigin wormHoleEnd |
+	
+	entrance := 5.
+	exit := 2.
+	aBoard := Board withSize: 8 withWormHoleFrom: entrance to: exit.
+	
+	wormHoleOrigin := aBoard getSquareAt: entrance.
+	wormHoleEnd := aBoard getSquareAt: exit.
+	
+	self assert: (wormHoleOrigin pointsTo) equals: (exit).
+	self assert: (wormHoleEnd pointsTo) equals: (entrance).
+]
+
 { #category : 'running' }
 BoardTest >> testWhenBoardIsCreatedWithSize8ThenSizeIs8 [
 	
 	| aBoard |
 	
-	aBoard:= Board withGridSize: 8.
+	aBoard:= Board withSize: 8.
 	
 	self assert: (aBoard size) equals: 8.
 ]
@@ -31,7 +108,7 @@ BoardTest >> testWhenBoardIsCreatedWithSquareListThenSquareIsOccupied [
 
 	| aBoard |
 	
-	aBoard:= Board withGridSize: 8.
+	aBoard := Board withSize: 8.
 	
 	self deny: (aBoard squareStatus: 6) equals: 'Occupied'
 ]
@@ -40,7 +117,7 @@ BoardTest >> testWhenBoardIsCreatedWithSquareListThenSquareIsOccupied [
 BoardTest >> testWhenXIsNegativeThenCreationFails [
 
 	self
-		should: [ Board withGridSize: -8 ]
+		should: [ Board withSize: -8 ]
 		raise:  Error
 		withErrorMessage: 'Size for the grid must be positive.'
 ]
