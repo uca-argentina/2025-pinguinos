@@ -34,6 +34,68 @@ GameTest >> testWhenStartingGameThenAllShipsAreInSquare1 [
 ]
 
 { #category : 'running' }
+GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying1TurnThenShipsEndIn1And2Squares [
+	
+	| aGameFactory newGame expectedResult |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
+	aGameFactory ships: 2.
+	aGameFactory withDice: { Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 2.
+	expectedResult at: 'player 2' put: 1.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
+GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying2TurnsThenShipsEndIn2Square [
+	
+	| aGameFactory newGame expectedResult |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
+	aGameFactory ships: 2.
+	aGameFactory withDice: { Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	newGame nextTurn.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 2.
+	expectedResult at: 'player 2' put: 2.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
+GameTest >> testWhenStartingGameWith1SidedDieAnd3ShipsAndPlaying4TurnsThenShipsEndInExpectedSquares [
+	
+	| aGameFactory newGame expectedResult |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
+	aGameFactory ships: 3.
+	aGameFactory withDice: { Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	4 timesRepeat: [ newGame nextTurn ].
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 3.
+	expectedResult at: 'player 2' put: 2.
+	expectedResult at: 'player 3' put: 2.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
 GameTest >> testWhenStartingGameWith1SidedDieAndPlayingTurnThenShipEndsOneSquareAhead [
 	
 	| aGameFactory newGame expectedResult |

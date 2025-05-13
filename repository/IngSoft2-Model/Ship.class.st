@@ -41,6 +41,12 @@ Ship >> name [
 	^ shipName
 ]
 
+{ #category : 'setter' }
+Ship >> playerNumber: aPlayerNumber [
+	
+	shipName := 'player ' , aPlayerNumber asString.
+]
+
 { #category : 'accessing' }
 Ship >> position [
 	

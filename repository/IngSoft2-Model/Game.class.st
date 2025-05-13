@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'board',
 		'diceSet',
-		'ships'
+		'ships',
+		'shipToMove'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -25,12 +26,15 @@ Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 	board:= aBoard.
 	diceSet := aDiceSet.
 	ships := aSetOfShips.
+	
+	shipToMove := 1.
 ]
 
 { #category : 'game controls' }
 Game >> nextTurn [
 	
-	(ships at: 1) moveBy: diceSet roll on: board.
+	(ships at: shipToMove) moveBy: diceSet roll on: board.
+	shipToMove := (shipToMove \\ ships size) + 1.
 	 
 ]
 
