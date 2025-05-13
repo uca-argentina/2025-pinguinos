@@ -24,20 +24,6 @@ Board class >> withGridSize: aSize [
 	^self new initializeWithGridSize: aSize.
 ]
 
-{ #category : 'initialization' }
-Board >> initializeWithGridSize: aSize [ 
-	
-	gridSize:= aSize.
-	
-   squareMap := OrderedCollection new.
-   0 to: gridSize do: [:x | squareMap add: (Square x: x)].
-
-	ships := Dictionary new.
-
-
-
-]
-
 { #category : 'accessing' }
 Board >> size [ 
 	^ gridSize.
