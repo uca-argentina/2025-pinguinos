@@ -34,6 +34,25 @@ GameTest >> testWhenStartingGameThenAllShipsAreInSquare1 [
 ]
 
 { #category : 'running' }
+GameTest >> testWhenStartingGameWith1SidedDieAnd1ShipAfterPlayingTurnTheShipCorrectlyTravelsThroughWormHole [
+	
+	| aGameFactory newGame expectedResult |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 2 to: 7.
+	aGameFactory ships: 1.
+	aGameFactory withDice: { Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 7.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
 GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying1TurnThenShipsEndIn1And2Squares [
 	
 	| aGameFactory newGame expectedResult |
@@ -104,6 +123,67 @@ GameTest >> testWhenStartingGameWith1SidedDieAndPlayingTurnThenShipEndsOneSquare
 	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
 	aGameFactory ships: 1.
 	aGameFactory withDice: { Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 2.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
+GameTest >> testWhenStartingGameWithTwo1SidedDiceAndPlayingTurnThenShipEndsTwoSquaresAhead [
+	
+	| aGameFactory newGame expectedResult |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
+	aGameFactory ships: 1.
+	aGameFactory withDice: { Die withSides: 1 . Die withSides: 1 }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 3.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
+GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCorrectlyMoves3Squares [
+	
+	| aGameFactory newGame expectedResult aWeighedDie |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 3 to: 7.
+	aGameFactory ships: 1.
+	
+	aWeighedDie := (Die withSides: 4) customizeMinimum: 4.
+	aGameFactory withDice: { aWeighedDie }.
+	
+	newGame := aGameFactory build.
+	newGame nextTurn.
+	
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 5.
+	
+	self assert: newGame state equals: expectedResult 
+]
+
+{ #category : 'running' }
+GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCorrectlyTravelsBackThroughWormHole [
+	
+	| aGameFactory newGame expectedResult aWeighedDie |
+	
+	aGameFactory := GameFactory new.
+	aGameFactory withBoardSize: 8 withWormHoleFrom: 5 to: 2.
+	aGameFactory ships: 1.
+	
+	aWeighedDie := (Die withSides: 4) customizeMinimum: 4.
+	aGameFactory withDice: { aWeighedDie }.
 	
 	newGame := aGameFactory build.
 	newGame nextTurn.

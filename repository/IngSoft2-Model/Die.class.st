@@ -5,7 +5,8 @@ Class {
 	#name : 'Die',
 	#superclass : 'Object',
 	#instVars : [
-		'sideNumber'
+		'sideNumber',
+		'numberFloor'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -31,6 +32,12 @@ Die class >> withSides: numberOfSides [
 	^ (self new) initializeWith: numberOfSides
 ]
 
+{ #category : 'setter' }
+Die >> customizeMinimum: minimumToRoll [
+	
+	numberFloor := minimumToRoll.
+]
+
 { #category : 'initialization' }
 Die >> initialize [
 
@@ -40,11 +47,12 @@ Die >> initialize [
 { #category : 'initialization' }
 Die >> initializeWith: numberOfSides [
 
-	sideNumber := numberOfSides
+	sideNumber := numberOfSides.
+	numberFloor := 1.
 ]
 
 { #category : 'random' }
 Die >> roll [
 
-	^ (1 to: sideNumber) atRandom
+	^ (numberFloor to: sideNumber) atRandom
 ]
