@@ -16,7 +16,6 @@ Ship >> initialize [
     super initialize. 
     position := 1.
     ^ self.
-
 ]
 
 { #category : 'accessing' }
@@ -32,9 +31,4 @@ Ship >> moveBy: aRolledNumber on: aBoard [
 	
 	intendedPosition := position + aRolledNumber.
 	position := aBoard resolveMovementOf: intendedPosition.
-]
-
-{ #category : 'accessing' }
-Ship >> position [
-	^ position.
 ]
