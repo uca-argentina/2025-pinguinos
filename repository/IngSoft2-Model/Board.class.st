@@ -21,13 +21,6 @@ Board class >> areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize [
 				'Wormhole cannot lead out of/into last square!' ]
 ]
 
-{ #category : 'validation' }
-Board class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
-
-	wormHoleOrigin = wormHoleEnd ifTrue: [
-		Error signal: 'Wormhole cannot lead to itself!' ]
-]
-
 { #category : 'testing' }
 Board class >> is: startPoint and: endPoint withinBoundsOf: size [
 
@@ -65,6 +58,24 @@ Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd 
 		to: wormHoleEnd
 ]
 
+{ #category : 'creation' }
+Board class >> withSize: aSize withWormhole: aWormhole [
+
+	self is: aWormhole firstPosition and: aWormhole secondPosition withinBoundsOf: aSize.
+	self areEnds: aWormhole firstPosition and: aWormhole secondPosition inGoal: aSize.
+	
+	^ (self withSize: aSize) 
+		initializeWithWormhole: aWormhole
+
+
+
+]
+
+{ #category : 'creation' }
+Board class >> withWormhole: aWormhole [
+^ self new initializeWithWormhole: aWormhole
+]
+
 { #category : 'getter' }
 Board >> getSquareAt: aPosition [
 
@@ -89,6 +100,15 @@ Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 	
 	(map at: wormHoleOrigin) pointTo: wormHoleEnd.
 	(map at: wormHoleEnd ) pointTo: wormHoleOrigin.
+
+
+]
+
+{ #category : 'initialization' }
+Board >> initializeWithWormhole: aWormhole [
+	
+	(map at: aWormhole firstPosition ) pointTo: aWormhole secondPosition.
+	(map at: aWormhole secondPosition) pointTo: aWormhole firstPosition.
 
 
 ]

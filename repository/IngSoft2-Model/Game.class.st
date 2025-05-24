@@ -27,6 +27,11 @@ Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aD
 	^self new initializeInSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
 ]
 
+{ #category : 'instance creation' }
+Game class >> inSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips [
+	^self new initializeInSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips
+]
+
 { #category : 'getter' }
 Game >> boardState [
 	
@@ -93,6 +98,25 @@ Game >> initializeInSize: aSize withWormHoleFrom: aSquare to: anotherSquare with
 	shipToMove := 1.
 	gameOver := false.
 	gameWinner := nil.
+]
+
+{ #category : 'initialization' }
+Game >> initializeInSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips [
+
+	board:= Board withSize: aSize withWormhole: aWormhole .
+	diceSet := DiceSet withDice: aDiceSet.
+	ships := OrderedCollection new.
+	1 to: aNumberOfShips do: [:shipNumber | 
+    ships add: ((Ship new) setPlayerNumber: shipNumber)
+	].
+
+	board ifNil: [ Error signal: 'Cannot build a game without a board!' ].
+	ships ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
+	diceSet ifNil: [ Error signal: 'Cannot build a game without any dice!' ].
+
+	
+	shipToMove := 1.
+	gameOver := false.
 ]
 
 { #category : 'getter' }
