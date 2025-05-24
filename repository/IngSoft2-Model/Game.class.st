@@ -48,6 +48,17 @@ Game >> getWinner [
 	^ gameWinner 
 ]
 
+{ #category : 'validation' }
+Game >> haveWeGotAWinner: currentShip [
+
+	(board isThisSquareTheGoal: (currentShip position)) ifFalse: [ ^false ].
+	
+	gameOver := true.
+	gameWinner := currentShip name.
+	^ true.
+	
+]
+
 { #category : 'initialization' }
 Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 
@@ -102,12 +113,8 @@ Game >> nextTurn [
 	currentShip := ships at: shipToMove.
 	currentShip moveBy: diceSet roll on: board.
 
-	(board isThisSquareTheGoal: (currentShip position)) ifTrue: [
-		gameOver := true.
-		gameWinner := currentShip name.
-		winner := gameWinner , ' has won the game!'.
-		].
+	(self haveWeGotAWinner: currentShip) ifTrue: [ ^ gameWinner , ' has won the game!' ].
 
 	shipToMove := shipToMove \\ ships size + 1.
-	^ winner
+
 ]
