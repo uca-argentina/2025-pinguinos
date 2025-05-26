@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : 'initialization' }
-Ship class >> name: aName [
+Ship class >> named: aName [
 
 	^ self new initializeName: aName
 ]

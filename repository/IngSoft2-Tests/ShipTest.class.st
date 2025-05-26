@@ -33,7 +33,7 @@ ShipTest >> testWhenAShipIsCreatedWithANameThenItIsValid [
 
 	| aShip |
 
-	aShip := Ship name: 'Valen Nave'.
+	aShip := Ship named: 'Valen Nave'.
 
 	self assert: aShip name equals: 'Valen Nave'
 ]

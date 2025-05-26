@@ -21,7 +21,7 @@ GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetFinalBoardPositions [
 	
 	aWeighedDie := LoadedDie withSides: 4.
 	
-	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship name: 'player 1' . Ship name: 'player 2' }.
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship named: 'player 1' . Ship named: 'player 2' }.
 	
 	aGame nextTurn.
 	
@@ -39,7 +39,7 @@ GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetWinner [
 	
 	aWeighedDie := LoadedDie withSides: 6.
 	
-	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship name: 'player 1' }.
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship named: 'player 1' }.
 
 	aGame nextTurn.
 
@@ -53,7 +53,7 @@ GameTest >> testWhenShipReachesGoalThenGameEndsCorrectlyAndTryingToPlayNextTurnR
 	
 	aWeighedDie := LoadedDie withSides: 6.
 	
-	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship name: 'player 1' }.
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship named: 'player 1' }.
 
 	aGame nextTurn.
 
@@ -69,7 +69,7 @@ GameTest >> testWhenStartingGameThenAllShipsAreInSquare1 [
 
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' . Ship name: 'player 2' }.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' . Ship named: 'player 2' }.
 
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 1.
@@ -83,7 +83,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd1ShipAfterPlayingTurnTheShipCorr
 	
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 2 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' }.
+	aGame := Game inSize: 8 withWormHoleFrom: 2 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' }.
 	
 	aGame nextTurn.
 
@@ -98,7 +98,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying1TurnThenShipsEn
 	
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' . Ship name: 'player 2' }.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' . Ship named: 'player 2' }.
 
 	2 timesRepeat: [ aGame nextTurn ].
 
@@ -114,7 +114,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying2TurnsThenShipsE
 
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' . Ship name: 'player 2' }.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' . Ship named: 'player 2' }.
 
 	2 timesRepeat: [ aGame nextTurn ].
 
@@ -130,7 +130,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd3ShipsAndPlaying4TurnsThenShipsE
 		
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' . Ship name: 'player 2' . Ship name: 'player 3'}.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' . Ship named: 'player 2' . Ship named: 'player 3'}.
 
 	4 timesRepeat: [ aGame nextTurn ].
 	
@@ -148,7 +148,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAndPlayingTurnThenShipEndsOneSquare
 	
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' }.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' }.
 
 	aGame nextTurn.
 	
@@ -164,7 +164,7 @@ GameTest >> testWhenStartingGameWithTwo1SidedDiceAndPlayingTurnThenShipEndsTwoSq
 	| expectedResult aGame |
 	
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 . Die withSides: 1 } and: { Ship name: 'player 1' }.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 . Die withSides: 1 } and: { Ship named: 'player 1' }.
 
 	aGame nextTurn.
 	
@@ -179,7 +179,7 @@ GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCor
 	
 	| expectedResult aWeighedDie aGame shipSet |
 	
-	shipSet := { Ship name: 'player 1' }.
+	shipSet := { Ship named: 'player 1' }.
 	aWeighedDie := LoadedDie withSides: 4.
 	aGame := Game inSize: 8 withWormHoleFrom: 3 to: 7 with: {aWeighedDie} and: shipSet.
 	
@@ -198,7 +198,7 @@ GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCor
 	
 	aWeighedDie := LoadedDie withSides: 4.
 	
-	shipSet := { Ship name: 'player 1' }.
+	shipSet := { Ship named: 'player 1' }.
 	
 	aGame := Game inSize: 8 withWormHoleFrom: 5 to: 2 with: {aWeighedDie} and: shipSet.
 

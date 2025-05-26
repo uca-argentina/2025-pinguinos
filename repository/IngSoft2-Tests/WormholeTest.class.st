@@ -49,7 +49,7 @@ WormholeTest >> testWhenWormholeIsUsedInTheSecondPositionThenShipGetsToTheOtherS
 	| aGame aLoadedDie expectedResult |
 	
 	aLoadedDie := LoadedDie withSides: 5.
-	aGame:= Game inSize: 8 withWormHoleFrom: 2 to: 6 with: { aLoadedDie } and: { Ship name: 'player 1' }.
+	aGame:= Game inSize: 8 withWormHoleFrom: 2 to: 6 with: { aLoadedDie } and: { Ship named: 'player 1' }.
 	
 	aGame nextTurn.
 	
@@ -65,7 +65,7 @@ WormholeTest >> testWhenWormholeIsUsedThenGameCanStillBeKeptPlaying [
 	| aGame aLoadedDie |
 	
 	aLoadedDie := LoadedDie withSides: 5.
-	aGame:= Game inSize: 10 withWormHoleFrom: 2 to: 6 with: { aLoadedDie } and: { Ship name: 'player 1' }.
+	aGame:= Game inSize: 10 withWormHoleFrom: 2 to: 6 with: { aLoadedDie } and: { Ship named: 'player 1' }.
 	
 	aGame nextTurn.
 	aGame nextTurn.
@@ -80,7 +80,7 @@ WormholeTest >> testWhenWormholePositionsAreInvertedThenGameStillPlays [
 	| aGame aLoadedDie expectedResult |
 	
 	aLoadedDie := LoadedDie withSides: 5.
-	aGame:= Game inSize: 10 withWormHoleFrom: 6 to: 2 with: { aLoadedDie } and: { Ship name: 'player 1' }.
+	aGame:= Game inSize: 10 withWormHoleFrom: 6 to: 2 with: { aLoadedDie } and: { Ship named: 'player 1' }.
 	
 	aGame nextTurn.
 	
