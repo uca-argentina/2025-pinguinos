@@ -22,6 +22,16 @@ Game class >> in: aBoard with: dice and: ships [
 	^self new initializeIn: aBoard with: dice and: ships
 ]
 
+{ #category : 'instance creation' }
+Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [
+	^self new initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
+]
+
+{ #category : 'instance creation' }
+Game class >> inSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips [
+	^self new initializeInSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips
+]
+
 { #category : 'getter' }
 Game >> boardState [
 	
@@ -43,16 +53,47 @@ Game >> getWinner [
 	^ gameWinner 
 ]
 
+{ #category : 'validation' }
+Game >> haveWeGotAWinner: currentShip [
+
+	(board isThisSquareTheGoal: currentShip position) ifTrue: [
+		gameOver := true.
+		gameWinner := currentShip name ].
+
+	^ gameOver
+]
+
 { #category : 'initialization' }
 Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 
+	board ifNil: [ Error signal: 'Cannot build a game without a board!' ].
+	ships ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
+	diceSet ifNil: [ Error signal: 'Cannot build a game without any dice!' ].
+
 	board:= aBoard.
-	diceSet := aDiceSet.
+	diceSet := DiceSet withDice: aDiceSet.
 	ships := aSetOfShips.
 	
 	shipToMove := 1.
 	gameOver := false.
 	gameWinner := nil.
+]
+
+{ #category : 'initialization' }
+Game >> initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [
+
+	board := Board
+		         withSize: aSize
+		         withWormHoleFrom: aSquare
+		         to: anotherSquare.
+
+	diceSet := DiceSet withDice: aDiceSet.
+
+	ships := self orderShips: aSetOfShips.
+
+	shipToMove := 1.
+	gameOver := false.
+	gameWinner := nil
 ]
 
 { #category : 'getter' }
@@ -66,19 +107,29 @@ Game >> isGameOver [
 { #category : 'game controls' }
 Game >> nextTurn [
 
-	| currentShip winner |
+	| currentShip |
 	self canIKeepPlaying.
 	
-	winner := nil.
 	currentShip := ships at: shipToMove.
 	currentShip moveBy: diceSet roll on: board.
 
-	(board isThisSquareTheGoal: (currentShip position)) ifTrue: [
-		gameOver := true.
-		gameWinner := currentShip name.
-		winner := gameWinner , ' has won the game!'.
-		].
+	self haveWeGotAWinner: currentShip.
 
 	shipToMove := shipToMove \\ ships size + 1.
-	^ winner
+
+]
+
+{ #category : 'setter' }
+Game >> orderShips: aSetOfShips [
+
+	| shipCollection |
+	shipCollection := OrderedCollection new.
+	
+	aSetOfShips ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
+	
+	(aSetOfShips allSatisfy: [ :object | object isKindOf: Ship ])
+		ifFalse: [ Error signal: 'Set of ships must contain only ships!' ].
+
+	shipCollection addAll: aSetOfShips.
+	^ shipCollection
 ]

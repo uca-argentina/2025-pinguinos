@@ -27,3 +27,13 @@ ShipTest >> testWhenAShipIsCreatedThenIsPositionedIn1 [
 
 	self assert: aShip position equals: 1
 ]
+
+{ #category : 'running' }
+ShipTest >> testWhenAShipIsCreatedWithANameThenItIsValid [
+
+	| aShip |
+
+	aShip := Ship named: 'Valen Nave'.
+
+	self assert: aShip name equals: 'Valen Nave'
+]

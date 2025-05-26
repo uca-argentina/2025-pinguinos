@@ -17,301 +17,214 @@ GameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 { #category : 'running' }
 GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetFinalBoardPositions [
 	
-	| aGameFactory newGame aWeighedDie expectedResult |
+	| aGame aWeighedDie expectedResult |
 	
-	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
+	aWeighedDie := LoadedDie withSides: 4.
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 4 withWormHoleFrom: 2 to: 3.
-	aGameFactory ships: 2.
-	aGameFactory withDice: { aWeighedDie }.
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship named: 'player 1' . Ship named: 'player 2' }.
+	
+	aGame nextTurn.
 	
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 4.
 	expectedResult at: 'player 2' put: 1.
 	
-	newGame := aGameFactory build.
-	newGame nextTurn.
-	
-	self assert: newGame boardState equals: expectedResult
+	self assert: aGame boardState equals: expectedResult
 ]
 
 { #category : 'running' }
 GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetWinner [
 	
-	| aGameFactory newGame aWeighedDie |
+	| aGame aWeighedDie |
 	
-	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
+	aWeighedDie := LoadedDie withSides: 6.
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 4 withWormHoleFrom: 2 to: 3.
-	aGameFactory ships: 1.
-	aGameFactory withDice: { aWeighedDie }.
-	
-	newGame := aGameFactory build.
-	newGame nextTurn.
-	
-	self assert: newGame getWinner equals: 'player 1'
-]
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship named: 'player 1' }.
 
-{ #category : 'running' }
-GameTest >> testWhenShipReachesGoalThenGameEndsAndWinnerIsDeclared [
-	
-	| aGameFactory newGame aWeighedDie |
-	
-	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
-	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 4 withWormHoleFrom: 2 to: 3.
-	aGameFactory ships: 1.
-	aGameFactory withDice: { aWeighedDie }.
-	
-	newGame := aGameFactory build.
-	
-	self assert: newGame nextTurn equals: 'player 1 has won the game!' 
+	aGame nextTurn.
+
+	self assert: aGame getWinner equals: 'player 1'
 ]
 
 { #category : 'running' }
 GameTest >> testWhenShipReachesGoalThenGameEndsCorrectlyAndTryingToPlayNextTurnResultsInError [
+	
+	| aGame aWeighedDie |
+	
+	aWeighedDie := LoadedDie withSides: 6.
+	
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship named: 'player 1' }.
 
-	| aGameFactory newGame aWeighedDie |
-	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
+	aGame nextTurn.
 
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 4 withWormHoleFrom: 2 to: 3.
-	aGameFactory ships: 1.
-	aGameFactory withDice: { aWeighedDie }.
-
-	newGame := aGameFactory build.
-	newGame nextTurn.
-
-	self assert: newGame isGameOver.
+	self assert: aGame isGameOver.
 	self
-		should: [ newGame nextTurn ]
+		should: [ aGame nextTurn ]
 		raise: Error
 		withMessageText: 'player 1 has won, game over!'
 ]
 
 { #category : 'running' }
 GameTest >> testWhenStartingGameThenAllShipsAreInSquare1 [
+
+	| expectedResult aGame |
 	
-	| aGameFactory newGame expectedResult |
-	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
-	aGameFactory ships: 2.
-	aGameFactory withDice: { Die withSides: 1 }.
-	
-	newGame := aGameFactory build.
-	
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' . Ship named: 'player 2' }.
+
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 1.
 	expectedResult at: 'player 2' put: 1.
 	
-	self assert: newGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
 GameTest >> testWhenStartingGameWith1SidedDieAnd1ShipAfterPlayingTurnTheShipCorrectlyTravelsThroughWormHole [
 	
-	| aGameFactory newGame expectedResult |
+	| expectedResult aGame |
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 2 to: 7.
-	aGameFactory ships: 1.
-	aGameFactory withDice: { Die withSides: 1 }.
+	aGame := Game inSize: 8 withWormHoleFrom: 2 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' }.
 	
-	newGame := aGameFactory build.
-	newGame nextTurn.
-	
+	aGame nextTurn.
+
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 7.
 	
-	self assert: newGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
 GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying1TurnThenShipsEndIn1And2Squares [
 	
-	| aGameFactory newGame expectedResult |
+	| expectedResult aGame |
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
-	aGameFactory ships: 2.
-	aGameFactory withDice: { Die withSides: 1 }.
-	
-	newGame := aGameFactory build.
-	newGame nextTurn.
-	
-	expectedResult := Dictionary new.
-	expectedResult at: 'player 1' put: 2.
-	expectedResult at: 'player 2' put: 1.
-	
-	self assert: newGame boardState equals: expectedResult 
-]
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' . Ship named: 'player 2' }.
 
-{ #category : 'running' }
-GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying2TurnsThenShipsEndIn2Square [
-	
-	| aGameFactory newGame expectedResult |
-	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
-	aGameFactory ships: 2.
-	aGameFactory withDice: { Die withSides: 1 }.
-	
-	newGame := aGameFactory build.
-	newGame nextTurn.
-	newGame nextTurn.
-	
+	2 timesRepeat: [ aGame nextTurn ].
+
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 2.
 	expectedResult at: 'player 2' put: 2.
 	
-	self assert: newGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult 
+]
+
+{ #category : 'running' }
+GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying2TurnsThenShipsEndIn2Square [
+
+	| expectedResult aGame |
+	
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' . Ship named: 'player 2' }.
+
+	2 timesRepeat: [ aGame nextTurn ].
+
+	expectedResult := Dictionary new.
+	expectedResult at: 'player 1' put: 2.
+	expectedResult at: 'player 2' put: 2.
+	
+	self assert: aGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
 GameTest >> testWhenStartingGameWith1SidedDieAnd3ShipsAndPlaying4TurnsThenShipsEndInExpectedSquares [
+		
+	| expectedResult aGame |
 	
-	| aGameFactory newGame expectedResult |
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' . Ship named: 'player 2' . Ship named: 'player 3'}.
+
+	4 timesRepeat: [ aGame nextTurn ].
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
-	aGameFactory ships: 3.
-	aGameFactory withDice: { Die withSides: 1 }.
-	
-	newGame := aGameFactory build.
-	4 timesRepeat: [ newGame nextTurn ].
 	
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 3.
 	expectedResult at: 'player 2' put: 2.
 	expectedResult at: 'player 3' put: 2.
 	
-	self assert: newGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
 GameTest >> testWhenStartingGameWith1SidedDieAndPlayingTurnThenShipEndsOneSquareAhead [
 	
-	| aGameFactory newGame expectedResult |
+	| expectedResult aGame |
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
-	aGameFactory ships: 1.
-	aGameFactory withDice: { Die withSides: 1 }.
-	
-	newGame := aGameFactory build.
-	newGame nextTurn.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship named: 'player 1' }.
+
+	aGame nextTurn.
 	
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 2.
 	
-	self assert: newGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
 GameTest >> testWhenStartingGameWithTwo1SidedDiceAndPlayingTurnThenShipEndsTwoSquaresAhead [
 	
-	| aGameFactory newGame expectedResult |
+	| expectedResult aGame |
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 4 to: 7.
-	aGameFactory ships: 1.
-	aGameFactory withDice: { Die withSides: 1 . Die withSides: 1 }.
 	
-	newGame := aGameFactory build.
-	newGame nextTurn.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 . Die withSides: 1 } and: { Ship named: 'player 1' }.
+
+	aGame nextTurn.
 	
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 3.
 	
-	self assert: newGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
 GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCorrectlyMoves3Squares [
 	
-	| aGameFactory newGame expectedResult aWeighedDie |
+	| expectedResult aWeighedDie aGame shipSet |
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 3 to: 7.
-	aGameFactory ships: 1.
+	shipSet := { Ship named: 'player 1' }.
+	aWeighedDie := LoadedDie withSides: 4.
+	aGame := Game inSize: 8 withWormHoleFrom: 3 to: 7 with: {aWeighedDie} and: shipSet.
 	
-	aWeighedDie := (Die withSides: 4) customizeMinimum: 4.
-	aGameFactory withDice: { aWeighedDie }.
-	
-	newGame := aGameFactory build.
-	newGame nextTurn.
-	
+	aGame nextTurn.
+
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 5.
 	
-	self assert: newGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
 GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCorrectlyTravelsBackThroughWormHole [
 	
-	| aGameFactory newGame expectedResult aWeighedDie |
+	| aGame expectedResult aWeighedDie shipSet |
 	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 5 to: 2.
-	aGameFactory ships: 1.
+	aWeighedDie := LoadedDie withSides: 4.
 	
-	aWeighedDie := (Die withSides: 4) customizeMinimum: 4.
-	aGameFactory withDice: { aWeighedDie }.
+	shipSet := { Ship named: 'player 1' }.
 	
-	newGame := aGameFactory build.
-	newGame nextTurn.
+	aGame := Game inSize: 8 withWormHoleFrom: 5 to: 2 with: {aWeighedDie} and: shipSet.
+
+	aGame nextTurn.
 	
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 2.
 	
-	self assert: newGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult 
 ]
 
 { #category : 'running' }
-GameTest >> testWhenTryingToCreateGameWithoutBoardAnErrorIsRaised [
+GameTest >> testWhenTryingToCreateGameWithOtherObjectsInPlaceOfShipsResultsInError [
 
-	| aGameFactory |
-	
-	aGameFactory := GameFactory new.
-	
 	self
-		should: [ aGameFactory build ]
+		should: [ Game inSize: 8 withWormHoleFrom: 5 to: 2 with: { Die withSides: 6 } and: { Die withSides: 4 } ]
 		raise: Error
-		withMessageText: 'Cannot build a game without a board!'
+		withMessageText: 'Set of ships must contain only ships!'
 	
 ]
 
 { #category : 'running' }
-GameTest >> testWhenTryingToCreateGameWithoutDiceAnErrorIsRaised [
+GameTest >> testWhenTryingToCreateGameWithoutShipsAnErrorIsRaised [
 
-	| aGameFactory |
-	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 2 to: 5.
-	aGameFactory ships: 3.
-	
 	self
-		should: [ aGameFactory build ]
-		raise: Error
-		withMessageText: 'Cannot build a game without any dice!'
-	
-]
-
-{ #category : 'running' }
-GameTest >> testWhenTryingToCreateGameWithoutShipAnErrorIsRaised [
-
-	| aGameFactory |
-	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 2 to: 5.
-	
-	self
-		should: [ aGameFactory build ]
+		should: [ Game inSize: 8 withWormHoleFrom: 5 to: 2 with: { Die withSides: 6 } and: {} ]
 		raise: Error
 		withMessageText: 'Cannot build a game without any ships!'
 	

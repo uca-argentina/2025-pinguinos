@@ -13,37 +13,40 @@ Class {
 }
 
 { #category : 'initialization' }
+Ship class >> named: aName [
+
+	^ self new initializeName: aName
+]
+
+{ #category : 'initialization' }
 Ship >> initialize [
 
 	super initialize.
-	position := 1.
+	position := 1
+]
 
-	^ self
+{ #category : 'initialization' }
+Ship >> initializeName: aName [
+	
+	shipName := aName.
 ]
 
 { #category : 'actions' }
 Ship >> moveBy: aRolledNumber on: aBoard [
-	
+
 	| intendedPosition |
-	
 	intendedPosition := position + aRolledNumber.
 	position := aBoard resolveMovementOf: intendedPosition.
 ]
 
 { #category : 'getter' }
 Ship >> name [
-	
+
 	^ shipName
 ]
 
 { #category : 'getter' }
 Ship >> position [
-	
-	^ position
-]
 
-{ #category : 'setter' }
-Ship >> setPlayerNumber: aPlayerNumber [
-	
-	shipName := 'player ' , aPlayerNumber asString.
+	^ position
 ]
