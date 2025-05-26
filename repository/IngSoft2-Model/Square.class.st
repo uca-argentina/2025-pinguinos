@@ -13,6 +13,13 @@ Class {
 }
 
 { #category : 'validation' }
+Square class >> validateX: x [
+	
+	self validateXIsPositive: x.
+	self validateXIsInteger: x.
+]
+
+{ #category : 'validation' }
 Square class >> validateXIsInteger: anXPosition [
 	
 	anXPosition isInteger ifFalse: [ Error signal: 'X position must be an integer.' ]
@@ -40,11 +47,9 @@ Square >> checkStatus [
 ]
 
 { #category : 'initialization' }
-Square >> initializeX: aXPosition [
+Square >> initializeX: anXPosition [
 
-	x := aXPosition.	
-	finalDestination := x.
-	
+	x := anXPosition.	
 	self setStatus: 'Free'.
 ]
 
