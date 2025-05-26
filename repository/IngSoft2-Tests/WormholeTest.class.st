@@ -20,16 +20,16 @@ WormholeTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMess
 WormholeTest >> testWhenFirstPositionIsNegativeThenCreationFails [
 
 	self
-		should: [ Wormhole firstPosition: -2 secondPosition: 6]
+		should: [ Wormhole from: -2 to: 4 ]
 		raise:  Error
-		withErrorMessage: 'First position position must be positive.'
+		withErrorMessage: 'X position must be positive.'
 ]
 
 { #category : 'running' }
 WormholeTest >> testWhenPositionsAreEqualThenCreationFails [
 
 	self
-		should: [ Wormhole firstPosition: 2 secondPosition: 2]
+		should: [ Wormhole from: 2 to: 2]
 		raise:  Error
 		withErrorMessage: 'Wormhole cannot lead to itself!'
 ]
@@ -38,19 +38,18 @@ WormholeTest >> testWhenPositionsAreEqualThenCreationFails [
 WormholeTest >> testWhenSecondPositionIsNegativeThenCreationFails [
 
 	self
-		should: [ Wormhole firstPosition: 2 secondPosition: -6]
+		should: [ Wormhole from: 3 to: -6]
 		raise:  Error
-		withErrorMessage: 'Second position position must be positive.'
+		withErrorMessage: 'X position must be positive.'
 ]
 
 { #category : 'running' }
 WormholeTest >> testWhenWormholeIsUsedInTheSecondPositionThenShipGetsToTheOtherSide [
 
-	| aWormhole aGame aWeighedDie expectedResult |
+	| aGame aWeighedDie expectedResult |
 	
-	aWormhole := Wormhole firstPosition: 2 secondPosition: 6.
 	aWeighedDie := (Die withSides: 5) customizeMinimum: 5.
-	aGame:= Game inSize: 14 withWormhole: aWormhole with: { aWeighedDie } and: 1.
+	aGame:= Game inSize: 8 withWormHoleFrom: 2 to: 6 with: { aWeighedDie } and: 1.
 	
 	aGame nextTurn.
 	
@@ -63,11 +62,10 @@ WormholeTest >> testWhenWormholeIsUsedInTheSecondPositionThenShipGetsToTheOtherS
 { #category : 'running' }
 WormholeTest >> testWhenWormholeIsUsedThenGameCanStillBeKeptPlaying [
 
-	| aWormhole aGame aWeighedDie |
+	| aGame aWeighedDie |
 	
-	aWormhole := Wormhole firstPosition: 2 secondPosition: 6.
 	aWeighedDie := (Die withSides: 5) customizeMinimum: 5.
-	aGame:= Game inSize: 10 withWormhole: aWormhole with: { aWeighedDie } and: 1.
+	aGame:= Game inSize: 10 withWormHoleFrom: 2 to: 6 with: { aWeighedDie } and: 1.
 	
 	aGame nextTurn.
 	aGame nextTurn.
@@ -78,11 +76,10 @@ WormholeTest >> testWhenWormholeIsUsedThenGameCanStillBeKeptPlaying [
 { #category : 'tests' }
 WormholeTest >> testWhenWormholePositionsAreInvertedThenGameStillPlays [
 
-	| aWormhole aGame aWeighedDie expectedResult |
+	| aGame aWeighedDie expectedResult |
 	
-	aWormhole := Wormhole firstPosition: 6 secondPosition: 2.
 	aWeighedDie := (Die withSides: 5) customizeMinimum: 5.
-	aGame:= Game inSize: 14 withWormhole: aWormhole with: { aWeighedDie } and: 1.
+	aGame:= Game inSize: 10 withWormHoleFrom: 6 to: 2 with: { aWeighedDie } and: 1.
 	
 	aGame nextTurn.
 	

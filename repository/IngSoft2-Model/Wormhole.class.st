@@ -4,6 +4,9 @@ Wormhole in grid for the game; to be occupied with a ship, which comes out from 
 Class {
 	#name : 'Wormhole',
 	#superclass : 'Square',
+	#instVars : [
+		'wormHoleExit'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -15,46 +18,29 @@ Wormhole class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
 		Error signal: 'Wormhole cannot lead to itself!' ]
 ]
 
-{ #category : 'accessing' }
-Wormhole class >> firstPosition: aFirstPosition secondPosition: aSecondPosition [
+{ #category : 'instance creation' }
+Wormhole class >> from: origin to: end [
 
-	self validateFirstPositionIsPositive: aFirstPosition.
-	self validateSecondPositionIsPositive: aSecondPosition.
+	self areEndsDistinct: origin and: end.
 	
-	self areEndsDistinct: aFirstPosition and: aSecondPosition.
+	Square validateXIsPositive: origin.
+	Square validateXIsPositive: end.
 	
-	^self new initializeFirstPosition: aFirstPosition secondPosition: aSecondPosition.
-]
-
-{ #category : 'validation' }
-Wormhole class >> validateFirstPositionIsPositive: aPosition [
-
-	aPosition < 0 ifTrue: [
-		Error signal: 'First position position must be positive.' ]
-]
-
-{ #category : 'validation' }
-Wormhole class >> validateSecondPositionIsPositive: aPosition [
-
-	aPosition < 0 ifTrue: [
-		Error signal: 'Second position position must be positive.' ]
-]
-
-{ #category : 'accessing' }
-Wormhole >> firstPosition [
-	^x
+	Square validateXIsInteger: origin.
+	Square validateXIsInteger: end.
+	
+	^ { (self new) initializeTo: end from: origin . (self new) initializeTo: origin from: end }
 ]
 
 { #category : 'initialization' }
-Wormhole >> initializeFirstPosition: aFirstPosition secondPosition: aSecondPosition [
-
-	x := aFirstPosition.	
-	finalDestination := aSecondPosition.
+Wormhole >> initializeTo: otherEnd from: origin [
 	
-	self setStatus: 'Free'.
+	super initializeX: origin.
+	wormHoleExit := otherEnd.
 ]
 
-{ #category : 'accessing' }
-Wormhole >> secondPosition [
-	^finalDestination.
+{ #category : 'getter' }
+Wormhole >> pointsTo [ 
+	
+	^ wormHoleExit.
 ]

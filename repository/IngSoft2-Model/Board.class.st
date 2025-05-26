@@ -50,7 +50,6 @@ Board class >> withSize: aSize [
 Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
-	self areEndsDistinct: wormHoleOrigin and: wormHoleEnd.
 	self areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize.
 	
 	^ (self withSize: aSize)
@@ -98,8 +97,11 @@ Board >> initializeWithSize: aSize [
 { #category : 'initialization' }
 Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 	
-	(map at: wormHoleOrigin) pointTo: wormHoleEnd.
-	(map at: wormHoleEnd ) pointTo: wormHoleOrigin.
+	| wormHoleEnds |
+	wormHoleEnds := Wormhole from: wormHoleOrigin to: wormHoleEnd.
+	
+	map at: wormHoleOrigin put: (wormHoleEnds first).
+	map at: wormHoleEnd put: (wormHoleEnds second).
 
 
 ]

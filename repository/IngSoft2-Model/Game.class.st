@@ -24,7 +24,7 @@ Game class >> in: aBoard with: dice and: ships [
 
 { #category : 'instance creation' }
 Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [
-	^self new initializeInSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
+	^self new initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
 ]
 
 { #category : 'instance creation' }
@@ -81,10 +81,12 @@ Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 ]
 
 { #category : 'initialization' }
-Game >> initializeInSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [
+Game >> initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [
 
 	board:= Board withSize: aSize withWormHoleFrom: aSquare to: anotherSquare.
+	
 	diceSet := DiceSet withDice: aDiceSet.
+	
 	ships := OrderedCollection new.
 	1 to: aNumberOfShips do: [:shipNumber | 
     ships add: ((Ship new) setPlayerNumber: shipNumber)
@@ -93,30 +95,10 @@ Game >> initializeInSize: aSize withWormHoleFrom: aSquare to: anotherSquare with
 	board ifNil: [ Error signal: 'Cannot build a game without a board!' ].
 	ships ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
 	diceSet ifNil: [ Error signal: 'Cannot build a game without any dice!' ].
-
 	
 	shipToMove := 1.
 	gameOver := false.
 	gameWinner := nil.
-]
-
-{ #category : 'initialization' }
-Game >> initializeInSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips [
-
-	board:= Board withSize: aSize withWormhole: aWormhole .
-	diceSet := DiceSet withDice: aDiceSet.
-	ships := OrderedCollection new.
-	1 to: aNumberOfShips do: [:shipNumber | 
-    ships add: ((Ship new) setPlayerNumber: shipNumber)
-	].
-
-	board ifNil: [ Error signal: 'Cannot build a game without a board!' ].
-	ships ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
-	diceSet ifNil: [ Error signal: 'Cannot build a game without any dice!' ].
-
-	
-	shipToMove := 1.
-	gameOver := false.
 ]
 
 { #category : 'getter' }
@@ -130,10 +112,9 @@ Game >> isGameOver [
 { #category : 'game controls' }
 Game >> nextTurn [
 
-	| currentShip winner |
+	| currentShip |
 	self canIKeepPlaying.
 	
-	winner := nil.
 	currentShip := ships at: shipToMove.
 	currentShip moveBy: diceSet roll on: board.
 

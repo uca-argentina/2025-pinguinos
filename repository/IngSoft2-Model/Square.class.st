@@ -6,8 +6,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'status',
-		'x',
-		'finalDestination'
+		'x'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -29,8 +28,7 @@ Square class >> validateXIsPositive: aXPosition [
 { #category : 'creation' }
 Square class >> x: aXPosition [
 		
-	self validateXIsPositive: aXPosition.
-	self validateXIsInteger: aXPosition.
+	self validateX: aXPosition.
 		
 	^self new initializeX: aXPosition.
 ]
@@ -56,16 +54,10 @@ Square >> occupy [
 	status:= 'Occupied'.
 ]
 
-{ #category : 'setter' }
-Square >> pointTo: whereToPoint [
-	
-	finalDestination := whereToPoint.
-]
-
 { #category : 'getter' }
 Square >> pointsTo [
 
-	^ finalDestination
+	^ x
 ]
 
 { #category : 'setter' }
