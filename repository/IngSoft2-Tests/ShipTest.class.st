@@ -37,17 +37,3 @@ ShipTest >> testWhenAShipIsCreatedWithANameThenItIsValid [
 
 	self assert: aShip name equals: 'Valen Nave'
 ]
-
-{ #category : 'running' }
-ShipTest >> testWhenAShipIsCreatedWithoutANameThenItIsPlayer1 [
-
-	| aShip aBoard  |
-	
-	aBoard := Board withSize: 5.
-
-	aShip := Ship new.
-	
-	aShip setPlayerNumber: 1.
-
-	self assert: aShip name equals: 'player 1'
-]

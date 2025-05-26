@@ -56,12 +56,11 @@ Game >> getWinner [
 { #category : 'validation' }
 Game >> haveWeGotAWinner: currentShip [
 
-	(board isThisSquareTheGoal: (currentShip position)) ifFalse: [ ^false ].
-	
-	gameOver := true.
-	gameWinner := currentShip name.
-	^ true.
-	
+	(board isThisSquareTheGoal: currentShip position) ifTrue: [
+		gameOver := true.
+		gameWinner := currentShip name ].
+
+	^ gameOver
 ]
 
 { #category : 'initialization' }
@@ -81,24 +80,20 @@ Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 ]
 
 { #category : 'initialization' }
-Game >> initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [
+Game >> initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [
 
-	board:= Board withSize: aSize withWormHoleFrom: aSquare to: anotherSquare.
-	
+	board := Board
+		         withSize: aSize
+		         withWormHoleFrom: aSquare
+		         to: anotherSquare.
+
 	diceSet := DiceSet withDice: aDiceSet.
-	
-	ships := OrderedCollection new.
-	1 to: aNumberOfShips do: [:shipNumber | 
-    ships add: ((Ship new) setPlayerNumber: shipNumber)
-	].
 
-	board ifNil: [ Error signal: 'Cannot build a game without a board!' ].
-	ships ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
-	diceSet ifNil: [ Error signal: 'Cannot build a game without any dice!' ].
-	
+	ships := self orderShips: aSetOfShips.
+
 	shipToMove := 1.
 	gameOver := false.
-	gameWinner := nil.
+	gameWinner := nil
 ]
 
 { #category : 'getter' }
@@ -118,8 +113,23 @@ Game >> nextTurn [
 	currentShip := ships at: shipToMove.
 	currentShip moveBy: diceSet roll on: board.
 
-	(self haveWeGotAWinner: currentShip) ifTrue: [ ^ gameWinner , ' has won the game!' ].
+	self haveWeGotAWinner: currentShip.
 
 	shipToMove := shipToMove \\ ships size + 1.
 
+]
+
+{ #category : 'setter' }
+Game >> orderShips: aSetOfShips [
+
+	| shipCollection |
+	shipCollection := OrderedCollection new.
+	
+	aSetOfShips ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
+	
+	(aSetOfShips allSatisfy: [ :object | object isKindOf: Ship ])
+		ifFalse: [ Error signal: 'Set of ships must contain only ships!' ].
+
+	shipCollection addAll: aSetOfShips.
+	^ shipCollection
 ]

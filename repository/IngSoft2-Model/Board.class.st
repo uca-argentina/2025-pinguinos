@@ -58,21 +58,9 @@ Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd 
 ]
 
 { #category : 'creation' }
-Board class >> withSize: aSize withWormhole: aWormhole [
-
-	self is: aWormhole firstPosition and: aWormhole secondPosition withinBoundsOf: aSize.
-	self areEnds: aWormhole firstPosition and: aWormhole secondPosition inGoal: aSize.
-	
-	^ (self withSize: aSize) 
-		initializeWithWormhole: aWormhole
-
-
-
-]
-
-{ #category : 'creation' }
 Board class >> withWormhole: aWormhole [
-^ self new initializeWithWormhole: aWormhole
+
+	^ self new initializeWithWormhole: aWormhole
 ]
 
 { #category : 'getter' }
@@ -106,15 +94,6 @@ Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 ]
 
-{ #category : 'initialization' }
-Board >> initializeWithWormhole: aWormhole [
-	
-	(map at: aWormhole firstPosition ) pointTo: aWormhole secondPosition.
-	(map at: aWormhole secondPosition) pointTo: aWormhole firstPosition.
-
-
-]
-
 { #category : 'squareMethods' }
 Board >> isThisSquareTheGoal: aSquareNumber [
 
@@ -126,11 +105,12 @@ Board >> resolveMovementOf: anIntendedPosition [
 
 	| anIntendedPositionWithinBounds |
 	anIntendedPositionWithinBounds := anIntendedPosition min: boardSize.
-	^ (map at: anIntendedPositionWithinBounds) pointsTo
+	^ (map at: anIntendedPositionWithinBounds) landingCoordinate
 ]
 
 { #category : 'accessing' }
-Board >> size [ 
+Board >> size [
+
 	^ boardSize
 ]
 

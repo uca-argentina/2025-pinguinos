@@ -46,10 +46,10 @@ WormholeTest >> testWhenSecondPositionIsNegativeThenCreationFails [
 { #category : 'running' }
 WormholeTest >> testWhenWormholeIsUsedInTheSecondPositionThenShipGetsToTheOtherSide [
 
-	| aGame aWeighedDie expectedResult |
+	| aGame aLoadedDie expectedResult |
 	
-	aWeighedDie := (Die withSides: 5) customizeMinimum: 5.
-	aGame:= Game inSize: 8 withWormHoleFrom: 2 to: 6 with: { aWeighedDie } and: 1.
+	aLoadedDie := LoadedDie withSides: 5.
+	aGame:= Game inSize: 8 withWormHoleFrom: 2 to: 6 with: { aLoadedDie } and: { Ship name: 'player 1' }.
 	
 	aGame nextTurn.
 	
@@ -62,24 +62,25 @@ WormholeTest >> testWhenWormholeIsUsedInTheSecondPositionThenShipGetsToTheOtherS
 { #category : 'running' }
 WormholeTest >> testWhenWormholeIsUsedThenGameCanStillBeKeptPlaying [
 
-	| aGame aWeighedDie |
+	| aGame aLoadedDie |
 	
-	aWeighedDie := (Die withSides: 5) customizeMinimum: 5.
-	aGame:= Game inSize: 10 withWormHoleFrom: 2 to: 6 with: { aWeighedDie } and: 1.
+	aLoadedDie := LoadedDie withSides: 5.
+	aGame:= Game inSize: 10 withWormHoleFrom: 2 to: 6 with: { aLoadedDie } and: { Ship name: 'player 1' }.
 	
 	aGame nextTurn.
 	aGame nextTurn.
+	aGame nextTurn.
 	
-	self assert: (aGame nextTurn) equals: 'player 1 has won the game!' 
+	self assert: (aGame getWinner) equals: 'player 1' 
 ]
 
 { #category : 'tests' }
 WormholeTest >> testWhenWormholePositionsAreInvertedThenGameStillPlays [
 
-	| aGame aWeighedDie expectedResult |
+	| aGame aLoadedDie expectedResult |
 	
-	aWeighedDie := (Die withSides: 5) customizeMinimum: 5.
-	aGame:= Game inSize: 10 withWormHoleFrom: 6 to: 2 with: { aWeighedDie } and: 1.
+	aLoadedDie := LoadedDie withSides: 5.
+	aGame:= Game inSize: 10 withWormHoleFrom: 6 to: 2 with: { aLoadedDie } and: { Ship name: 'player 1' }.
 	
 	aGame nextTurn.
 	

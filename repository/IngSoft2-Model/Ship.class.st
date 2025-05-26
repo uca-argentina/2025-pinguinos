@@ -6,8 +6,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'position',
-		'shipName',
-		'shipNumber'
+		'shipName'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -15,7 +14,8 @@ Class {
 
 { #category : 'initialization' }
 Ship class >> name: aName [
-	^self new initializeName: aName.
+
+	^ self new initializeName: aName
 ]
 
 { #category : 'initialization' }
@@ -32,33 +32,21 @@ Ship >> initializeName: aName [
 ]
 
 { #category : 'actions' }
-Ship >> moveBy: arg1 on: arg2 [
+Ship >> moveBy: aRolledNumber on: aBoard [
 
-	| tmp1 |
-	tmp1 := position + arg1.
-	position := arg2 resolveMovementOf: tmp1
+	| intendedPosition |
+	intendedPosition := position + aRolledNumber.
+	position := aBoard resolveMovementOf: intendedPosition.
 ]
 
 { #category : 'getter' }
 Ship >> name [
-	shipName ifNil: [ shipName:= 'player ', shipNumber asString].
+
 	^ shipName
-]
-
-{ #category : 'api' }
-Ship >> number [
-
-	^ shipNumber
 ]
 
 { #category : 'getter' }
 Ship >> position [
 
 	^ position
-]
-
-{ #category : 'setter' }
-Ship >> setPlayerNumber: aPlayerNumber [
-	
-	shipNumber := aPlayerNumber asString.
 ]

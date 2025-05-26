@@ -46,8 +46,8 @@ BoardTest >> testCreatingBoardWithWormHoleInsideItsLimitsIsSuccesful [
 	wormHoleOrigin := aBoard getSquareAt: entrance.
 	wormHoleEnd := aBoard getSquareAt: exit.
 	
-	self assert: (wormHoleOrigin pointsTo) equals: (exit).
-	self assert: (wormHoleEnd pointsTo) equals: (entrance).
+	self assert: (wormHoleOrigin landingCoordinate) equals: (exit).
+	self assert: (wormHoleEnd landingCoordinate) equals: (entrance).
 ]
 
 { #category : 'tests' }
@@ -107,8 +107,8 @@ BoardTest >> testCreatingBoardWithWormHoleWithinLimitsWithEntranceBeingAfterExit
 	wormHoleOrigin := aBoard getSquareAt: entrance.
 	wormHoleEnd := aBoard getSquareAt: exit.
 	
-	self assert: (wormHoleOrigin pointsTo) equals: (exit).
-	self assert: (wormHoleEnd pointsTo) equals: (entrance).
+	self assert: (wormHoleOrigin landingCoordinate) equals: (exit).
+	self assert: (wormHoleEnd landingCoordinate) equals: (entrance).
 ]
 
 { #category : 'running' }

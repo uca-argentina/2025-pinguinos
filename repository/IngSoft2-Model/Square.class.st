@@ -53,16 +53,16 @@ Square >> initializeX: anXPosition [
 	self setStatus: 'Free'.
 ]
 
+{ #category : 'getter' }
+Square >> landingCoordinate [
+
+	^ x
+]
+
 { #category : 'setter' }
 Square >> occupy [ 
 	
 	status:= 'Occupied'.
-]
-
-{ #category : 'getter' }
-Square >> pointsTo [
-
-	^ x
 ]
 
 { #category : 'setter' }

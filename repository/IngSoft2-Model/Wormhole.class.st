@@ -40,7 +40,7 @@ Wormhole >> initializeTo: otherEnd from: origin [
 ]
 
 { #category : 'getter' }
-Wormhole >> pointsTo [ 
+Wormhole >> landingCoordinate [ 
 	
-	^ wormHoleExit.
+	^ wormHoleExit
 ]

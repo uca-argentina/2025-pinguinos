@@ -19,9 +19,9 @@ GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetFinalBoardPositions [
 	
 	| aGame aWeighedDie expectedResult |
 	
-	aWeighedDie := (Die withSides: 4) customizeMinimum: 4.
+	aWeighedDie := LoadedDie withSides: 4.
 	
-	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: 2.
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship name: 'player 1' . Ship name: 'player 2' }.
 	
 	aGame nextTurn.
 	
@@ -37,9 +37,9 @@ GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetWinner [
 	
 	| aGame aWeighedDie |
 	
-	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
+	aWeighedDie := LoadedDie withSides: 6.
 	
-	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: 1.
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship name: 'player 1' }.
 
 	aGame nextTurn.
 
@@ -47,25 +47,13 @@ GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetWinner [
 ]
 
 { #category : 'running' }
-GameTest >> testWhenShipReachesGoalThenGameEndsAndWinnerIsDeclared [
-	
-	| aGame aWeighedDie |
-	
-	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
-	
-	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: 1.
-	
-	self assert: aGame nextTurn equals: 'player 1 has won the game!' 
-]
-
-{ #category : 'running' }
 GameTest >> testWhenShipReachesGoalThenGameEndsCorrectlyAndTryingToPlayNextTurnResultsInError [
 	
 	| aGame aWeighedDie |
 	
-	aWeighedDie := (Die withSides: 6) customizeMinimum: 6.
+	aWeighedDie := LoadedDie withSides: 6.
 	
-	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: 1.
+	aGame := Game inSize: 4 withWormHoleFrom: 2 to: 3 with: { aWeighedDie } and: { Ship name: 'player 1' }.
 
 	aGame nextTurn.
 
@@ -81,7 +69,7 @@ GameTest >> testWhenStartingGameThenAllShipsAreInSquare1 [
 
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: 2.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' . Ship name: 'player 2' }.
 
 	expectedResult := Dictionary new.
 	expectedResult at: 'player 1' put: 1.
@@ -95,7 +83,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd1ShipAfterPlayingTurnTheShipCorr
 	
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 2 to: 7 with: { Die withSides: 1 } and: 1.
+	aGame := Game inSize: 8 withWormHoleFrom: 2 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' }.
 	
 	aGame nextTurn.
 
@@ -110,7 +98,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying1TurnThenShipsEn
 	
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: 2.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' . Ship name: 'player 2' }.
 
 	2 timesRepeat: [ aGame nextTurn ].
 
@@ -126,7 +114,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd2ShipsAndPlaying2TurnsThenShipsE
 
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: 2.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' . Ship name: 'player 2' }.
 
 	2 timesRepeat: [ aGame nextTurn ].
 
@@ -142,7 +130,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAnd3ShipsAndPlaying4TurnsThenShipsE
 		
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: 3.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' . Ship name: 'player 2' . Ship name: 'player 3'}.
 
 	4 timesRepeat: [ aGame nextTurn ].
 	
@@ -160,7 +148,7 @@ GameTest >> testWhenStartingGameWith1SidedDieAndPlayingTurnThenShipEndsOneSquare
 	
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: 1.
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 } and: { Ship name: 'player 1' }.
 
 	aGame nextTurn.
 	
@@ -175,7 +163,8 @@ GameTest >> testWhenStartingGameWithTwo1SidedDiceAndPlayingTurnThenShipEndsTwoSq
 	
 	| expectedResult aGame |
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 . Die withSides: 1 } and: 1.
+	
+	aGame := Game inSize: 8 withWormHoleFrom: 4 to: 7 with: { Die withSides: 1 . Die withSides: 1 } and: { Ship name: 'player 1' }.
 
 	aGame nextTurn.
 	
@@ -188,10 +177,11 @@ GameTest >> testWhenStartingGameWithTwo1SidedDiceAndPlayingTurnThenShipEndsTwoSq
 { #category : 'running' }
 GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCorrectlyMoves3Squares [
 	
-	| expectedResult aWeighedDie aGame |
+	| expectedResult aWeighedDie aGame shipSet |
 	
-	aWeighedDie := (Die withSides: 4) customizeMinimum: 4.
-	aGame := Game inSize: 8 withWormHoleFrom: 3 to: 7 with: {aWeighedDie} and: 1.
+	shipSet := { Ship name: 'player 1' }.
+	aWeighedDie := LoadedDie withSides: 4.
+	aGame := Game inSize: 8 withWormHoleFrom: 3 to: 7 with: {aWeighedDie} and: shipSet.
 	
 	aGame nextTurn.
 
@@ -204,11 +194,13 @@ GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCor
 { #category : 'running' }
 GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCorrectlyTravelsBackThroughWormHole [
 	
-	| aGame expectedResult aWeighedDie |
+	| aGame expectedResult aWeighedDie shipSet |
 	
-	aWeighedDie := (Die withSides: 4) customizeMinimum: 4.
+	aWeighedDie := LoadedDie withSides: 4.
 	
-	aGame := Game inSize: 8 withWormHoleFrom: 5 to: 2 with: {aWeighedDie} and: 1.
+	shipSet := { Ship name: 'player 1' }.
+	
+	aGame := Game inSize: 8 withWormHoleFrom: 5 to: 2 with: {aWeighedDie} and: shipSet.
 
 	aGame nextTurn.
 	
@@ -219,45 +211,20 @@ GameTest >> testWhenStartingGameWithWeighedDieAnd1ShipAfterPlayingTurnTheShipCor
 ]
 
 { #category : 'running' }
-GameTest >> testWhenTryingToCreateGameWithoutBoardAnErrorIsRaised [
+GameTest >> testWhenTryingToCreateGameWithOtherObjectsInPlaceOfShipsResultsInError [
 
-	| aGameFactory |
-	
-	aGameFactory := GameFactory new.
-	
 	self
-		should: [ aGameFactory build ]
+		should: [ Game inSize: 8 withWormHoleFrom: 5 to: 2 with: { Die withSides: 6 } and: { Die withSides: 4 } ]
 		raise: Error
-		withMessageText: 'Cannot build a game without a board!'
+		withMessageText: 'Set of ships must contain only ships!'
 	
 ]
 
 { #category : 'running' }
-GameTest >> testWhenTryingToCreateGameWithoutDiceAnErrorIsRaised [
+GameTest >> testWhenTryingToCreateGameWithoutShipsAnErrorIsRaised [
 
-	| aGameFactory |
-	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 2 to: 5.
-	aGameFactory ships: 3.
-	
 	self
-		should: [ aGameFactory build ]
-		raise: Error
-		withMessageText: 'Cannot build a game without any dice!'
-	
-]
-
-{ #category : 'running' }
-GameTest >> testWhenTryingToCreateGameWithoutShipAnErrorIsRaised [
-
-	| aGameFactory |
-	
-	aGameFactory := GameFactory new.
-	aGameFactory withBoardSize: 8 withWormHoleFrom: 2 to: 5.
-	
-	self
-		should: [ aGameFactory build ]
+		should: [ Game inSize: 8 withWormHoleFrom: 5 to: 2 with: { Die withSides: 6 } and: {} ]
 		raise: Error
 		withMessageText: 'Cannot build a game without any ships!'
 	
