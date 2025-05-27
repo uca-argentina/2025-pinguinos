@@ -56,7 +56,7 @@ Game >> getWinner [
 { #category : 'validation' }
 Game >> haveWeGotAWinner: currentShip [
 
-	(board isThisSquareTheGoal: currentShip position) ifTrue: [
+	((board isThisSquareTheGoal: currentShip position) and: board isThisTheLastRound ) ifTrue: [
 		gameOver := true.
 		gameWinner := currentShip name ].
 
@@ -77,6 +77,22 @@ Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 	shipToMove := 1.
 	gameOver := false.
 	gameWinner := nil.
+]
+
+{ #category : 'initialization' }
+Game >> initializeInSize: aSize rounds: aRoundNumber withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [ 
+		board := CircularBoard
+		         withSize: aSize rounds: aRoundNumber
+		         withWormHoleFrom: aSquare
+		         to: anotherSquare.
+
+	diceSet := DiceSet withDice: aDiceSet.
+
+	ships := self orderShips: aSetOfShips.
+
+	shipToMove := 1.
+	gameOver := false.
+	gameWinner := nil
 ]
 
 { #category : 'initialization' }
