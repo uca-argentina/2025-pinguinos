@@ -60,6 +60,22 @@ CircularBoardTest >> testWhenCircularBoardIsCreatedWithMoreThanOneRoundThenIsNot
 ]
 
 { #category : 'tests' }
+CircularBoardTest >> testWhenCircularBoardIsCreatedWithMoreThanOneShipdThenTheFirstOneWins [
+	| aGame |
+
+	aGame := Game inSize: 4 rounds: 2
+		withWormHoleFrom: 2 to: 3 
+		with: { LoadedDie withSides: 6 } 
+		and: { Ship named: 'player 1' . Ship named: 'player 2'}.
+
+	aGame nextTurn.
+	aGame nextTurn.
+	aGame nextTurn.
+
+	self assert: aGame getWinner equals: 'player 1'
+]
+
+{ #category : 'tests' }
 CircularBoardTest >> testWhenCreatingCircularBoardWithNegativeRoundsThenItFails [
 	
 	self

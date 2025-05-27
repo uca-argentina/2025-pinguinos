@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'position',
-		'shipName'
+		'shipName',
+		'laps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -22,13 +23,24 @@ Ship class >> named: aName [
 Ship >> initialize [
 
 	super initialize.
-	position := 1
+	position := 1.
+	laps:= 1.
 ]
 
 { #category : 'initialization' }
 Ship >> initializeName: aName [
 	
 	shipName := aName.
+]
+
+{ #category : 'actions' }
+Ship >> lapCounter [
+	laps := laps + 1.
+]
+
+{ #category : 'accessing' }
+Ship >> laps [
+	^laps
 ]
 
 { #category : 'actions' }

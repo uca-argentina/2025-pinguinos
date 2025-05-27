@@ -61,12 +61,6 @@ Board class >> withWormhole: aWormhole [
 	^ self new initializeWithWormhole: aWormhole
 ]
 
-{ #category : 'round management' }
-Board >> decrementRounds [
-	rounds := rounds - 1
-
-]
-
 { #category : 'getter' }
 Board >> getSquareAt: arg1 [
 
@@ -107,12 +101,8 @@ Board >> isThisSquareTheGoal: aSquare [
 ]
 
 { #category : 'testing' }
-Board >> isThisTheLastRound [
-	rounds > 0 ifTrue: [ self decrementRounds ].
-	^rounds = 0
-
-
-
+Board >> isThisTheLastRoundFor: aShip [
+	aShip laps = rounds ifTrue: [ ^true ] ifFalse: [ aShip lapCounter . ^false ]
 
 ]
 
