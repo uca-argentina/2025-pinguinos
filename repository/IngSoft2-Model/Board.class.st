@@ -6,42 +6,42 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'boardSize',
-		'map',
-		'rounds'
+		'map'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'validation' }
-Board class >> areEnds: arg1 and: arg2 inGoal: arg3 [
+Board class >> areEnds: awormHoleOrigin and: wormHoleEnd inGoal: aSize [
 
-	(arg1 = arg3 or: arg2 = arg3) ifTrue: [
+	((awormHoleOrigin = aSize) or: (wormHoleEnd = aSize)) ifTrue: [
 		Error signal: 'Wormhole cannot lead out of/into last square!' ]
 ]
 
 { #category : 'testing' }
-Board class >> is: arg1 and: arg2 withinBoundsOf: arg3 [
+Board class >> is: startPoint and: endPoint withinBoundsOf: size [
 
-	| tmp1 |
-	tmp1 := 1 to: arg3.
-	((tmp1 includes: arg1) and: (tmp1 includes: arg2)) ifFalse: [
-		Error signal:
-			'WormHole must have both its ends leading to valid positions inside the limits of the board!' ]
+	| range |
+	range := 1 to: size.
+	((range includes: startPoint) and: (range includes: endPoint))
+		ifFalse: [
+			Error signal:
+				'WormHole must have both its ends leading to valid positions inside the limits of the board!' ]
 ]
 
 { #category : 'validation' }
-Board class >> validateSizeIsPositive: arg1 [
+Board class >> validateSizeIsPositive: aSize [
 
-	arg1 < 0 ifTrue: [
+	aSize < 0 ifTrue: [
 		Error signal: 'Size for the grid must be positive.' ]
 ]
 
 { #category : 'creation' }
-Board class >> withSize: arg1 [
+Board class >> withSize: aSize [
 
-	self validateSizeIsPositive: arg1.
-	^ self new initializeWithSize: arg1
+	self validateSizeIsPositive: aSize .
+	^ self new initializeWithSize: aSize
 ]
 
 { #category : 'creation' }
@@ -55,24 +55,16 @@ Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd 
 		to: wormHoleEnd
 ]
 
-{ #category : 'creation' }
-Board class >> withWormhole: aWormhole [
+{ #category : 'accessing' }
+Board >> getSquareAt: aPosition [
 
-	^ self new initializeWithWormhole: aWormhole
-]
-
-{ #category : 'getter' }
-Board >> getSquareAt: arg1 [
-
-	^ map at: arg1
+	^ map at: aPosition
 ]
 
 { #category : 'initialization' }
 Board >> initializeWithSize: aSize [ 
 	
 	boardSize := aSize.
-	
-	rounds:= 1.
 	
    map := OrderedCollection new.
 
@@ -100,16 +92,11 @@ Board >> isThisSquareTheGoal: aSquare [
 	^ aSquare = boardSize
 ]
 
-{ #category : 'testing' }
-Board >> isThisTheLastRoundFor: aShip [
-	aShip laps = rounds ifTrue: [ ^true ] ifFalse: [ aShip lapCounter . ^false ]
-
-]
-
 { #category : 'process' }
 Board >> resolveMovementOf: anIntendedPosition [
 
 	| anIntendedPositionWithinBounds |
+	
 	anIntendedPositionWithinBounds := anIntendedPosition min: boardSize.
 	^ (map at: anIntendedPositionWithinBounds) landingCoordinate
 ]
@@ -121,9 +108,9 @@ Board >> size [
 ]
 
 { #category : 'squareMethods' }
-Board >> squareStatus: arg1 [
+Board >> squareStatus: aPosition [
 
-	| tmp1 |
-	tmp1 := map at: arg1.
-	^ tmp1 checkStatus
+	| aSquare |
+	aSquare := map at: aPosition.
+	^ aSquare checkStatus
 ]

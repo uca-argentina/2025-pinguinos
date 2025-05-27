@@ -4,6 +4,9 @@ Circular board class for board game; has a number of rounds to play in the same 
 Class {
 	#name : 'CircularBoard',
 	#superclass : 'Board',
+	#instVars : [
+		'rounds'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -37,11 +40,28 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wo
 { #category : 'initialization' }
 CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [ 
 	
-	boardSize := aSize.
+	super initializeWithSize: aSize.
+
+	rounds := aRoundNumber.
+]
+
+{ #category : 'process' }
+CircularBoard >> resolveMovementOf: anIntendedPosition [
+
+	| finalPosition finalLapNumber |
 	
-   map := OrderedCollection new.
+	finalPosition := anIntendedPosition first.
+	finalLapNumber := anIntendedPosition second.
+	
+	finalPosition > boardSize ifTrue: [ finalLapNumber := finalLapNumber + (finalPosition - 1 // boardSize) ].
+	finalPosition := finalPosition \\ boardSize + 1.
 
-   1 to: boardSize do: [:x | map add: (Square x: x)].
+	^ {(map at: finalPosition) landingCoordinate . finalLapNumber }
+]
 
-	rounds:= aRoundNumber.
+{ #category : 'validation' }
+CircularBoard >> wasThisTheLastRoundFor: aShip [
+
+	^ aShip laps >= rounds
+		
 ]

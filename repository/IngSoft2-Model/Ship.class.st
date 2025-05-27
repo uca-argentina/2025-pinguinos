@@ -24,7 +24,7 @@ Ship >> initialize [
 
 	super initialize.
 	position := 1.
-	laps:= 1.
+	laps := 0.
 ]
 
 { #category : 'initialization' }
@@ -35,12 +35,14 @@ Ship >> initializeName: aName [
 
 { #category : 'actions' }
 Ship >> lapCounter [
-	laps := laps + 1.
+
+	laps := laps + 1
 ]
 
 { #category : 'accessing' }
 Ship >> laps [
-	^laps
+
+	^ laps
 ]
 
 { #category : 'actions' }
@@ -49,6 +51,19 @@ Ship >> moveBy: aRolledNumber on: aBoard [
 	| intendedPosition |
 	intendedPosition := position + aRolledNumber.
 	position := aBoard resolveMovementOf: intendedPosition.
+]
+
+{ #category : 'actions' }
+Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard [
+
+	| intendedPosition resultingPosition |
+	
+	intendedPosition := { (position + aRolledNumber) . laps }.
+	
+	resultingPosition := aCircularBoard resolveMovementOf: intendedPosition.
+	
+	position := resultingPosition first.
+	laps := resultingPosition second.
 ]
 
 { #category : 'getter' }
