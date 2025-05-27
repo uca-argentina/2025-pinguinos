@@ -8,6 +8,34 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'getter' }
+ShipBattleGame >> boardState [
+
+	| currentGameState rankedList |
+	
+	currentGameState := OrderedDictionary new.
+	
+	rankedList := ships sort: [ :shipA :shipB |
+		              self compareProgressOf2Ships: shipA and: shipB ].
+	
+	rankedList doWithIndex: [ :ship :i |
+		currentGameState
+			at: (i printString , '°')
+			put: (Dictionary newFrom: {
+						 ('name' -> ship name).
+						 ('position' -> ship position).
+						 ('lap' -> ship laps) }) ].
+					
+	^ currentGameState
+]
+
+{ #category : 'comparing' }
+ShipBattleGame >> compareProgressOf2Ships: shipA and: shipB [
+
+	^ shipA laps > shipB laps or: [
+		  shipA laps = shipB laps and: [ shipA position > shipB position ] ] "Comparo primero numero de vueltas, si son iguales paso a posicion en el tablero."
+]
+
 { #category : 'validation' }
 ShipBattleGame >> haveWeGotAWinner: currentShip [
 

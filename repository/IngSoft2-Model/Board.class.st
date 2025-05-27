@@ -33,7 +33,7 @@ Board class >> is: startPoint and: endPoint withinBoundsOf: size [
 { #category : 'validation' }
 Board class >> validateSizeIsPositive: aSize [
 
-	aSize < 0 ifTrue: [
+	aSize <= 0 ifTrue: [
 		Error signal: 'Size for the grid must be positive.' ]
 ]
 

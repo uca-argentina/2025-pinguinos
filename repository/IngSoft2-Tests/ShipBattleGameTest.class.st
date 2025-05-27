@@ -17,7 +17,7 @@ ShipBattleGameTest >> should: anErrorBlock raise: anErrorClass withErrorMessage:
 ]
 
 { #category : 'running' }
-ShipBattleGameTest >> testWhenCircularBoardIsCreatedThenGameDoesntEndIfShipDoesntCrossGoal [
+ShipBattleGameTest >> testWhenShipBattleGameIsCreatedThenGameDoesntEndIfShipDoesntCrossGoal [
 
 	| aGame |
 	aGame := ShipBattleGame
@@ -34,7 +34,7 @@ ShipBattleGameTest >> testWhenCircularBoardIsCreatedThenGameDoesntEndIfShipDoesn
 ]
 
 { #category : 'running' }
-ShipBattleGameTest >> testWhenCircularBoardIsCreatedThenGameEndsAfterOneRound [
+ShipBattleGameTest >> testWhenShipBattleGameIsCreatedThenGameEndsAfterOneTurn [
 
 	| aGame |
 	aGame := ShipBattleGame
@@ -51,7 +51,7 @@ ShipBattleGameTest >> testWhenCircularBoardIsCreatedThenGameEndsAfterOneRound [
 ]
 
 { #category : 'tests' }
-ShipBattleGameTest >> testWhenCircularBoardIsCreatedWith2RoundsGameDoesntEndIfShipReachesLastSquareIn2ndRound [
+ShipBattleGameTest >> testWhenShipBattleGameIsCreatedWith2RoundsGameDoesntEndIfShipReachesLastSquareIn2ndRound [
 
 	| aGame |
 	aGame := ShipBattleGame
@@ -68,24 +68,7 @@ ShipBattleGameTest >> testWhenCircularBoardIsCreatedWith2RoundsGameDoesntEndIfSh
 ]
 
 { #category : 'tests' }
-ShipBattleGameTest >> testWhenCircularBoardIsCreatedWith2RoundsGameEndsIfShipCrossesGoal2TimesInSameDiceRoll [
-
-	| aGame |
-	aGame := ShipBattleGame
-		         inSize: 4
-		         rounds: 2
-		         withWormHoleFrom: 2
-		         to: 3
-		         with: { (LoadedDie withSides: 100) }
-		         and: { (Ship named: 'player 1') }.
-
-	aGame nextTurn.
-
-	self assert: aGame getWinner equals: 'player 1'
-]
-
-{ #category : 'tests' }
-ShipBattleGameTest >> testWhenCircularBoardIsCreatedWithMoreThanOneRoundThenIsFinished [
+ShipBattleGameTest >> testWhenShipBattleGameIsCreatedWith2RoundsGameEndsIfShipCrossesGoal2TimesIn2Turns [
 
 	| aGame |
 	aGame := ShipBattleGame
@@ -103,7 +86,24 @@ ShipBattleGameTest >> testWhenCircularBoardIsCreatedWithMoreThanOneRoundThenIsFi
 ]
 
 { #category : 'tests' }
-ShipBattleGameTest >> testWhenCircularBoardIsCreatedWithMoreThanOneRoundThenIsNotFinishedAfterFirstOne [
+ShipBattleGameTest >> testWhenShipBattleGameIsCreatedWith2RoundsGameEndsIfShipCrossesGoal2TimesInSameTurn [
+
+	| aGame |
+	aGame := ShipBattleGame
+		         inSize: 4
+		         rounds: 2
+		         withWormHoleFrom: 2
+		         to: 3
+		         with: { (LoadedDie withSides: 100) }
+		         and: { (Ship named: 'player 1') }.
+
+	aGame nextTurn.
+
+	self assert: aGame getWinner equals: 'player 1'
+]
+
+{ #category : 'tests' }
+ShipBattleGameTest >> testWhenShipBattleGameIsCreatedWithMoreThanOneRoundThenGameIsNotFinishedAfterFirstTurn [
 
 	| aGame |
 	aGame := ShipBattleGame
@@ -120,7 +120,25 @@ ShipBattleGameTest >> testWhenCircularBoardIsCreatedWithMoreThanOneRoundThenIsNo
 ]
 
 { #category : 'tests' }
-ShipBattleGameTest >> testWhenCircularBoardIsCreatedWithMoreThanOneShipThenTheFirstOneWins [
+ShipBattleGameTest >> testWhenShipBattleGameIsCreatedWithMoreThanOneRoundThenIsFinished [
+
+	| aGame |
+	aGame := ShipBattleGame
+		         inSize: 4
+		         rounds: 2
+		         withWormHoleFrom: 2
+		         to: 3
+		         with: { (LoadedDie withSides: 4) }
+		         and: { (Ship named: 'player 1') }.
+
+	aGame nextTurn.
+	aGame nextTurn.
+
+	self assert: aGame getWinner equals: 'player 1'
+]
+
+{ #category : 'tests' }
+ShipBattleGameTest >> testWhenShipBattleGameIsCreatedWithMoreThanOneShipThenTheFirstOneWins [
 
 	| aGame |
 	aGame := ShipBattleGame
@@ -138,4 +156,29 @@ ShipBattleGameTest >> testWhenCircularBoardIsCreatedWithMoreThanOneShipThenTheFi
 	aGame nextTurn.
 
 	self assert: aGame getWinner equals: 'player 1'
+]
+
+{ #category : 'running' }
+ShipBattleGameTest >> testWith2ShipsInPlayWeCanGetRankedPositionOfShipsCorrectly [
+
+	| aGame expectedResult |
+	aGame := ShipBattleGame
+		         inSize: 5
+		         rounds: 2
+		         withWormHoleFrom: 2
+		         to: 3
+		         with: { (LoadedDie withSides: 4) }
+		         and: {
+				         (Ship named: 'Jorge').
+				         (Ship named: 'Luciano') }.
+
+	aGame nextTurn.
+	aGame nextTurn.
+	aGame nextTurn.
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: { 'name' -> 'Jorge' . 'position' -> 4 . 'lap' -> 2 }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { 'name' -> 'Luciano' . 'position' -> 5 . 'lap' -> 1 }).
+
+	self assert: aGame boardState equals: expectedResult
 ]

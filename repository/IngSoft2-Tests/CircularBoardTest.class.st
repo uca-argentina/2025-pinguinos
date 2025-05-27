@@ -25,3 +25,23 @@ CircularBoardTest >> testWhenCreatingCircularBoardWithNegativeRoundsThenItFails 
 		withErrorMessage: 'Round number for the board must be positive.'
 
 ]
+
+{ #category : 'tests' }
+CircularBoardTest >> testWhenCreatingCircularBoardWithNegativeSizeAnErrorIsRaised [
+	
+	self
+		should: [ CircularBoard withSize: -2 rounds: 1 ]
+		raise: Error 
+		withErrorMessage: 'Size for the grid must be positive.'
+
+]
+
+{ #category : 'tests' }
+CircularBoardTest >> testWhenCreatingCircularBoardWithSize0AnErrorIsRaised [
+	
+	self
+		should: [ CircularBoard withSize: 0 rounds: 1 ]
+		raise: Error 
+		withErrorMessage: 'Size for the grid must be positive.'
+
+]

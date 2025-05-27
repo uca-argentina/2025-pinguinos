@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'position',
 		'shipName',
-		'laps'
+		'laps',
+		'shields'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -24,19 +25,14 @@ Ship >> initialize [
 
 	super initialize.
 	position := 1.
-	laps := 0.
+	laps := 1.
+	shields := 3.
 ]
 
 { #category : 'initialization' }
 Ship >> initializeName: aName [
 	
 	shipName := aName.
-]
-
-{ #category : 'actions' }
-Ship >> lapCounter [
-
-	laps := laps + 1
 ]
 
 { #category : 'accessing' }
@@ -55,15 +51,15 @@ Ship >> moveBy: aRolledNumber on: aBoard [
 
 { #category : 'actions' }
 Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard [
-
+	"Nuevo metodo para que sepan moverse sobre tablero circular"
 	| intendedPosition resultingPosition |
 	
-	intendedPosition := { (position + aRolledNumber) . laps }.
+	intendedPosition := position + aRolledNumber. 
 	
 	resultingPosition := aCircularBoard resolveMovementOf: intendedPosition.
 	
 	position := resultingPosition first.
-	laps := resultingPosition second.
+	laps := laps + resultingPosition second. "Devuelve posicion final y la cantidad de vueltas que complete en este turno"
 ]
 
 { #category : 'getter' }

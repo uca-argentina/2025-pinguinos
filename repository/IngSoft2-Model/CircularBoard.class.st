@@ -19,15 +19,18 @@ CircularBoard class >> validateRoundNumberIsPositive: aRoundNumber [
 ]
 
 { #category : 'creation' }
-CircularBoard class >> withSize: aSize rounds: aRoundNumber [ 
+CircularBoard class >> withSize: aSize rounds: aRoundNumber [
+
 	self validateRoundNumberIsPositive: aRoundNumber.
-	^ self new initializeWithSize: aSize rounds: aRoundNumber 
+	Board validateSizeIsPositive: aSize.
+	^ self new initializeWithSize: aSize rounds: aRoundNumber
 ]
 
 { #category : 'creation' }
 CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 	self validateRoundNumberIsPositive: aRoundNumber.
+	Board validateSizeIsPositive: aSize.
 	
 	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
 	self areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize.
@@ -40,28 +43,26 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wo
 { #category : 'initialization' }
 CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [ 
 	
-	super initializeWithSize: aSize.
+	super initializeWithSize: aSize. "Llamo a funcion de clase padre"
 
-	rounds := aRoundNumber.
+	rounds := aRoundNumber. 
 ]
 
 { #category : 'process' }
 CircularBoard >> resolveMovementOf: anIntendedPosition [
 
-	| finalPosition finalLapNumber |
+	| finalPosition completedLaps |	
 	
-	finalPosition := anIntendedPosition first.
-	finalLapNumber := anIntendedPosition second.
-	
-	finalPosition > boardSize ifTrue: [ finalLapNumber := finalLapNumber + (finalPosition - 1 // boardSize) ].
-	finalPosition := finalPosition \\ boardSize + 1.
+	completedLaps := 0.
+	anIntendedPosition > boardSize ifTrue: [ completedLaps := (anIntendedPosition - 1 // boardSize) ]. "Si quiero moverme mas alla del tamaño, o sea si completo una vuelta, digo a la nave que completo una vuelta. anIntendedPosition -1 ya que las posiciones empiezan en 1 no en 0."
+	finalPosition := ((anIntendedPosition - 1) \\ boardSize) + 1.
 
-	^ {(map at: finalPosition) landingCoordinate . finalLapNumber }
+	^ {(map at: finalPosition) landingCoordinate . completedLaps } "Devuelvo tupla de ubicacion final a la que debe ir el Ship y vuelta en la que esta"
 ]
 
 { #category : 'validation' }
 CircularBoard >> wasThisTheLastRoundFor: aShip [
 
-	^ aShip laps >= rounds
+	^ aShip laps >= (rounds + 1) "+1 Ya que conisderamos que las naves empiezan en la lap 1"
 		
 ]
