@@ -22,7 +22,9 @@ RankingTest >> testWhenTwoShipsCompeteAndBothAreInTheSameSpotThenRankingIsOverri
    aGame nextTurn.
    aGame nextTurn.
 
-   expectedRanking := 'player 2: 1', String lf, 'player 1: 2'.
+   expectedRanking := 'player 2 ranked: 1 - round: 2 - position: 3', 
+		String lf, 
+		'player 1 ranked: 2 - round: 2 - position: 3'.
 
    self assert: aGame rankingReport equals: expectedRanking.
 ]
@@ -43,7 +45,10 @@ RankingTest >> testWhenTwoShipsCompeteAndDontFinishThenItShowsRanking [
    aGame nextTurn.
    aGame nextTurn.
 
-   expectedRanking := 'player 1: 1', String lf, 'player 2: 2'.
+   expectedRanking := 'player 1 ranked: 1 - round: 1 - position: 7', 
+		String lf, 
+		'player 2 ranked: 2 - round: 1 - position: 4'.
+
 
    self assert: aGame rankingReport equals: expectedRanking.
 
@@ -65,7 +70,10 @@ RankingTest >> testWhenTwoShipsCompeteAndOneGoesToNextRoundThenIsHigher [
    aGame nextTurn.
    aGame nextTurn.
 
-   expectedRanking := 'player 1: 1', String lf, 'player 2: 2'.
+   expectedRanking := 'player 1 ranked: 1 - round: 2 - position: 3', 
+		String lf, 
+		'player 2 ranked: 2 - round: 1 - position: 6'.
+
    self assert: aGame rankingReport equals: expectedRanking.
 ]
 
@@ -87,7 +95,10 @@ RankingTest >> testWhenTwoShipsCompeteAndOneWinsThenItIsCalledAsWinner [
 	aGame nextTurn.
 	aGame nextTurn.	
 
-   expectedRanking := 'player 1: 1 -> We have a winner!', String lf, 'player 2: 2'.
+   expectedRanking := 'player 1 ranked: 1 - round: 3 - position: 3 -> We have a winner!', 
+		String lf, 
+		'player 2 ranked: 2 - round: 2 - position: 5'.
+
 
    self assert: aGame rankingReport equals: expectedRanking.
 ]

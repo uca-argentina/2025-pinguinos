@@ -146,8 +146,13 @@ Game >> printRanking: sortedShips [
 
    sortedShips doWithIndex: [ :ship :index |
 		stream nextPutAll: ship name asString.
-		stream nextPutAll: ': 'asString.
+		stream nextPutAll: ' ranked: ' .
 		stream nextPutAll: index asString.
+		stream nextPutAll: ' - round: ' .
+		stream nextPutAll: ship laps asString.
+		stream nextPutAll: ' - position: ' .
+		stream nextPutAll: ship position asString.
+		
       (index = 1 and: (self haveWeGotAWinner: ship)) ifTrue: [ stream nextPutAll: ' -> We have a winner!' ].
 		index < sortedShips size ifTrue: [ stream nextPut: Character lf ].
 	].
