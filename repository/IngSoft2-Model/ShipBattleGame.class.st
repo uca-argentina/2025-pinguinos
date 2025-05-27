@@ -36,6 +36,20 @@ ShipBattleGame >> compareProgressOf2Ships: shipA and: shipB [
 		  shipA laps = shipB laps and: [ shipA position > shipB position ] ] "Comparo primero numero de vueltas, si son iguales paso a posicion en el tablero."
 ]
 
+{ #category : 'game controls' }
+ShipBattleGame >> fightBetween: fightingShip and: shipToFight [
+
+	| shipToFightDiceRoll fightingShipDiceRoll |
+	
+	fightingShipDiceRoll := diceSet roll. "Primero tira el que llega al cuadrado"
+	shipToFightDiceRoll := diceSet roll.
+
+	fightingShipDiceRoll = shipToFightDiceRoll ifTrue: [ ^ nil ]. "Si hay empate no pasa nada"
+	fightingShipDiceRoll > shipToFightDiceRoll
+		ifTrue: [ shipToFight loseFight ]
+		ifFalse: [ fightingShip loseFight ]
+]
+
 { #category : 'validation' }
 ShipBattleGame >> haveWeGotAWinner: currentShip [
 
@@ -69,11 +83,50 @@ ShipBattleGame >> nextTurn [
 
 	| currentShip |
 	self canIKeepPlaying.
-	
+
 	currentShip := ships at: shipToMove.
+
+	currentShip canIPlayTurn ifTrue: [ self playTurnOf: currentShip ] ifFalse: [ currentShip turnSkipped ].
+
+	shipToMove := shipToMove \\ ships size + 1
+]
+
+{ #category : 'game controls' }
+ShipBattleGame >> playTurnOf: currentShip [
+	
+	| shipToFight |
+	
 	currentShip moveBy: diceSet roll onCircularBoard: board.
 
 	self haveWeGotAWinner: currentShip.
+	
+	shipToFight := self whoDoIFight: currentShip.
+	
+	shipToFight ifNotNil: [
+		self fightBetween: currentShip and: shipToFight ].
+]
 
+{ #category : 'game controls' }
+ShipBattleGame >> skipTurn [
+	
+	| currentShip |
+
+	currentShip := ships at: shipToMove.
+	currentShip recoverShields.
+	
 	shipToMove := shipToMove \\ ships size + 1.
+]
+
+{ #category : 'accessing' }
+ShipBattleGame >> whoDoIFight: thisShip [
+
+	| shipToFight returnValue |
+	
+	returnValue := nil.
+	shipToFight := ships select: [ :ship | "Devuelvo toda nave que este en el cuadrado de thisShip excluyendo a thisShip en si misma, y al primer casillero"
+		               thisShip position ~= 1 and: (ship position = thisShip position and: ship ~= thisShip) ].
+	
+	shipToFight ifNotEmpty: [ returnValue := shipToFight atRandom ]. "Devuelvo una nave random del cuadrado para pelear"
+	
+	^ returnValue 
 ]

@@ -17,6 +17,95 @@ ShipBattleGameTest >> should: anErrorBlock raise: anErrorClass withErrorMessage:
 ]
 
 { #category : 'running' }
+ShipBattleGameTest >> testWhen2ShipsLandInSameSquareAndFightThenLoserCanSkipTurnToRecoverShields [
+
+	| aGame lucianoShip jorgeShip expectedResult |
+	
+	lucianoShip := Ship named: 'Luciano'.
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         withWormHoleFrom: 2
+		         to: 4
+		         with: { (LoadedDie withSides: { 4. 4. 5. 4 }) }
+		         and: {
+				         jorgeShip.
+				         lucianoShip }.
+
+	aGame nextTurn. "Jorge mueve hasta 5"
+	aGame nextTurn. "Luciano mueve hasta 5, pelean, Luciano saca 5, Jorge 4 y Luciano gana"
+	aGame skipTurn. "Jorge saltea su turno y recupera todos sus escudos"
+	aGame nextTurn. "Luciano se mueve 4 hasta 3"
+	
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 3). ('lap' -> 2) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 1) }).
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 3.
+]
+
+{ #category : 'running' }
+ShipBattleGameTest >> testWhen2ShipsLandInSameSquareTheFighterWinsCorrectly [
+
+	| aGame expectedResult lucianoShip jorgeShip |
+	
+	lucianoShip := Ship named: 'Luciano'.
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         withWormHoleFrom: 2
+		         to: 3
+		         with: { (LoadedDie withSides: { 4. 4. 5. 4 }) }
+		         and: {
+				         jorgeShip.
+				         lucianoShip }.
+
+	aGame nextTurn. "Jorge mueve hasta 5"
+	aGame nextTurn. "Luciano mueve hasta 5, pelean, Luciano saca 5, Jorge 4 y Luciano gana"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 5). ('lap' -> 1) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 1) }).
+
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 2.
+]
+
+{ #category : 'running' }
+ShipBattleGameTest >> testWhen2ShipsLandInSameSquareTheShipBeingFoughtCanWinCorrectly [
+
+	| aGame expectedResult lucianoShip jorgeShip |
+	
+	lucianoShip := Ship named: 'Luciano'.
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         withWormHoleFrom: 2
+		         to: 3
+		         with: { (LoadedDie withSides: { 4. 4. 4. 6 }) }
+		         and: {
+				         jorgeShip.
+				         lucianoShip }.
+
+	aGame nextTurn. "Jorge mueve hasta 5"
+	aGame nextTurn. "Luciano mueve hasta 5, pelean, Luciano saca 4, Jorge 6 y Jorge gana"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 5). ('lap' -> 1) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 1). ('lap' -> 1) }).
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: lucianoShip remainingShields equals: 2.
+]
+
+{ #category : 'running' }
 ShipBattleGameTest >> testWhenShipBattleGameIsCreatedThenGameDoesntEndIfShipDoesntCrossGoal [
 
 	| aGame |

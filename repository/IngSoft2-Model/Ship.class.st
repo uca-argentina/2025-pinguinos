@@ -8,7 +8,8 @@ Class {
 		'position',
 		'shipName',
 		'laps',
-		'shields'
+		'shields',
+		'turnsToSkip'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,6 +21,12 @@ Ship class >> named: aName [
 	^ self new initializeName: aName
 ]
 
+{ #category : 'accessing' }
+Ship >> canIPlayTurn [
+	
+	^ turnsToSkip = 0
+]
+
 { #category : 'initialization' }
 Ship >> initialize [
 
@@ -27,6 +34,7 @@ Ship >> initialize [
 	position := 1.
 	laps := 1.
 	shields := 3.
+	turnsToSkip := 0.
 ]
 
 { #category : 'initialization' }
@@ -39,6 +47,15 @@ Ship >> initializeName: aName [
 Ship >> laps [
 
 	^ laps
+]
+
+{ #category : 'actions' }
+Ship >> loseFight [
+
+	position := 1.
+	shields >= 1
+		ifTrue: [ shields := shields - 1 ]
+		ifFalse: [ turnsToSkip := turnsToSkip + 2 ].
 ]
 
 { #category : 'actions' }
@@ -72,4 +89,23 @@ Ship >> name [
 Ship >> position [
 
 	^ position
+]
+
+{ #category : 'actions' }
+Ship >> recoverShields [
+
+	shields := 3.
+]
+
+{ #category : 'getter' }
+Ship >> remainingShields [
+
+	^ shields 
+]
+
+{ #category : 'actions' }
+Ship >> turnSkipped [
+	
+	self recoverShields.
+	turnsToSkip := turnsToSkip - 1.
 ]
