@@ -138,3 +138,37 @@ Game >> orderShips: aSetOfShips [
 	shipCollection addAll: aSetOfShips.
 	^ shipCollection
 ]
+
+{ #category : 'printing' }
+Game >> printRanking: sortedShips [
+	| stream |
+	stream := WriteStream on: String new.
+
+   sortedShips doWithIndex: [ :ship :index |
+		stream nextPutAll: ship name asString.
+		stream nextPutAll: ': 'asString.
+		stream nextPutAll: index asString.
+      (index = 1 and: (self haveWeGotAWinner: ship)) ifTrue: [ stream nextPutAll: ' -> We have a winner!' ].
+		index < sortedShips size ifTrue: [ stream nextPut: Character lf ].
+	].
+
+	^ stream contents
+
+]
+
+{ #category : 'getter' }
+Game >> rankingReport [
+	| sortedShips |
+	sortedShips := ships
+		sorted: [ :aShip :anotherShip |
+   		(aShip laps > anotherShip laps) or: [
+      (aShip laps = anotherShip laps) and: [ aShip position > anotherShip position ]]
+  		].
+
+	^ self printRanking: sortedShips.
+
+  
+
+
+
+]
