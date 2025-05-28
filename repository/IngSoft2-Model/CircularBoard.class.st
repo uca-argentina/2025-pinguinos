@@ -69,6 +69,12 @@ CircularBoard >> createHyperSpaceJumpsAt: aSquarePositions [
 	
 ]
 
+{ #category : 'accessing' }
+CircularBoard >> createMoonWalksAt: squarePositions [
+
+	squarePositions do: [:position | map at: position put: (MoonWalk by: 3 at: position) ].
+]
+
 { #category : 'initialization' }
 CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [ 
 	
@@ -82,6 +88,7 @@ CircularBoard >> initializeWithSpecialSquares: squarePositions [
 
 	self createBlackHolesAt: squarePositions first.
 	self createHyperSpaceJumpsAt: squarePositions second.
+	self createMoonWalksAt: squarePositions third.
 ]
 
 { #category : 'process' }
@@ -90,10 +97,11 @@ CircularBoard >> resolveMovementOf: anIntendedPosition [
 	| finalPosition completedLaps |	
 	
 	completedLaps := 0.
-	anIntendedPosition > boardSize ifTrue: [ completedLaps := (anIntendedPosition - 1 // boardSize) ]. "Si quiero moverme mas alla del tamaño, o sea si completo una vuelta, digo a la nave que completo una vuelta. anIntendedPosition -1 ya que las posiciones empiezan en 1 no en 0."
+	(anIntendedPosition > boardSize or: anIntendedPosition < 1) ifTrue: [ completedLaps := (anIntendedPosition - 1 // boardSize) ].
+	
 	finalPosition := ((anIntendedPosition - 1) \\ boardSize) + 1.
 
-	^ {(map at: finalPosition) landingCoordinate . completedLaps } "Devuelvo tupla de ubicacion final a la que debe ir el Ship y vuelta en la que esta"
+	^ { map at: finalPosition . completedLaps } "Devuelvo tupla de ubicacion final a la que debe ir el Ship y vuelta en la que esta"
 ]
 
 { #category : 'validation' }

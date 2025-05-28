@@ -27,6 +27,12 @@ Ship >> canIPlayTurn [
 	^ turnsToSkip = 0
 ]
 
+{ #category : 'actions' }
+Ship >> completeLaps: aNumberOfLaps [
+	
+	laps := laps + aNumberOfLaps.
+]
+
 { #category : 'initialization' }
 Ship >> initialize [
 
@@ -53,9 +59,20 @@ Ship >> laps [
 Ship >> loseFight [
 
 	position := 1.
-	shields >= 1
-		ifTrue: [ shields := shields - 1 ]
-		ifFalse: [ turnsToSkip := turnsToSkip + 2 ].
+	shields >= 1 ifTrue: [ self loseShield ].
+	shields = 0 ifTrue: [ turnsToSkip := turnsToSkip + 2 ].
+]
+
+{ #category : 'actions' }
+Ship >> loseShield [
+	
+	 shields := shields - 1.
+]
+
+{ #category : 'actions' }
+Ship >> moveBackwardTo: aSquare [
+
+	position := aSquare getX. "Dont care about effect"
 ]
 
 { #category : 'actions' }
@@ -67,16 +84,30 @@ Ship >> moveBy: aRolledNumber on: aBoard [
 ]
 
 { #category : 'actions' }
-Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard [
+Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
 	"Nuevo metodo para que sepan moverse sobre tablero circular"
-	| intendedPosition resultingPosition |
-	
-	intendedPosition := position + aRolledNumber. 
-	
-	resultingPosition := aCircularBoard resolveMovementOf: intendedPosition.
-	
-	position := resultingPosition first.
-	laps := laps + resultingPosition second. "Devuelve posicion final y la cantidad de vueltas que complete en este turno"
+
+	| intendedPosition resultingPosition resultingSquare completedLaps |
+	intendedPosition := position + aRolledNumber.
+
+	resultingPosition := aCircularBoard resolveMovementOf: intendedPosition. "Devuelve cuadrado en el que cai y la cantidad de vueltas que complete en este turno"
+
+	resultingSquare := resultingPosition first.
+	completedLaps := resultingPosition second.
+
+	intendedPosition > position
+		ifTrue: [
+			self moveForwardTo: resultingSquare.
+			resultingSquare applyEffectTo: self in: aGame ]
+		ifFalse: [ self moveBackwardTo: resultingSquare ].
+		
+	self completeLaps: completedLaps
+]
+
+{ #category : 'actions' }
+Ship >> moveForwardTo: aSquare [
+
+	position := aSquare landingCoordinate.
 ]
 
 { #category : 'getter' }

@@ -3,10 +3,7 @@ Blackhole in grid for the game; to be occupied with a ship, which comes out from
 "
 Class {
 	#name : 'BlackHole',
-	#superclass : 'Square',
-	#instVars : [
-		'destination'
-	],
+	#superclass : 'MoverSquare',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -19,15 +16,8 @@ BlackHole class >> at: aSquare in: aBoard [
 	^ self new initializeTo: exit from: aSquare
 ]
 
-{ #category : 'intialization' }
-BlackHole >> initializeTo: otherEnd from: origin [
-	
-	super initializeX: origin.
-	destination := otherEnd.
-]
+{ #category : 'action' }
+BlackHole >> applyEffectTo: aShip in: aGame [
 
-{ #category : 'getter' }
-BlackHole >> landingCoordinate [
-
-	^ destination
+	destination >= x ifTrue: [ aShip completeLaps: -1 ].
 ]

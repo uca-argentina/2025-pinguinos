@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'running' }
-BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4 [
+BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4AndLoses1Lap [
 
 	| aGame expectedResult |
 	aGame := ShipBattleGame
@@ -23,7 +23,7 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4 [
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 4).
-				 ('lap' -> 1) }).
+				 ('lap' -> 0) }).
 				
 	self assert: aGame boardState equals: expectedResult 
 ]
@@ -46,7 +46,7 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4ThenLa
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 4).
-				 ('lap' -> 1) }).
+				 ('lap' -> 0) }).
 				
 	self assert: aGame boardState equals: expectedResult 
 ]

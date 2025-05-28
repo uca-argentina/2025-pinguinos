@@ -6,14 +6,39 @@ Class {
 }
 
 { #category : 'running' }
-HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition2ThenPlayerGetsSentToPosition4ThenLandsOnAnotherHyperSpaceJumpAndDoesntMove [
+HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition2ThenPlayerGetsSentToPosition4AndLoses1Shield [
 
-	| aGame expectedResult |
+	| aGame expectedResult jorgeShip |
+
+	jorgeShip := Ship named: 'Jorge'.
+
 	aGame := ShipBattleGame
 		         inSize: 6
 		         rounds: 2
 		         with: { (LoadedDie withSides: 1) }
-		         and: { (Ship named: 'Jorge') }
+		         and: { jorgeShip }
+					withSpecialSquaresAt: {{}. {2}. {}. {}. {}}.
+
+	aGame nextTurn. "Jorge mueve hasta 2"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 6). ('lap' -> 1) }).
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 2.
+]
+
+{ #category : 'running' }
+HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition2ThenPlayerGetsSentToPosition4ThenLandsOnAnotherHyperSpaceJumpAndDoesntMoveAndLoses1ShieldOnly [
+
+	| aGame expectedResult jorgeShip |
+	
+	jorgeShip := Ship named: 'Jorge'.
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         with: { (LoadedDie withSides: 1) }
+		         and: { jorgeShip }
 		         withSpecialSquaresAt: {{}. {2. 6}. {}. {}. {}}.
 
 	aGame nextTurn.
@@ -25,5 +50,29 @@ HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition2ThenPlayerGetsSentToPosition4
 				 ('position' -> 6).
 				 ('lap' -> 1) }).
 				
-	self assert: aGame boardState equals: expectedResult 
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 2.
+]
+
+{ #category : 'running' }
+HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSentToPosition2AndLoses1ShieldAndGains1Lap [
+
+	| aGame expectedResult jorgeShip |
+
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         with: { (LoadedDie withSides: 3) }
+		         and: { jorgeShip }
+					withSpecialSquaresAt: {{}. {4}. {}. {}. {}}.
+
+	aGame nextTurn. "Jorge mueve hasta 2"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 2). ('lap' -> 2) }).
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 2.
 ]

@@ -40,6 +40,12 @@ Square class >> x: aXPosition [
 	^self new initializeX: aXPosition.
 ]
 
+{ #category : 'action' }
+Square >> applyEffectTo: aShip in: aGame [ 
+
+	^ true
+]
+
 { #category : 'getter' }
 Square >> checkStatus [
 

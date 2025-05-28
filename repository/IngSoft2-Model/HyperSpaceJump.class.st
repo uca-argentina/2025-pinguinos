@@ -3,10 +3,7 @@ HyperSpaceJump in grid for the game; to be occupied with a ship, which comes out
 "
 Class {
 	#name : 'HyperSpaceJump',
-	#superclass : 'Square',
-	#instVars : [
-		'destination'
-	],
+	#superclass : 'MoverSquare',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -19,15 +16,9 @@ HyperSpaceJump class >> at: aSquare in: aBoard [
 	^ self new initializeTo: exit from: aSquare
 ]
 
-{ #category : 'initialization' }
-HyperSpaceJump >> initializeTo: otherEnd from: origin [
+{ #category : 'action' }
+HyperSpaceJump >> applyEffectTo: aShip in: aGame [
 	
-	super initializeX: origin.
-	destination := otherEnd.
-]
-
-{ #category : 'getter' }
-HyperSpaceJump >> landingCoordinate [
-
-	^ destination
+	destination <= x ifTrue: [ aShip completeLaps: 1 ].
+	aShip loseShield.
 ]

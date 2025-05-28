@@ -23,11 +23,12 @@ ShipBattleGame class >> inSize: aSize rounds: aRoundNumber withWormHoleFrom: aSq
 { #category : 'getter' }
 ShipBattleGame >> boardState [
 
-	| currentGameState rankedList |
+	| currentGameState rankedList tempShipsList |
 	
 	currentGameState := OrderedDictionary new.
+	tempShipsList := ships copy.
 	
-	rankedList := ships sort: [ :shipA :shipB |
+	rankedList := tempShipsList sort: [ :shipA :shipB |
 		              self compareProgressOf2Ships: shipA and: shipB ].
 	
 	rankedList doWithIndex: [ :ship :i |
@@ -124,6 +125,17 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber withWormholeFrom:
 ]
 
 { #category : 'game controls' }
+ShipBattleGame >> moveAllShipsBackBy: spacesToCover exceptFor: exceptionShip [
+	
+	| numberToMove |
+	
+	numberToMove := -1 * spacesToCover. 
+	
+	ships do: [ :ship |
+		ship ~= exceptionShip ifTrue: [ ship moveBy: numberToMove onCircularBoard: board of: self] ].
+]
+
+{ #category : 'game controls' }
 ShipBattleGame >> nextTurn [
 
 	| currentShip |
@@ -141,7 +153,7 @@ ShipBattleGame >> playTurnOf: currentShip [
 	
 	| shipToFight |
 	
-	currentShip moveBy: diceSet roll onCircularBoard: board.
+	currentShip moveBy: diceSet roll onCircularBoard: board of: self.
 
 	self haveWeGotAWinner: currentShip.
 	
@@ -166,12 +178,12 @@ ShipBattleGame >> skipTurn [
 ShipBattleGame >> whoDoIFight: thisShip [
 
 	| shipToFight returnValue |
-	
 	returnValue := nil.
-	shipToFight := ships select: [ :ship | "Devuelvo toda nave que este en el cuadrado de thisShip excluyendo a thisShip en si misma, y al primer casillero"
-		               thisShip position ~= 1 and: (ship position = thisShip position and: ship ~= thisShip) ].
-	
+	shipToFight := ships select: [ :ship | "Devuelvo toda nave que este en el cuadrado de thisShip excluyendo a thisShip en si misma"
+		               ship position = thisShip position and:
+			               ship ~= thisShip ].
+
 	shipToFight ifNotEmpty: [ returnValue := shipToFight atRandom ]. "Devuelvo una nave random del cuadrado para pelear"
-	
-	^ returnValue 
+
+	^ returnValue
 ]

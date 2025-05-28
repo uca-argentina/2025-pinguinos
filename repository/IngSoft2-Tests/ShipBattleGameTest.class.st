@@ -21,6 +21,7 @@ ShipBattleGameTest >> testWhen2ShipsFightIfTheLoserHad0ShieldsThenHeLoses2Turns 
 
 	| aGame expectedResult lucianoShip jorgeShip |
 	
+	expectedResult := OrderedDictionary new.
 	lucianoShip := Ship named: 'Luciano'.
 	jorgeShip := Ship named: 'Jorge'.
 
@@ -29,7 +30,7 @@ ShipBattleGameTest >> testWhen2ShipsFightIfTheLoserHad0ShieldsThenHeLoses2Turns 
 		         rounds: 2
 		         withWormHoleFrom: 2
 		         to: 3
-		         with: { (LoadedDie withSides: { 4 . 4  .5. 4.  4  .4. 5.  4  .4. 5.  4  .4. 5.  1 . 1 . 3}) }
+		         with: { (LoadedDie withSides: { 4 . 4  .5. 4.  4  .4. 5.  4  .4. 5.  5  . 4 }) }
 		         and: {
 				         jorgeShip.
 				         lucianoShip }.
@@ -37,29 +38,52 @@ ShipBattleGameTest >> testWhen2ShipsFightIfTheLoserHad0ShieldsThenHeLoses2Turns 
 	aGame nextTurn. "Jorge mueve hasta 5"
 	aGame nextTurn. "Luciano mueve hasta 5, pelean, Luciano saca 5, Jorge 4 y Luciano gana"
 	
-	aGame nextTurn. "Jorge mueve hasta 5, se pelea, Jorge saca 4, Luciano 5 y Luciano gana"
-	aGame skipTurn. "Luciano saltea su turno"
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 5). ('lap' -> 1) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 1) }).
 	
-	aGame nextTurn. "Jorge mueve hasta 5, se pelea, Jorge saca 4, Luciano 5 y Luciano gana"
-	aGame skipTurn. "Luciano saltea su turno"
-	
-	aGame nextTurn. "Jorge mueve hasta 5, se pelea, Jorge saca 4, Luciano 5 y Luciano gana, Jorge no tenia mas escudos, asi que perdera los proximos dos turnos"
-	aGame skipTurn. "Luciano saltea su turno"
-	
-	self assert: jorgeShip remainingShields equals: 0.
-	aGame nextTurn. "Jorge no puede mover"
-	self assert: jorgeShip remainingShields equals: 3. "Ya recupera sus escudos aunque no juegue"
-	
-	aGame nextTurn. "Luciano mueve hasta 6"
-	
-	aGame nextTurn. "Jorge no puede mover"
-	aGame nextTurn. "Luciano mueve hasta 1"
-	
-	aGame nextTurn. "Jorge mueve hasta 4"
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 2.
 
-	expectedResult := OrderedDictionary new.
-	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 1). ('lap' -> 2) }).
-	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 4). ('lap' -> 1) }).
+	
+	
+	aGame nextTurn. "Jorge mueve hasta 5, se pelea, Jorge saca 4, Luciano 5 y Luciano gana"
+	aGame skipTurn. "Luciano saltea su turno"
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 1.
+	
+	
+	
+	aGame nextTurn. "Jorge mueve hasta 5, se pelea, Jorge saca 4, Luciano 5 y Luciano gana, Jorge no tiene mas escudos y perdera 2 turnos"
+	aGame skipTurn. "Luciano saltea su turno"
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 0.
+
+
+	
+	aGame nextTurn. "Jorge no puede mover, recupera sus escudos"
+	aGame nextTurn. "Luciano mueve hasta 4"
+	
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 4). ('lap' -> 2) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 1) }).
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 3.
+	
+	
+	
+	aGame nextTurn. "Jorge no puede mover"
+	aGame skipTurn. "Luciano saltea su turno"
+	
+	self assert: aGame boardState equals: expectedResult.
+	
+	
+	
+	aGame nextTurn. "Jorge se mueve hasta 5"
+	
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 4). ('lap' -> 2) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 5). ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult.
 ]
@@ -325,6 +349,77 @@ ShipBattleGameTest >> testWhenShipBattleGameIsCreatedWithMoreThanOneShipThenTheF
 	aGame nextTurn.
 
 	self assert: aGame getWinner equals: 'player 1'
+]
+
+{ #category : 'running' }
+ShipBattleGameTest >> testWhenShipFightsShipWithNoShieldsAndWinsLoserWillLose2MoreTurns [
+
+	| aGame expectedResult lucianoShip jorgeShip |
+	
+	expectedResult := OrderedDictionary new.
+	lucianoShip := Ship named: 'Luciano'.
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         withWormHoleFrom: 2
+		         to: 3
+		         with: { (LoadedDie withSides: { 4 . 4  .5. 4.  4  .4. 5.  4  .4. 5.  2.  4. 3.  4 }) }
+		         and: {
+				         jorgeShip.
+				         lucianoShip }.
+
+	aGame nextTurn. "Jorge mueve hasta 5"
+	aGame nextTurn. "Luciano mueve hasta 5, pelean, Luciano saca 5, Jorge 4 y Luciano gana"
+	
+	aGame nextTurn. "Jorge mueve hasta 5, se pelea, Jorge saca 4, Luciano 5 y Luciano gana"
+	aGame skipTurn. "Luciano saltea su turno"
+	
+	
+	
+	aGame nextTurn. "Jorge mueve hasta 5, se pelea, Jorge saca 4, Luciano 5 y Luciano gana, Jorge no tiene mas escudos y perdera 2 turnos"
+	aGame nextTurn. "Luciano avanza 2 hasta 1 en la segunda vuelta, pelea y gana"
+	
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 1). ('lap' -> 2) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 1) }).
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 0.
+	
+	
+	
+	aGame nextTurn. "Jorge no puede mover, recupera sus escudos"
+	aGame skipTurn. "Luciano saltea su turno"
+	
+	self assert: aGame boardState equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 3.
+	
+	
+	aGame nextTurn. "Jorge no puede mover"
+	aGame skipTurn. "Luciano saltea su turno"
+	
+	self assert: aGame boardState equals: expectedResult.
+	
+	
+	aGame nextTurn. "Jorge no puede mover"
+	aGame skipTurn. "Luciano saltea su turno"
+	
+	self assert: aGame boardState equals: expectedResult.
+	
+	
+	aGame nextTurn. "Jorge no puede mover"
+	aGame skipTurn. "Luciano saltea su turno"
+	
+	self assert: aGame boardState equals: expectedResult.
+
+	
+	aGame nextTurn. "Jorge se mueve hasta 5"
+	
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 1). ('lap' -> 2) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 5). ('lap' -> 1) }).
+
+	self assert: aGame boardState equals: expectedResult.
 ]
 
 { #category : 'running' }
