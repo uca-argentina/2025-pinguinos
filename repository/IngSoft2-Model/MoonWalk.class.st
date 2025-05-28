@@ -11,7 +11,7 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
+{ #category : 'instance creation' }
 MoonWalk class >> by: aNumberOfSquares at: aPosition [
 	
 	^ self new initializeWith: aNumberOfSquares at: aPosition.
@@ -20,7 +20,7 @@ MoonWalk class >> by: aNumberOfSquares at: aPosition [
 { #category : 'action' }
 MoonWalk >> applyEffectTo: aShip in: aGame [
 	
-	aGame moveAllShipsBackBy: numberToMoveBackOtherShips exceptFor: aShip.
+	aGame moveAllShipsBy: numberToMoveBackOtherShips exceptFor: aShip.
 	
 ]
 
@@ -28,5 +28,5 @@ MoonWalk >> applyEffectTo: aShip in: aGame [
 MoonWalk >> initializeWith: numberToMoveBack at: position [
 	
 	super initializeX: position.
-	numberToMoveBackOtherShips := numberToMoveBack.
+	numberToMoveBackOtherShips := (-1 * numberToMoveBack). "Me muevo para atras entonces negativo"
 ]

@@ -61,7 +61,7 @@ Square >> getX [
 { #category : 'initialization' }
 Square >> initializeX: anXPosition [
 
-	x := anXPosition.	
+	x := anXPosition.
 	self setStatus: 'Free'.
 ]
 

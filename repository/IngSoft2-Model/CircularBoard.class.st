@@ -5,7 +5,9 @@ Class {
 	#name : 'CircularBoard',
 	#superclass : 'Board',
 	#instVars : [
-		'rounds'
+		'rounds',
+		'parsecBoardSize',
+		'parsecRatio'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -16,6 +18,17 @@ CircularBoard class >> validateRoundNumberIsPositive: aRoundNumber [
 
 	aRoundNumber < 1 ifTrue: [
 		Error signal: 'Round number for the board must be positive.' ]
+]
+
+{ #category : 'creation' }
+CircularBoard class >> withRandomSpecialSquaresAndSize: aSize rounds: aRoundNumber [
+
+	self validateRoundNumberIsPositive: aRoundNumber.
+	Board validateSizeIsPositive: aSize.
+	
+		
+	^ (self withSize: aSize rounds: aRoundNumber)
+		initializeRandomSpecialSquares.
 ]
 
 { #category : 'creation' }
@@ -34,7 +47,7 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withSpecialSquaresAt
 	
 		
 	^ (self withSize: aSize rounds: aRoundNumber)
-		initializeWithSpecialSquares: squarePositions.
+		initializeWithSpecialSquaresAt: squarePositions.
 ]
 
 { #category : 'creation' }
@@ -52,9 +65,24 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wo
 ]
 
 { #category : 'accessing' }
+CircularBoard >> createAtomicBombsAt: squarePositions [
+
+	squarePositions do: [:position | map at: position put: (AtomicBomb at: position) ].
+]
+
+{ #category : 'accessing' }
 CircularBoard >> createBlackHolesAt: aSquarePositions [
 	
 	aSquarePositions do: [:position | map at: position put: (Blackhole at: position in: self) ]
+	
+	
+	
+]
+
+{ #category : 'accessing' }
+CircularBoard >> createHyperJumpsAt: aSquarePositions [
+	
+	aSquarePositions do: [:position | map at: position put: (HyperJump inBoardOfSize: parsecBoardSize at: position ) ]
 	
 	
 	
@@ -75,20 +103,65 @@ CircularBoard >> createMoonWalksAt: squarePositions [
 	squarePositions do: [:position | map at: position put: (MoonWalk by: 3 at: position) ].
 ]
 
-{ #category : 'initialization' }
-CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [ 
-	
-	super initializeWithSize: aSize. "Llamo a funcion de clase padre"
+{ #category : 'getter' }
+CircularBoard >> getParsecRatio [
 
-	rounds := aRoundNumber. 
+	^parsecRatio 
 ]
 
 { #category : 'initialization' }
-CircularBoard >> initializeWithSpecialSquares: squarePositions [ 
+CircularBoard >> initializeRandomSpecialSquares [
+	
+	| blackHoles hyperSpaceJumps moonWalks hyperJumps atomicBombs resultForEachCell |
+	
+	blackHoles := OrderedCollection new.
+	hyperSpaceJumps := OrderedCollection new.
+	moonWalks := OrderedCollection new.
+	hyperJumps := OrderedCollection new.
+	atomicBombs := OrderedCollection new.
+
+	"Tiro un numero random por cada casillero "
+	resultForEachCell := OrderedCollection new.
+	boardSize timesRepeat: [ resultForEachCell add: (1 to: 100) atRandom ].
+
+	resultForEachCell doWithIndex: [ :result :i |
+		(60 >= result and: result > 40) ifTrue: [ blackHoles add: i ] ].
+
+	resultForEachCell doWithIndex: [ :result :i |
+		(40 >= result and: result > 20) ifTrue: [ hyperSpaceJumps add: i ] ].
+
+	resultForEachCell doWithIndex: [ :result :i |
+		(20 >= result and: result > 10) ifTrue: [ moonWalks add: i ] ].
+	
+	resultForEachCell doWithIndex: [ :result :i |
+		(10 >= result and: result > 2) ifTrue: [ hyperJumps add: i ] ].
+	
+	resultForEachCell doWithIndex: [ :result :i |
+		(2 >= result and: result > 0) ifTrue: [ atomicBombs add: i ] ].
+	
+	self initializeWithSpecialSquaresAt: { blackHoles . hyperSpaceJumps . moonWalks . hyperJumps . atomicBombs }.
+]
+
+{ #category : 'initialization' }
+CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [
+
+	super initializeWithSize: aSize. "Llamo a funcion de clase padre"
+
+	rounds := aRoundNumber.
+	parsecRatio := 20.
+	parsecBoardSize := aSize * parsecRatio.
+
+	
+]
+
+{ #category : 'initialization' }
+CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [ 
 
 	self createBlackHolesAt: squarePositions first.
 	self createHyperSpaceJumpsAt: squarePositions second.
 	self createMoonWalksAt: squarePositions third.
+	self createHyperJumpsAt: squarePositions fourth.
+	self createAtomicBombsAt: squarePositions fifth.
 ]
 
 { #category : 'process' }

@@ -140,3 +140,18 @@ Ship >> turnSkipped [
 	self recoverShields.
 	turnsToSkip := turnsToSkip - 1.
 ]
+
+{ #category : 'actions' }
+Ship >> withNoEffectsMove: aRolledNumber onCircularBoard: aCircularBoard [
+
+	| intendedPosition resultingPosition resultingSquare completedLaps |
+	intendedPosition := position + aRolledNumber.
+
+	resultingPosition := aCircularBoard resolveMovementOf: intendedPosition. "Devuelve cuadrado en el que cai y la cantidad de vueltas que complete en este turno"
+
+	resultingSquare := resultingPosition first.
+	completedLaps := resultingPosition second.
+
+	position := resultingSquare getX.
+	self completeLaps: completedLaps.
+]

@@ -76,3 +76,44 @@ HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSentToPosition2
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 2.
 ]
+
+{ #category : 'running' }
+HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSentToPosition2AndLoses1ShieldAndWinsGame [
+
+	| aGame jorgeShip |
+
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 1
+		         with: { (LoadedDie withSides: 3) }
+		         and: { jorgeShip }
+					withSpecialSquaresAt: {{}. {4}. {}. {}. {}}.
+
+	aGame nextTurn. "Jorge mueve hasta 2"
+
+	self assert: aGame getWinner equals: 'Jorge'.
+]
+
+{ #category : 'running' }
+HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition5ThenPlayerGetsSentAcrossTheGoalToPosition3Correctly [
+
+	| aGame expectedResult jorgeShip |
+
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         with: { (LoadedDie withSides: 4) }
+		         and: { jorgeShip }
+					withSpecialSquaresAt: {{}. {5}. {}. {}. {}}.
+
+	aGame nextTurn. "Jorge mueve hasta 5"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 3). ('lap' -> 2) }).
+	
+	self assert: aGame boardState equals: expectedResult.
+]

@@ -9,6 +9,13 @@ Class {
 }
 
 { #category : 'instance creation' }
+ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips [
+	^self new initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips.
+	
+
+]
+
+{ #category : 'instance creation' }
 ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips withSpecialSquaresAt: squarePositions [
 	^self new initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips withSpecialSquaresAt: squarePositions.
 	
@@ -40,6 +47,13 @@ ShipBattleGame >> boardState [
 						 ('lap' -> ship laps) }) ].
 					
 	^ currentGameState
+]
+
+{ #category : 'game controls' }
+ShipBattleGame >> breakShieldsOfAllShips [
+	
+	ships do: [ :ship |
+		 ship loseShield ].
 ]
 
 { #category : 'comparing' }
@@ -77,7 +91,7 @@ ShipBattleGame >> haveWeGotAWinner: currentShip [
 ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips [
 
 	board := CircularBoard
-		         withSize: aSize
+		         withRandomSpecialSquaresAndSize: aSize 
 		         rounds: aRoundNumber.
 
 	diceSet := DiceSet withDice: aDiceSet.
@@ -125,11 +139,23 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber withWormholeFrom:
 ]
 
 { #category : 'game controls' }
-ShipBattleGame >> moveAllShipsBackBy: spacesToCover exceptFor: exceptionShip [
+ShipBattleGame >> move: aShip byParsecs: anAmountOfParsecs [
 	
-	| numberToMove |
+	| spacesToMove |
 	
-	numberToMove := -1 * spacesToCover. 
+	spacesToMove := (anAmountOfParsecs / board getParsecRatio) floor.
+	aShip withNoEffectsMove: spacesToMove onCircularBoard: board.
+]
+
+{ #category : 'game controls' }
+ShipBattleGame >> moveAllShipsBackToStart [
+	
+	ships do: [ :ship |
+		 ship moveBackwardTo: (board getSquareAt: 1) ].
+]
+
+{ #category : 'game controls' }
+ShipBattleGame >> moveAllShipsBy: numberToMove exceptFor: exceptionShip [
 	
 	ships do: [ :ship |
 		ship ~= exceptionShip ifTrue: [ ship moveBy: numberToMove onCircularBoard: board of: self] ].
