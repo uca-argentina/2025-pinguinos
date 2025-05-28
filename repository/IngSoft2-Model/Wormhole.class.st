@@ -2,21 +2,21 @@
 Wormhole in grid for the game; to be occupied with a ship, which comes out from the other end.
 "
 Class {
-	#name : 'WormHole',
+	#name : 'Wormhole',
 	#superclass : 'MoverSquare',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'validation' }
-WormHole class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
+Wormhole class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
 
 	wormHoleOrigin = wormHoleEnd ifTrue: [
 		Error signal: 'Wormhole cannot lead to itself!' ]
 ]
 
 { #category : 'instance creation' }
-WormHole class >> from: origin to: end [
+Wormhole class >> from: origin to: end [
 
 	self areEndsDistinct: origin and: end.
 	

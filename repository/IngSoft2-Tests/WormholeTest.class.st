@@ -20,7 +20,7 @@ WormholeTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMess
 WormholeTest >> testWhenFirstPositionIsNegativeThenCreationFails [
 
 	self
-		should: [ WormHole from: -2 to: 4 ]
+		should: [ Wormhole from: -2 to: 4 ]
 		raise:  Error
 		withErrorMessage: 'X position must be positive.'
 ]
@@ -29,7 +29,7 @@ WormholeTest >> testWhenFirstPositionIsNegativeThenCreationFails [
 WormholeTest >> testWhenPositionsAreEqualThenCreationFails [
 
 	self
-		should: [ WormHole from: 2 to: 2]
+		should: [ Wormhole from: 2 to: 2]
 		raise:  Error
 		withErrorMessage: 'Wormhole cannot lead to itself!'
 ]
@@ -38,7 +38,7 @@ WormholeTest >> testWhenPositionsAreEqualThenCreationFails [
 WormholeTest >> testWhenSecondPositionIsNegativeThenCreationFails [
 
 	self
-		should: [ WormHole from: 3 to: -6]
+		should: [ Wormhole from: 3 to: -6]
 		raise:  Error
 		withErrorMessage: 'X position must be positive.'
 ]

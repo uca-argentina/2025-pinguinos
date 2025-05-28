@@ -78,7 +78,7 @@ Board >> initializeWithSize: aSize [
 Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 	
 	| wormHoleEnds |
-	wormHoleEnds := WormHole from: wormHoleOrigin to: wormHoleEnd.
+	wormHoleEnds := Wormhole from: wormHoleOrigin to: wormHoleEnd.
 	
 	map at: wormHoleOrigin put: (wormHoleEnds first).
 	map at: wormHoleEnd put: (wormHoleEnds second).

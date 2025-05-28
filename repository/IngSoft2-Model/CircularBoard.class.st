@@ -54,7 +54,7 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wo
 { #category : 'accessing' }
 CircularBoard >> createBlackHolesAt: aSquarePositions [
 	
-	aSquarePositions do: [:position | map at: position put: (BlackHole at: position in: self) ]
+	aSquarePositions do: [:position | map at: position put: (Blackhole at: position in: self) ]
 	
 	
 	
