@@ -27,6 +27,17 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber [
 ]
 
 { #category : 'creation' }
+CircularBoard class >> withSize: aSize rounds: aRoundNumber withBlackholeAt: aPosition [
+
+	self validateRoundNumberIsPositive: aRoundNumber.
+	Board validateSizeIsPositive: aSize.
+	
+		
+	^ (self withSize: aSize rounds: aRoundNumber)
+		initializeWithBlackhole: aPosition.
+]
+
+{ #category : 'creation' }
 CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
 	self validateRoundNumberIsPositive: aRoundNumber.
@@ -38,6 +49,18 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wo
 	^ (self withSize: aSize rounds: aRoundNumber)
 		initializeWithWormHoleFrom: wormHoleOrigin
 		to: wormHoleEnd
+]
+
+{ #category : 'accessing' }
+CircularBoard >> createBlackholeAt: aSquarePosition [
+	map at: aSquarePosition put: (Blackhole at: aSquarePosition in: self)
+	
+]
+
+{ #category : 'initialization' }
+CircularBoard >> initializeWithBlackhole: aPosition [ 
+
+	self createBlackholeAt: aPosition.
 ]
 
 { #category : 'initialization' }

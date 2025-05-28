@@ -23,11 +23,6 @@ Game class >> in: aBoard with: dice and: ships [
 ]
 
 { #category : 'instance creation' }
-Game class >> inSize: aSize rounds: aRoundNumber withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [ 
-	^self new initializeInSize: aSize rounds: aRoundNumber withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
-]
-
-{ #category : 'instance creation' }
 Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [
 	^self new initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
 ]

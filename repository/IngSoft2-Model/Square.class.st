@@ -46,6 +46,12 @@ Square >> checkStatus [
 	^ status
 ]
 
+{ #category : 'getter' }
+Square >> getX [
+
+	^ x
+]
+
 { #category : 'initialization' }
 Square >> initializeX: anXPosition [
 

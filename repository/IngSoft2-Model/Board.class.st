@@ -58,7 +58,7 @@ Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd 
 { #category : 'accessing' }
 Board >> getSquareAt: aPosition [
 
-	^ map at: aPosition
+	^ map at: (aPosition \\ boardSize)
 ]
 
 { #category : 'initialization' }

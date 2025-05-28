@@ -8,6 +8,16 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'instance creation' }
+ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips withBlackholeAt: aPosition [
+	^self new initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips withBlackholeAt: aPosition.
+]
+
+{ #category : 'instance creation' }
+ShipBattleGame class >> inSize: aSize rounds: aRoundNumber withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [ 
+	^self new initializeInSize: aSize rounds: aRoundNumber withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
+]
+
 { #category : 'getter' }
 ShipBattleGame >> boardState [
 
@@ -58,6 +68,39 @@ ShipBattleGame >> haveWeGotAWinner: currentShip [
 		gameWinner := currentShip name ].
 
 	^ gameOver
+]
+
+{ #category : 'initialization' }
+ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips [
+
+	board := CircularBoard
+		         withSize: aSize
+		         rounds: aRoundNumber.
+
+	diceSet := DiceSet withDice: aDiceSet.
+
+	ships := self orderShips: aSetOfShips.
+
+	shipToMove := 1.
+	gameOver := false.
+	gameWinner := nil.
+]
+
+{ #category : 'initialization' }
+ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withBlackholeAt: aPosition [ 
+
+	board := CircularBoard
+		         withSize: aSize
+		         rounds: aRoundNumber
+					withBlackholeAt: aPosition.
+
+	diceSet := DiceSet withDice: aDiceSet.
+
+	ships := self orderShips: aSetOfShips.
+
+	shipToMove := 1.
+	gameOver := false.
+	gameWinner := nil.
 ]
 
 { #category : 'initialization' }
