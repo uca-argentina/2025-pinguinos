@@ -2,7 +2,7 @@
 Wormhole in grid for the game; to be occupied with a ship, which comes out from the other end.
 "
 Class {
-	#name : 'Wormhole',
+	#name : 'WormHole',
 	#superclass : 'Square',
 	#instVars : [
 		'wormHoleExit'
@@ -12,14 +12,14 @@ Class {
 }
 
 { #category : 'validation' }
-Wormhole class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
+WormHole class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
 
 	wormHoleOrigin = wormHoleEnd ifTrue: [
 		Error signal: 'Wormhole cannot lead to itself!' ]
 ]
 
 { #category : 'instance creation' }
-Wormhole class >> from: origin to: end [
+WormHole class >> from: origin to: end [
 
 	self areEndsDistinct: origin and: end.
 	
@@ -33,14 +33,14 @@ Wormhole class >> from: origin to: end [
 ]
 
 { #category : 'initialization' }
-Wormhole >> initializeTo: otherEnd from: origin [
+WormHole >> initializeTo: otherEnd from: origin [
 	
 	super initializeX: origin.
 	wormHoleExit := otherEnd.
 ]
 
 { #category : 'getter' }
-Wormhole >> landingCoordinate [ 
+WormHole >> landingCoordinate [ 
 	
 	^ wormHoleExit
 ]

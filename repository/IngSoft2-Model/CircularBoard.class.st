@@ -27,14 +27,14 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber [
 ]
 
 { #category : 'creation' }
-CircularBoard class >> withSize: aSize rounds: aRoundNumber withBlackholeAt: aPosition [
+CircularBoard class >> withSize: aSize rounds: aRoundNumber withSpecialSquaresAt: squarePositions [
 
 	self validateRoundNumberIsPositive: aRoundNumber.
 	Board validateSizeIsPositive: aSize.
 	
 		
 	^ (self withSize: aSize rounds: aRoundNumber)
-		initializeWithBlackhole: aPosition.
+		initializeWithSpecialSquares: squarePositions.
 ]
 
 { #category : 'creation' }
@@ -52,15 +52,21 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wo
 ]
 
 { #category : 'accessing' }
-CircularBoard >> createBlackholeAt: aSquarePosition [
-	map at: aSquarePosition put: (Blackhole at: aSquarePosition in: self)
+CircularBoard >> createBlackHolesAt: aSquarePositions [
+	
+	aSquarePositions do: [:position | map at: position put: (BlackHole at: position in: self) ]
+	
+	
 	
 ]
 
-{ #category : 'initialization' }
-CircularBoard >> initializeWithBlackhole: aPosition [ 
-
-	self createBlackholeAt: aPosition.
+{ #category : 'accessing' }
+CircularBoard >> createHyperSpaceJumpsAt: aSquarePositions [
+	
+	aSquarePositions do: [:position | map at: position put: (HyperSpaceJump at: position in: self) ]
+	
+	
+	
 ]
 
 { #category : 'initialization' }
@@ -69,6 +75,13 @@ CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [
 	super initializeWithSize: aSize. "Llamo a funcion de clase padre"
 
 	rounds := aRoundNumber. 
+]
+
+{ #category : 'initialization' }
+CircularBoard >> initializeWithSpecialSquares: squarePositions [ 
+
+	self createBlackHolesAt: squarePositions first.
+	self createHyperSpaceJumpsAt: squarePositions second.
 ]
 
 { #category : 'process' }

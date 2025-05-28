@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'running' }
-BlackholeTest >> testWhenBlackholeWorksCorrectly [
+BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4 [
 
 	| aGame expectedResult |
 	aGame := ShipBattleGame
@@ -14,7 +14,30 @@ BlackholeTest >> testWhenBlackholeWorksCorrectly [
 		         rounds: 2
 		         with: { (LoadedDie withSides: 1) }
 		         and: { (Ship named: 'Jorge') }
-		         withBlackholeAt: 2.
+		         withSpecialSquaresAt: {{2}. {}. {}. {}. {}}.
+
+	aGame nextTurn.
+
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 4).
+				 ('lap' -> 1) }).
+				
+	self assert: aGame boardState equals: expectedResult 
+]
+
+{ #category : 'running' }
+BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4ThenLandsOnAnotherBlackholeAndDoesntMove [
+
+	| aGame expectedResult |
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         with: { (LoadedDie withSides: 1) }
+		         and: { (Ship named: 'Jorge') }
+		         withSpecialSquaresAt: {{2. 4}. {}. {}. {}. {}}.
 
 	aGame nextTurn.
 

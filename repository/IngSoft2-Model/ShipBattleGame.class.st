@@ -9,8 +9,10 @@ Class {
 }
 
 { #category : 'instance creation' }
-ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips withBlackholeAt: aPosition [
-	^self new initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips withBlackholeAt: aPosition.
+ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips withSpecialSquaresAt: squarePositions [
+	^self new initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aNumberOfShips withSpecialSquaresAt: squarePositions.
+	
+
 ]
 
 { #category : 'instance creation' }
@@ -87,12 +89,12 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 ]
 
 { #category : 'initialization' }
-ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withBlackholeAt: aPosition [ 
+ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions [ 
 
 	board := CircularBoard
 		         withSize: aSize
 		         rounds: aRoundNumber
-					withBlackholeAt: aPosition.
+					withSpecialSquaresAt: squarePositions.
 
 	diceSet := DiceSet withDice: aDiceSet.
 
