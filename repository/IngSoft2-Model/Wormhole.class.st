@@ -3,10 +3,7 @@ Wormhole in grid for the game; to be occupied with a ship, which comes out from 
 "
 Class {
 	#name : 'Wormhole',
-	#superclass : 'Square',
-	#instVars : [
-		'wormHoleExit'
-	],
+	#superclass : 'MoverSquare',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -30,17 +27,4 @@ Wormhole class >> from: origin to: end [
 	Square validateXIsInteger: end.
 	
 	^ { (self new) initializeTo: end from: origin . (self new) initializeTo: origin from: end }
-]
-
-{ #category : 'initialization' }
-Wormhole >> initializeTo: otherEnd from: origin [
-	
-	super initializeX: origin.
-	wormHoleExit := otherEnd.
-]
-
-{ #category : 'getter' }
-Wormhole >> landingCoordinate [ 
-	
-	^ wormHoleExit
 ]

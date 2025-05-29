@@ -13,12 +13,10 @@ Class {
 }
 
 { #category : 'validation' }
-Board class >> areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize [
-	
-	((wormHoleOrigin = aSize) or: (wormHoleEnd = aSize))
-		ifTrue: [
-			Error signal:
-				'Wormhole cannot lead out of/into last square!' ]
+Board class >> areEnds: awormHoleOrigin and: wormHoleEnd inGoal: aSize [
+
+	((awormHoleOrigin = aSize) or: (wormHoleEnd = aSize)) ifTrue: [
+		Error signal: 'Wormhole cannot lead out of/into last square!' ]
 ]
 
 { #category : 'testing' }
@@ -35,14 +33,14 @@ Board class >> is: startPoint and: endPoint withinBoundsOf: size [
 { #category : 'validation' }
 Board class >> validateSizeIsPositive: aSize [
 
-	aSize < 0 ifTrue: [
+	aSize <= 0 ifTrue: [
 		Error signal: 'Size for the grid must be positive.' ]
 ]
 
 { #category : 'creation' }
 Board class >> withSize: aSize [
 
-	self validateSizeIsPositive: aSize.
+	self validateSizeIsPositive: aSize .
 	^ self new initializeWithSize: aSize
 ]
 
@@ -57,16 +55,10 @@ Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd 
 		to: wormHoleEnd
 ]
 
-{ #category : 'creation' }
-Board class >> withWormhole: aWormhole [
-
-	^ self new initializeWithWormhole: aWormhole
-]
-
-{ #category : 'getter' }
+{ #category : 'accessing' }
 Board >> getSquareAt: aPosition [
 
-	^ (map at: aPosition)
+	^ map at: (aPosition - 1 \\ boardSize) + 1
 ]
 
 { #category : 'initialization' }
@@ -95,15 +87,16 @@ Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 ]
 
 { #category : 'squareMethods' }
-Board >> isThisSquareTheGoal: aSquareNumber [
+Board >> isThisSquareTheGoal: aSquare [
 
-	^ aSquareNumber = boardSize
+	^ aSquare = boardSize
 ]
 
 { #category : 'process' }
 Board >> resolveMovementOf: anIntendedPosition [
 
 	| anIntendedPositionWithinBounds |
+	
 	anIntendedPositionWithinBounds := anIntendedPosition min: boardSize.
 	^ (map at: anIntendedPositionWithinBounds) landingCoordinate
 ]
@@ -119,6 +112,5 @@ Board >> squareStatus: aPosition [
 
 	| aSquare |
 	aSquare := map at: aPosition.
-
 	^ aSquare checkStatus
 ]
