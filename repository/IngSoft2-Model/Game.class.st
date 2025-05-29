@@ -32,7 +32,7 @@ Game class >> inSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberO
 	^self new initializeInSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips
 ]
 
-{ #category : 'getter' }
+{ #category : 'accessing' }
 Game >> boardState [
 	
 	| currentGameState |

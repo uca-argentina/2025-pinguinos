@@ -17,6 +17,27 @@ ShipBattleGameTest >> should: anErrorBlock raise: anErrorClass withErrorMessage:
 ]
 
 { #category : 'running' }
+ShipBattleGameTest >> testGameWithSemiRandomlyDistributedSpecialSquaresIsCreatedSuccessfully [
+
+	| aGame |
+	
+	aGame := ShipBattleGame
+		         inSize: 50
+		         rounds: 5
+		         with: { (Die withSides: 6) . Die withSides: 4 }
+		         and: {
+				         (Ship named: 'Jorge').
+				         (Ship named: 'Luciano').
+							(Ship named: 'Julian')}.
+							
+	aGame nextTurn.
+	aGame skipTurn.
+
+   "Observo que no hay errores al jugar"
+	self assert: aGame nextTurn equals: aGame.
+]
+
+{ #category : 'running' }
 ShipBattleGameTest >> testWhen2ShipsFightIfTheLoserHad0ShieldsThenHeLoses2Turns [
 
 	| aGame expectedResult lucianoShip jorgeShip |

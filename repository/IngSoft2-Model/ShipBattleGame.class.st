@@ -27,7 +27,7 @@ ShipBattleGame class >> inSize: aSize rounds: aRoundNumber withWormHoleFrom: aSq
 	^self new initializeInSize: aSize rounds: aRoundNumber withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
 ]
 
-{ #category : 'getter' }
+{ #category : 'accessing' }
 ShipBattleGame >> boardState [
 
 	| currentGameState rankedList tempShipsList |
