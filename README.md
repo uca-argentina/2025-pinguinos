@@ -1,7 +1,7 @@
 # Ingenieria del Software II - Template
 
 ![GHA Status](https://github.com/uca-argentina/project-template/actions/workflows/GHA.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/github/uca-argentina/2025-pinguinos/badge.svg?branch=master)](https://coveralls.io/github/uca-argentina/2025-pinguinos?branch=master)
+![Coverage Status](https://coveralls.io/github/uca-argentina/2025-pinguinos/badge.svg?branch=master)(https://coveralls.io/github/uca-argentina/2025-pinguinos?branch=master)
 
 ## Metacello
 
