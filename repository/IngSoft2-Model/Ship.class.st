@@ -136,6 +136,12 @@ Ship >> position [
 ]
 
 { #category : 'actions' }
+Ship >> receive: aCard [
+
+	cards add: aCard
+]
+
+{ #category : 'actions' }
 Ship >> recoverShields [
 
 	shields := 3.
