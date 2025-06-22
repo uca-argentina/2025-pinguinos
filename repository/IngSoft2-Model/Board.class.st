@@ -15,7 +15,7 @@ Class {
 { #category : 'validation' }
 Board class >> areEnds: awormHoleOrigin and: wormHoleEnd inGoal: aSize [
 
-	((awormHoleOrigin = aSize) or: (wormHoleEnd = aSize)) ifTrue: [
+	(awormHoleOrigin = aSize or: wormHoleEnd = aSize) ifTrue: [
 		Error signal: 'Wormhole cannot lead out of/into last square!' ]
 ]
 
@@ -40,7 +40,7 @@ Board class >> validateSizeIsPositive: aSize [
 { #category : 'creation' }
 Board class >> withSize: aSize [
 
-	self validateSizeIsPositive: aSize .
+	self validateSizeIsPositive: aSize.
 	^ self new initializeWithSize: aSize
 ]
 
@@ -49,41 +49,36 @@ Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd 
 
 	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
 	self areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize.
-	
+
 	^ (self withSize: aSize)
-		initializeWithWormHoleFrom: wormHoleOrigin
-		to: wormHoleEnd
+		  initializeWithWormHoleFrom: wormHoleOrigin
+		  to: wormHoleEnd
 ]
 
 { #category : 'accessing' }
 Board >> getSquareAt: aPosition [
 
-	^ map at: (aPosition - 1 \\ boardSize) + 1
+	^ map at: aPosition - 1 \\ boardSize + 1
 ]
 
 { #category : 'initialization' }
-Board >> initializeWithSize: aSize [ 
-	
+Board >> initializeWithSize: aSize [
+
 	boardSize := aSize.
-	
-   map := OrderedCollection new.
 
-   1 to: boardSize do: [:x | map add: (Square x: x)].
+	map := OrderedCollection new.
 
-
-
+	1 to: boardSize do: [ :x | map add: (Square x: x) ]
 ]
 
 { #category : 'initialization' }
 Board >> initializeWithWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
-	
+
 	| wormHoleEnds |
 	wormHoleEnds := Wormhole from: wormHoleOrigin to: wormHoleEnd.
-	
-	map at: wormHoleOrigin put: (wormHoleEnds first).
-	map at: wormHoleEnd put: (wormHoleEnds second).
 
-
+	map at: wormHoleOrigin put: wormHoleEnds first.
+	map at: wormHoleEnd put: wormHoleEnds second
 ]
 
 { #category : 'squareMethods' }
@@ -111,6 +106,7 @@ Board >> size [
 Board >> squareStatus: aPosition [
 
 	| aSquare |
+	
 	aSquare := map at: aPosition.
 	^ aSquare checkStatus
 ]

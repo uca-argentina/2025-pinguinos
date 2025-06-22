@@ -22,7 +22,7 @@ DiceSet class >> withDice: aSetOfDice [
 
 	(self areAllDice: aSetOfDice) ifFalse: [
 		Error signal: 'Dice set must contain only dice!' ].
-	
+
 	aSetOfDice ifEmpty: [
 		Error signal: 'Dice set must contain at least 1 die!' ].
 
@@ -32,7 +32,7 @@ DiceSet class >> withDice: aSetOfDice [
 { #category : 'initialization' }
 DiceSet >> initializeWith: diceSet [
 
-	setOfDice := diceSet.
+	setOfDice := diceSet
 ]
 
 { #category : 'random' }

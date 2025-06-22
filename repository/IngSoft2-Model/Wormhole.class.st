@@ -19,12 +19,14 @@ Wormhole class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
 Wormhole class >> from: origin to: end [
 
 	self areEndsDistinct: origin and: end.
-	
+
 	Square validateXIsPositive: origin.
 	Square validateXIsPositive: end.
-	
+
 	Square validateXIsInteger: origin.
 	Square validateXIsInteger: end.
-	
-	^ { (self new) initializeTo: end from: origin . (self new) initializeTo: origin from: end }
+
+	^ {
+		  (self new initializeTo: end from: origin).
+		  (self new initializeTo: origin from: end) }
 ]

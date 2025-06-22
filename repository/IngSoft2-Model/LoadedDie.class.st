@@ -12,25 +12,26 @@ Class {
 }
 
 { #category : 'instance creation' }
-LoadedDie class >> withSides: arg1 [
+LoadedDie class >> withSides: aNumberToBeRolled [
 
-	^ self new initializeWith: arg1
+	^ self new initializeWith: aNumberToBeRolled
 ]
 
 { #category : 'initialization' }
-LoadedDie >> initializeWith: arg1 [
+LoadedDie >> initializeWith: aNumberToBeRolled [
 
-	sideNumber := arg1.
+	sideNumber := aNumberToBeRolled.
 	index := 1
 ]
 
 { #category : 'random' }
 LoadedDie >> roll [
 
-	| tmp1 |
+	| numberInSequence |
+	
 	sideNumber isInteger ifTrue: [ ^ sideNumber ].
-	nil.
-	tmp1 := sideNumber at: index.
+
+	numberInSequence := sideNumber at: index.
 	index := index \\ sideNumber size + 1.
-	^ tmp1
+	^ numberInSequence
 ]

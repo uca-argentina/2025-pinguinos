@@ -23,23 +23,26 @@ Game class >> in: aBoard with: dice and: ships [
 ]
 
 { #category : 'instance creation' }
-Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips [
-	^self new initializeInSize: aSize withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aNumberOfShips
-]
+Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [
 
-{ #category : 'instance creation' }
-Game class >> inSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips [
-	^self new initializeInSize: aSize withWormhole: aWormhole with: aDiceSet and: aNumberOfShips
+	^ self new
+		  initializeInSize: aSize
+		  withWormholeFrom: aSquare
+		  to: anotherSquare
+		  with: aDiceSet
+		  and: aSetOfShips
 ]
 
 { #category : 'accessing' }
 Game >> boardState [
-	
+
 	| currentGameState |
-	currentGameState := Dictionary new.
-	ships do: [ :ship | currentGameState at: (ship name) put: (ship position) ].
 	
-	^ currentGameState 
+	currentGameState := Dictionary new.
+	ships do: [ :ship |
+		currentGameState at: ship name put: ship position ].
+
+	^ currentGameState
 ]
 
 { #category : 'validation' }
@@ -50,7 +53,8 @@ Game >> canIKeepPlaying [
 
 { #category : 'getter' }
 Game >> getWinner [
-	^ gameWinner 
+
+	^ gameWinner
 ]
 
 { #category : 'validation' }
@@ -66,17 +70,20 @@ Game >> haveWeGotAWinner: currentShip [
 { #category : 'initialization' }
 Game >> initializeIn: aBoard with: aDiceSet and: aSetOfShips [
 
-	board ifNil: [ Error signal: 'Cannot build a game without a board!' ].
-	ships ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
-	diceSet ifNil: [ Error signal: 'Cannot build a game without any dice!' ].
+	board ifNil: [ 
+		Error signal: 'Cannot build a game without a board!' ].
+	ships ifEmpty: [
+		Error signal: 'Cannot build a game without any ships!' ].
+	diceSet ifNil: [
+		Error signal: 'Cannot build a game without any dice!' ].
 
-	board:= aBoard.
+	board := aBoard.
 	diceSet := DiceSet withDice: aDiceSet.
 	ships := aSetOfShips.
-	
+
 	shipToMove := 1.
 	gameOver := false.
-	gameWinner := nil.
+	gameWinner := nil
 ]
 
 { #category : 'initialization' }
@@ -108,6 +115,7 @@ Game >> isGameOver [
 Game >> nextTurn [
 
 	| currentShip |
+	
 	self canIKeepPlaying.
 	
 	currentShip := ships at: shipToMove.
@@ -123,10 +131,12 @@ Game >> nextTurn [
 Game >> orderShips: aSetOfShips [
 
 	| shipCollection |
+	
 	shipCollection := OrderedCollection new.
-	
-	aSetOfShips ifEmpty: [ Error signal: 'Cannot build a game without any ships!' ].
-	
+
+	aSetOfShips ifEmpty: [
+		Error signal: 'Cannot build a game without any ships!' ].
+
 	(aSetOfShips allSatisfy: [ :object | object isKindOf: Ship ])
 		ifFalse: [ Error signal: 'Set of ships must contain only ships!' ].
 
@@ -136,39 +146,36 @@ Game >> orderShips: aSetOfShips [
 
 { #category : 'printing' }
 Game >> printRanking: sortedShips [
+
 	| stream |
+	
 	stream := WriteStream on: String new.
 
-   sortedShips doWithIndex: [ :ship :index |
+	sortedShips doWithIndex: [ :ship :index |
 		stream nextPutAll: ship name asString.
-		stream nextPutAll: ' ranked: ' .
+		stream nextPutAll: ' ranked: '.
 		stream nextPutAll: index asString.
-		stream nextPutAll: ' - round: ' .
+		stream nextPutAll: ' - round: '.
 		stream nextPutAll: ship laps asString.
-		stream nextPutAll: ' - position: ' .
+		stream nextPutAll: ' - position: '.
 		stream nextPutAll: ship position asString.
-		
-      (index = 1 and: (self haveWeGotAWinner: ship)) ifTrue: [ stream nextPutAll: ' -> We have a winner!' ].
-		index < sortedShips size ifTrue: [ stream nextPut: Character lf ].
-	].
+
+		(index = 1 and: (self haveWeGotAWinner: ship)) ifTrue: [
+			stream nextPutAll: ' -> We have a winner!' ].
+		index < sortedShips size ifTrue: [ stream nextPut: Character lf ] ].
 
 	^ stream contents
-
 ]
 
 { #category : 'getter' }
 Game >> rankingReport [
+
 	| sortedShips |
-	sortedShips := ships
-		sorted: [ :aShip :anotherShip |
-   		(aShip laps > anotherShip laps) or: [
-      (aShip laps = anotherShip laps) and: [ aShip position > anotherShip position ]]
-  		].
+	
+	sortedShips := ships sorted: [ :aShip :anotherShip |
+		               aShip laps > anotherShip laps or: [
+			               aShip laps = anotherShip laps and: [
+				               aShip position > anotherShip position ] ] ].
 
-	^ self printRanking: sortedShips.
-
-  
-
-
-
+	^ self printRanking: sortedShips
 ]

@@ -25,10 +25,10 @@ CircularBoard class >> withRandomSpecialSquaresAndSize: aSize rounds: aRoundNumb
 
 	self validateRoundNumberIsPositive: aRoundNumber.
 	Board validateSizeIsPositive: aSize.
-	
-		
+
+
 	^ (self withSize: aSize rounds: aRoundNumber)
-		initializeRandomSpecialSquares.
+		  initializeRandomSpecialSquares
 ]
 
 { #category : 'creation' }
@@ -44,10 +44,10 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withSpecialSquaresAt
 
 	self validateRoundNumberIsPositive: aRoundNumber.
 	Board validateSizeIsPositive: aSize.
-	
-		
+
+
 	^ (self withSize: aSize rounds: aRoundNumber)
-		initializeWithSpecialSquaresAt: squarePositions.
+		  initializeWithSpecialSquaresAt: squarePositions
 ]
 
 { #category : 'creation' }
@@ -55,63 +55,61 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wo
 
 	self validateRoundNumberIsPositive: aRoundNumber.
 	Board validateSizeIsPositive: aSize.
-	
+
 	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
 	self areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize.
-	
+
 	^ (self withSize: aSize rounds: aRoundNumber)
-		initializeWithWormHoleFrom: wormHoleOrigin
-		to: wormHoleEnd
+		  initializeWithWormHoleFrom: wormHoleOrigin
+		  to: wormHoleEnd
 ]
 
 { #category : 'accessing' }
 CircularBoard >> createAtomicBombsAt: squarePositions [
 
-	squarePositions do: [:position | map at: position put: (AtomicBomb at: position) ].
+	squarePositions do: [ :position |
+		map at: position put: (AtomicBomb at: position) ]
 ]
 
 { #category : 'accessing' }
 CircularBoard >> createBlackHolesAt: aSquarePositions [
-	
-	aSquarePositions do: [:position | map at: position put: (Blackhole at: position in: self) ]
-	
-	
-	
+
+	aSquarePositions do: [ :position |
+		map at: position put: (Blackhole at: position in: self) ]
 ]
 
 { #category : 'accessing' }
 CircularBoard >> createHyperJumpsAt: aSquarePositions [
-	
-	aSquarePositions do: [:position | map at: position put: (HyperJump inBoardOfSize: parsecBoardSize at: position ) ]
-	
-	
-	
+
+	aSquarePositions do: [ :position |
+		map
+			at: position
+			put: (HyperJump inBoardOfSize: parsecBoardSize at: position) ]
 ]
 
 { #category : 'accessing' }
 CircularBoard >> createHyperSpaceJumpsAt: aSquarePositions [
-	
-	aSquarePositions do: [:position | map at: position put: (HyperSpaceJump at: position in: self) ]
-	
-	
-	
+
+	aSquarePositions do: [ :position |
+		map at: position put: (HyperSpaceJump at: position in: self) ]
 ]
 
 { #category : 'accessing' }
 CircularBoard >> createMoonWalksAt: squarePositions [
 
-	squarePositions do: [:position | map at: position put: (MoonWalk by: 3 at: position) ].
+	squarePositions do: [ :position |
+		map at: position put: (MoonWalk by: 3 at: position) ]
 ]
 
 { #category : 'getter' }
 CircularBoard >> getParsecRatio [
 
-	^parsecRatio 
+	^ parsecRatio
 ]
 
 { #category : 'initialization' }
 CircularBoard >> initializeRandomSpecialSquares [
-	
+
 	| blackHoles hyperSpaceJumps moonWalks hyperJumps atomicBombs resultForEachCell |
 	
 	blackHoles := OrderedCollection new.
@@ -132,14 +130,19 @@ CircularBoard >> initializeRandomSpecialSquares [
 
 	resultForEachCell doWithIndex: [ :result :i |
 		(20 >= result and: result > 10) ifTrue: [ moonWalks add: i ] ].
-	
+
 	resultForEachCell doWithIndex: [ :result :i |
 		(10 >= result and: result > 2) ifTrue: [ hyperJumps add: i ] ].
-	
+
 	resultForEachCell doWithIndex: [ :result :i |
 		(2 >= result and: result > 0) ifTrue: [ atomicBombs add: i ] ].
-	
-	self initializeWithSpecialSquaresAt: { blackHoles . hyperSpaceJumps . moonWalks . hyperJumps . atomicBombs }.
+
+	self initializeWithSpecialSquaresAt: {
+			blackHoles.
+			hyperSpaceJumps.
+			moonWalks.
+			hyperJumps.
+			atomicBombs }
 ]
 
 { #category : 'initialization' }
@@ -149,37 +152,37 @@ CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [
 
 	rounds := aRoundNumber.
 	parsecRatio := 20.
-	parsecBoardSize := aSize * parsecRatio.
-
-	
+	parsecBoardSize := aSize * parsecRatio
 ]
 
 { #category : 'initialization' }
-CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [ 
+CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [
 
 	self createBlackHolesAt: squarePositions first.
 	self createHyperSpaceJumpsAt: squarePositions second.
 	self createMoonWalksAt: squarePositions third.
 	self createHyperJumpsAt: squarePositions fourth.
-	self createAtomicBombsAt: squarePositions fifth.
+	self createAtomicBombsAt: squarePositions fifth
 ]
 
 { #category : 'process' }
 CircularBoard >> resolveMovementOf: anIntendedPosition [
 
-	| finalPosition completedLaps |	
+	| finalPosition completedLaps |
 	
 	completedLaps := 0.
-	(anIntendedPosition > boardSize or: anIntendedPosition < 1) ifTrue: [ completedLaps := (anIntendedPosition - 1 // boardSize) ].
-	
-	finalPosition := ((anIntendedPosition - 1) \\ boardSize) + 1.
+	(anIntendedPosition > boardSize or: anIntendedPosition < 1) ifTrue: [
+		completedLaps := anIntendedPosition - 1 // boardSize ].
 
-	^ { map at: finalPosition . completedLaps } "Devuelvo tupla de ubicacion final a la que debe ir el Ship y vuelta en la que esta"
+	finalPosition := anIntendedPosition - 1 \\ boardSize + 1.
+
+	^ {
+		  (map at: finalPosition).
+		  completedLaps } "Devuelvo tupla de ubicacion final a la que debe ir el Ship y vuelta en la que esta"
 ]
 
 { #category : 'validation' }
 CircularBoard >> wasThisTheLastRoundFor: aShip [
 
 	^ aShip laps >= (rounds + 1) "+1 Ya que conisderamos que las naves empiezan en la lap 1"
-		
 ]

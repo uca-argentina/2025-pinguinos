@@ -12,13 +12,14 @@ Class {
 HyperSpaceJump class >> at: aSquare in: aBoard [
 
 	| exit |
-	exit := (aBoard getSquareAt: aSquare + 4) getX .
+	
+	exit := (aBoard getSquareAt: aSquare + 4) getX.
 	^ self new initializeTo: exit from: aSquare
 ]
 
 { #category : 'action' }
 HyperSpaceJump >> applyEffectTo: aShip in: aGame [
-	
+
 	destination <= x ifTrue: [ aShip completeLaps: 1 ].
-	aShip loseShield.
+	aShip loseShield
 ]

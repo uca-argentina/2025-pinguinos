@@ -21,8 +21,9 @@ Square class >> validateX: x [
 
 { #category : 'validation' }
 Square class >> validateXIsInteger: anXPosition [
-	
-	anXPosition isInteger ifFalse: [ Error signal: 'X position must be an integer.' ]
+
+	anXPosition isInteger ifFalse: [
+		Error signal: 'X position must be an integer.' ]
 ]
 
 { #category : 'validation' }

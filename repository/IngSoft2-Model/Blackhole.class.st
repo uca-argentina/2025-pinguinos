@@ -12,6 +12,7 @@ Class {
 Blackhole class >> at: aSquare in: aBoard [
 
 	| exit |
+	
 	exit := (aBoard getSquareAt: aSquare - 4) getX .
 	^ self new initializeTo: exit from: aSquare
 ]
@@ -19,5 +20,5 @@ Blackhole class >> at: aSquare in: aBoard [
 { #category : 'action' }
 Blackhole >> applyEffectTo: aShip in: aGame [
 
-	destination >= x ifTrue: [ aShip completeLaps: -1 ].
+	destination >= x ifTrue: [ aShip completeLaps: -1 ]
 ]

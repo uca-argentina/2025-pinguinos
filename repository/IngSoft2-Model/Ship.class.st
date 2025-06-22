@@ -23,14 +23,14 @@ Ship class >> named: aName [
 
 { #category : 'accessing' }
 Ship >> canIPlayTurn [
-	
+
 	^ turnsToSkip = 0
 ]
 
 { #category : 'actions' }
 Ship >> completeLaps: aNumberOfLaps [
-	
-	laps := laps + aNumberOfLaps.
+
+	laps := laps + aNumberOfLaps
 ]
 
 { #category : 'initialization' }
@@ -45,8 +45,8 @@ Ship >> initialize [
 
 { #category : 'initialization' }
 Ship >> initializeName: aName [
-	
-	shipName := aName.
+
+	shipName := aName
 ]
 
 { #category : 'accessing' }
@@ -60,7 +60,7 @@ Ship >> loseFight [
 
 	position := 1.
 	shields >= 1 ifTrue: [ self loseShield ].
-	shields = 0 ifTrue: [ turnsToSkip := turnsToSkip + 2 ].
+	shields = 0 ifTrue: [ turnsToSkip := turnsToSkip + 2 ]
 ]
 
 { #category : 'actions' }
@@ -80,17 +80,18 @@ Ship >> moveBy: aRolledNumber on: aBoard [
 
 	| intendedPosition |
 	intendedPosition := position + aRolledNumber.
-	position := aBoard resolveMovementOf: intendedPosition.
+	position := aBoard resolveMovementOf: intendedPosition
 ]
 
 { #category : 'actions' }
 Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
-	"Nuevo metodo para que sepan moverse sobre tablero circular"
 
 	| intendedPosition resultingPosition resultingSquare completedLaps |
+	
 	intendedPosition := position + aRolledNumber.
 
-	resultingPosition := aCircularBoard resolveMovementOf: intendedPosition. "Devuelve cuadrado en el que cai y la cantidad de vueltas que complete en este turno"
+	resultingPosition := aCircularBoard resolveMovementOf:
+		                     intendedPosition. "Devuelve cuadrado en el que cai y la cantidad de vueltas que complete en este turno"
 
 	resultingSquare := resultingPosition first.
 	completedLaps := resultingPosition second.
@@ -100,14 +101,14 @@ Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
 			self moveForwardTo: resultingSquare.
 			resultingSquare applyEffectTo: self in: aGame ]
 		ifFalse: [ self moveBackwardTo: resultingSquare ].
-		
+
 	self completeLaps: completedLaps
 ]
 
 { #category : 'actions' }
 Ship >> moveForwardTo: aSquare [
 
-	position := aSquare landingCoordinate.
+	position := aSquare landingCoordinate
 ]
 
 { #category : 'getter' }
@@ -145,13 +146,15 @@ Ship >> turnSkipped [
 Ship >> withNoEffectsMove: aRolledNumber onCircularBoard: aCircularBoard [
 
 	| intendedPosition resultingPosition resultingSquare completedLaps |
+	
 	intendedPosition := position + aRolledNumber.
 
-	resultingPosition := aCircularBoard resolveMovementOf: intendedPosition. "Devuelve cuadrado en el que cai y la cantidad de vueltas que complete en este turno"
+	resultingPosition := aCircularBoard resolveMovementOf:
+		                     intendedPosition. "Devuelve cuadrado en el que cai y la cantidad de vueltas que complete en este turno"
 
 	resultingSquare := resultingPosition first.
 	completedLaps := resultingPosition second.
 
 	position := resultingSquare getX.
-	self completeLaps: completedLaps.
+	self completeLaps: completedLaps
 ]
