@@ -19,15 +19,15 @@ MoonWalkTest >> testMoonWalkOf3AtPosition2ThenEveryOtherPlayerGetsSentToPosition
 		         rounds: 2
 		         with: { (LoadedDie withSides: {2. 1} ) }
 		         and: { jorgeShip . julioShip . lucianoShip }
-					withSpecialSquaresAt: {{}. {}. {2}. {}. {}}. "Moonwalks son de 3 por default"
+					withSpecialSquaresAt: {{}. {}. {2}. {}. {}. {} . {}}. "Moonwalks son de 3 por default"
 
 	aGame nextTurn. "Jorge mueve hasta 3"
 	aGame nextTurn. "Julio mueve hasta 2 y activa moonwalk"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Julio'). ('position' -> 2). ('lap' -> 1) }).
-	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 6). ('lap' -> 0) }).
-	expectedResult at: '3°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 4). ('lap' -> 0) }).
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Julio'). ('position' -> 2). ('lap' -> 1) . ('card count' -> 2)}).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 6). ('lap' -> 0) . ('card count' -> 2) }).
+	expectedResult at: '3°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 4). ('lap' -> 0) . ('card count' -> 2)}).
 	
 	self assert: aGame boardState equals: expectedResult.
 ]
@@ -45,13 +45,13 @@ MoonWalkTest >> testWhenAPlayerGetsMovedBackByAMoonWalkBackIntoAnotherMoonWalkTh
 		         rounds: 2
 		         with: { (LoadedDie withSides: 1) }
 		         and: { jorgeShip . julioShip }
-					withSpecialSquaresAt: {{}. {}. {2. 5}. {}. {}}. "Moonwalks son de 3 por default"
+					withSpecialSquaresAt: {{}. {}. {2. 5}. {}. {} . {}. {} }. "Moonwalks son de 3 por default"
 
 	aGame nextTurn. "Jorge mueve hasta 2"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 2). ('lap' -> 1) }).
-	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Julio'). ('position' -> 4). ('lap' -> 0) }).
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 2). ('lap' -> 1) . ('card count' -> 2)}).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Julio'). ('position' -> 4). ('lap' -> 0) . ('card count' -> 2) }).
 	
 	self assert: aGame boardState equals: expectedResult.
 ]

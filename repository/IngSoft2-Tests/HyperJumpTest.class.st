@@ -22,7 +22,7 @@ HyperJumpTest >> testHyperJumpInternalListCyclesBackProperlyWhen6thPlayerTouches
 		         rounds: 2
 		         with: { (LoadedDie withSides: 3) }
 		         and: { jorgeShip . julioShip . lucianoShip . luisShip . pepeShip . julianShip }
-					withSpecialSquaresAt: {{}. {}. {}. {4}. {}}.
+					withSpecialSquaresAt: {{}. {}. {}. {4}. {}.{}. {} }.
 
 	aGame nextTurn. "Jorge mueve hasta 4"
 	aGame nextTurn. "Julio mueve hasta 4"
@@ -33,12 +33,12 @@ HyperJumpTest >> testHyperJumpInternalListCyclesBackProperlyWhen6thPlayerTouches
 	
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Julian'). ('position' -> 1). ('lap' -> 2) }).
-	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 2) }).
-	expectedResult at: '3°' put: (Dictionary newFrom: { ('name' -> 'Julio'). ('position' -> 6). ('lap' -> 1) }).
-	expectedResult at: '4°' put: (Dictionary newFrom: { ('name' -> 'Pepe'). ('position' -> 5). ('lap' -> 1) }).
-	expectedResult at: '5°' put: (Dictionary newFrom: { ('name' -> 'Luis'). ('position' -> 5). ('lap' -> 1) }).
-	expectedResult at: '6°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 5). ('lap' -> 1) }).
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Julian'). ('position' -> 1). ('lap' -> 2). ('card count' -> 2) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 2). ('card count' -> 2) }).
+	expectedResult at: '3°' put: (Dictionary newFrom: { ('name' -> 'Julio'). ('position' -> 6). ('lap' -> 1). ('card count' -> 2) }).
+	expectedResult at: '4°' put: (Dictionary newFrom: { ('name' -> 'Pepe'). ('position' -> 5). ('lap' -> 1). ('card count' -> 2) }).
+	expectedResult at: '5°' put: (Dictionary newFrom: { ('name' -> 'Luis'). ('position' -> 5). ('lap' -> 1). ('card count' -> 2) }).
+	expectedResult at: '6°' put: (Dictionary newFrom: { ('name' -> 'Luciano'). ('position' -> 5). ('lap' -> 1). ('card count' -> 2) }).
 	
 	self assert: aGame boardState equals: expectedResult.
 ]
@@ -56,14 +56,14 @@ HyperJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSent60ParsecsForward
 		         rounds: 2
 		         with: { (LoadedDie withSides: 3) }
 		         and: { jorgeShip . julioShip }
-					withSpecialSquaresAt: {{}. {}. {}. {4}. {}}.
+					withSpecialSquaresAt: {{}. {}. {}. {4}. {}.{}. {} }.
 
 	aGame nextTurn. "Jorge mueve hasta 4"
 	aGame nextTurn. "Julio mueve hasta 4"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 2) }).
-	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Julio'). ('position' -> 6). ('lap' -> 1) }).
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 2) . ('card count' -> 2)}).
+	expectedResult at: '2°' put: (Dictionary newFrom: { ('name' -> 'Julio'). ('position' -> 6). ('lap' -> 1) . ('card count' -> 2)}).
 	
 	self assert: aGame boardState equals: expectedResult.
 ]
@@ -80,12 +80,12 @@ HyperJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSent60ParsecsForward
 		         rounds: 2
 		         with: { (LoadedDie withSides: 3) }
 		         and: { jorgeShip }
-					withSpecialSquaresAt: {{}. {}. {}. {4}. {}}.
+					withSpecialSquaresAt: {{}. {}. {}. {4}. {}.{}. {  } }.
 
 	aGame nextTurn. "Jorge mueve hasta 4"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 2) }).
+	expectedResult at: '1°' put: (Dictionary newFrom: { ('name' -> 'Jorge'). ('position' -> 1). ('lap' -> 2) . ('card count' -> 2)}).
 	
 	self assert: aGame boardState equals: expectedResult.
 ]

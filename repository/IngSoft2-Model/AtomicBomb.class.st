@@ -25,5 +25,5 @@ AtomicBomb >> applyEffectTo: aShip in: aGame [
 { #category : 'initialization' }
 AtomicBomb >> initializeAt: aPosition [
 	
-	super initializeX: aPosition .
+	super initializeX: aPosition.
 ]

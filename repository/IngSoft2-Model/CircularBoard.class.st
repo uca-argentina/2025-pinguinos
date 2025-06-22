@@ -80,6 +80,21 @@ CircularBoard >> createBlackHolesAt: aSquarePositions [
 ]
 
 { #category : 'accessing' }
+CircularBoard >> createCardGiversAt: squarePositions [
+
+	squarePositions do: [:position | map at: position put: (CardGiver at: position with: Deck new) ].
+]
+
+{ #category : 'accessing' }
+CircularBoard >> createEmptySquaresAt: aSquarePositions [
+	
+	aSquarePositions do: [:position | map at: position put: (EmptySquare at: position) ]
+	
+	
+	
+]
+
+{ #category : 'accessing' }
 CircularBoard >> createHyperJumpsAt: aSquarePositions [
 	
 	aSquarePositions do: [:position | map at: position put: (HyperJump inBoardOfSize: parsecBoardSize at: position ) ]
@@ -112,18 +127,26 @@ CircularBoard >> getParsecRatio [
 { #category : 'initialization' }
 CircularBoard >> initializeRandomSpecialSquares [
 	
-	| blackHoles hyperSpaceJumps moonWalks hyperJumps atomicBombs resultForEachCell |
+	| blackHoles hyperSpaceJumps moonWalks hyperJumps atomicBombs resultForEachCell cardGivers emptySquares |
 	
+	emptySquares := OrderedCollection new.
 	blackHoles := OrderedCollection new.
 	hyperSpaceJumps := OrderedCollection new.
 	moonWalks := OrderedCollection new.
 	hyperJumps := OrderedCollection new.
 	atomicBombs := OrderedCollection new.
+	cardGivers := OrderedCollection new.
 
 	"Tiro un numero random por cada casillero "
 	resultForEachCell := OrderedCollection new.
-	boardSize timesRepeat: [ resultForEachCell add: (1 to: 100) atRandom ].
+	boardSize timesRepeat: [ resultForEachCell add: (1 to: 108) atRandom ].
 
+	resultForEachCell doWithIndex: [ :result :i |
+		(108 >= result and: result > 70) ifTrue: [ emptySquares add: i ] ].
+
+	resultForEachCell doWithIndex: [ :result :i |
+		(70 >= result and: result > 60) ifTrue: [ cardGivers add: i ] ].
+	
 	resultForEachCell doWithIndex: [ :result :i |
 		(60 >= result and: result > 40) ifTrue: [ blackHoles add: i ] ].
 
@@ -139,7 +162,8 @@ CircularBoard >> initializeRandomSpecialSquares [
 	resultForEachCell doWithIndex: [ :result :i |
 		(2 >= result and: result > 0) ifTrue: [ atomicBombs add: i ] ].
 	
-	self initializeWithSpecialSquaresAt: { blackHoles . hyperSpaceJumps . moonWalks . hyperJumps . atomicBombs }.
+	
+	self initializeWithSpecialSquaresAt: { blackHoles. hyperSpaceJumps . moonWalks . hyperJumps . atomicBombs. cardGivers . emptySquares }.
 ]
 
 { #category : 'initialization' }
@@ -157,11 +181,14 @@ CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [
 { #category : 'initialization' }
 CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [ 
 
+
 	self createBlackHolesAt: squarePositions first.
 	self createHyperSpaceJumpsAt: squarePositions second.
 	self createMoonWalksAt: squarePositions third.
 	self createHyperJumpsAt: squarePositions fourth.
 	self createAtomicBombsAt: squarePositions fifth.
+	self createCardGiversAt: squarePositions sixth.
+	self createEmptySquaresAt: squarePositions seventh.
 ]
 
 { #category : 'process' }

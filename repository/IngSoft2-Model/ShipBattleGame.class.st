@@ -44,7 +44,8 @@ ShipBattleGame >> boardState [
 			put: (Dictionary newFrom: {
 						 ('name' -> ship name).
 						 ('position' -> ship position).
-						 ('lap' -> ship laps) }) ].
+						 ('lap' -> ship laps) .
+						 ('card count' -> ship cards size)}) ].
 					
 	^ currentGameState
 ]

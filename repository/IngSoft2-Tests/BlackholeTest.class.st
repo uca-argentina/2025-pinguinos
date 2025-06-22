@@ -14,7 +14,7 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4AndLos
 		         rounds: 2
 		         with: { (LoadedDie withSides: 1) }
 		         and: { (Ship named: 'Jorge') }
-		         withSpecialSquaresAt: {{2}. {}. {}. {}. {}}.
+		         withSpecialSquaresAt: {{2}. {}. {}. {}. {} . {}. {}}.
 
 	aGame nextTurn.
 
@@ -23,7 +23,8 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4AndLos
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 4).
-				 ('lap' -> 0) }).
+				 ('lap' -> 0) .
+				 ('card count' -> 2)}).
 				
 	self assert: aGame boardState equals: expectedResult 
 ]
@@ -37,7 +38,7 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4ThenLa
 		         rounds: 2
 		         with: { (LoadedDie withSides: 1) }
 		         and: { (Ship named: 'Jorge') }
-		         withSpecialSquaresAt: {{2. 4}. {}. {}. {}. {}}.
+		         withSpecialSquaresAt: {{2. 4}. {}. {}. {}. {} . {}. {}}.
 
 	aGame nextTurn.
 
@@ -46,7 +47,8 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4ThenLa
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 4).
-				 ('lap' -> 0) }).
+				 ('lap' -> 0) .
+				 ('card count' -> 2)}).
 				
 	self assert: aGame boardState equals: expectedResult 
 ]

@@ -9,7 +9,8 @@ Class {
 		'shipName',
 		'laps',
 		'shields',
-		'turnsToSkip'
+		'turnsToSkip',
+		'cards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -27,6 +28,11 @@ Ship >> canIPlayTurn [
 	^ turnsToSkip = 0
 ]
 
+{ #category : 'getter' }
+Ship >> cards [
+	^ cards.
+]
+
 { #category : 'actions' }
 Ship >> completeLaps: aNumberOfLaps [
 	
@@ -36,11 +42,18 @@ Ship >> completeLaps: aNumberOfLaps [
 { #category : 'initialization' }
 Ship >> initialize [
 
+	| allCards |
 	super initialize.
 	position := 1.
 	laps := 1.
 	shields := 3.
 	turnsToSkip := 0.
+	
+	allCards := OrderedCollection with: Card.
+	cards := OrderedCollection new.
+
+	2 timesRepeat: [
+    cards add: (allCards atRandom)].
 ]
 
 { #category : 'initialization' }
