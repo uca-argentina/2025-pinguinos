@@ -38,7 +38,7 @@ HyperJump >> initialize [
 { #category : 'initialization' }
 HyperJump >> initializeInBoardOfSize: aBoardParsecSize at: position [
 
-	super initializeX: position.
+	super initializeAtPosition: position.
 
 	1 to: parsecListSize do: [ :i |
 	parsecList add: aBoardParsecSize / (i + 1) ]

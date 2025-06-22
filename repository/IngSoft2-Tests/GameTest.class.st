@@ -14,6 +14,101 @@ GameTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 		withExceptionDo: [ :error | self assert: error messageText equals: errorMessage ]
 ]
 
+{ #category : 'tests' }
+GameTest >> testIfIMoveShip2AndThen3PositionsOnTheBoardItsPositionChangesAccordingly [
+
+	| aShip aGame |
+	
+	aShip := Ship named: 'player 1'.
+
+	aGame := Game
+		         inSize: 8
+		         withWormHoleFrom: 4
+		         to: 7
+		         with: { (LoadedDie withSides: { 2. 3 }) }
+		         and: { aShip }.
+
+	2 timesRepeat: [ aGame nextTurn ].
+
+	self assert: aShip position equals: 6
+]
+
+{ #category : 'tests' }
+GameTest >> testIfIMoveShip2PositionsOnTheBoardItsPositionChangesAccordingly [
+
+	| aShip aGame |
+	
+	aShip := Ship named: 'player 1'.
+
+	aGame := Game
+		         inSize: 8
+		         withWormHoleFrom: 4
+		         to: 7
+		         with: { (LoadedDie withSides: 2) }
+		         and: { aShip }.
+
+	aGame nextTurn.
+
+	self assert: aShip position equals: 3
+]
+
+{ #category : 'tests' }
+GameTest >> testIfIMoveShipByMorePositionsThanTheSizeOfTheBoardShipStaysInLastSquare [
+
+	| aShip aGame |
+	
+	aShip := Ship named: 'player 1'.
+
+	aGame := Game
+		         inSize: 8
+		         withWormHoleFrom: 4
+		         to: 7
+		         with: { (LoadedDie withSides: 20) }
+		         and: { aShip }.
+
+	aGame nextTurn.
+
+	self assert: aShip position equals: 8
+]
+
+{ #category : 'tests' }
+GameTest >> testIfIMoveShipIntoEntranceOfWormHoleThenItEndsUpOnOtherSide [
+
+	| aShip aGame |
+	
+	aShip := Ship named: 'player 1'.
+
+	aGame := Game
+		         inSize: 8
+		         withWormHoleFrom: 4
+		         to: 7
+		         with: { (LoadedDie withSides: 3) }
+		         and: { aShip }.
+
+	aGame nextTurn.
+
+	self assert: aShip position equals: 7
+]
+
+{ #category : 'tests' }
+GameTest >> testIfIMoveShipIntoExitOfWormHoleThenItEndsUpOnOtherSide [
+
+	| aShip aGame |
+	
+	aShip := Ship named: 'player 1'.
+
+	aGame := Game
+		         inSize: 8
+		         withWormHoleFrom: 4
+		         to: 7
+		         with: { (LoadedDie withSides: 6) }
+		         and: { aShip }.
+
+	aGame nextTurn.
+
+	self assert: aShip position equals: 4.
+]
+
 { #category : 'running' }
 GameTest >> testWhenShipReachesGoalThenGameEndsAndWeCanGetFinalBoardPositions [
 	

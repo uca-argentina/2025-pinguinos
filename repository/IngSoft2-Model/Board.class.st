@@ -37,6 +37,13 @@ Board class >> validateSizeIsPositive: aSize [
 		Error signal: 'Size for the grid must be positive.' ]
 ]
 
+{ #category : 'validation' }
+Board class >> validateWormHoleFrom: anOrigin to: aDestination in: aBoardSize [
+	
+	self is: anOrigin and: aDestination withinBoundsOf: aBoardSize.
+	self areEnds: anOrigin and: aDestination inGoal: aBoardSize.
+]
+
 { #category : 'creation' }
 Board class >> withSize: aSize [
 
@@ -47,8 +54,7 @@ Board class >> withSize: aSize [
 { #category : 'creation' }
 Board class >> withSize: aSize withWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
 
-	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
-	self areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize.
+	self validateWormHoleFrom: wormHoleOrigin to: wormHoleEnd in: aSize. 
 
 	^ (self withSize: aSize)
 		  initializeWithWormHoleFrom: wormHoleOrigin
@@ -93,7 +99,7 @@ Board >> resolveMovementOf: anIntendedPosition [
 	| anIntendedPositionWithinBounds |
 	
 	anIntendedPositionWithinBounds := anIntendedPosition min: boardSize.
-	^ (map at: anIntendedPositionWithinBounds) landingCoordinate
+	^ (map at: anIntendedPositionWithinBounds)
 ]
 
 { #category : 'accessing' }

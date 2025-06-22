@@ -11,14 +11,16 @@ Class {
 { #category : 'accessing' }
 Blackhole class >> at: aSquare in: aBoard [
 
-	| exit |
+	| aDestiny |
 	
-	exit := (aBoard getSquareAt: aSquare - 4) getX .
-	^ self new initializeTo: exit from: aSquare
+	aDestiny := (aBoard getSquareAt: aSquare - 4) getPosition.
+	^ self new initializeTo: aDestiny from: aSquare
 ]
 
 { #category : 'action' }
 Blackhole >> applyEffectTo: aShip in: aGame [
-
-	destination >= x ifTrue: [ aShip completeLaps: -1 ]
+	
+	super applyEffectTo: aShip in: aGame.
+	destination >= origin ifTrue: [ aShip completeLaps: -1 ].
+	
 ]

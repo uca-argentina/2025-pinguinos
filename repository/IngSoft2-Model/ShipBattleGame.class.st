@@ -29,18 +29,6 @@ ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: a
 		  withSpecialSquaresAt: squarePositions
 ]
 
-{ #category : 'instance creation' }
-ShipBattleGame class >> inSize: aSize rounds: aRoundNumber withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [
-
-	^ self new
-		  initializeInSize: aSize
-		  rounds: aRoundNumber
-		  withWormholeFrom: aSquare
-		  to: anotherSquare
-		  with: aDiceSet
-		  and: aSetOfShips
-]
-
 { #category : 'accessing' }
 ShipBattleGame >> boardState [
 
@@ -133,24 +121,6 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 	gameWinner := nil
 ]
 
-{ #category : 'initialization' }
-ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber withWormholeFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [
-
-	board := CircularBoard
-		         withSize: aSize
-		         rounds: aRoundNumber
-		         withWormHoleFrom: aSquare
-		         to: anotherSquare.
-
-	diceSet := DiceSet withDice: aDiceSet.
-
-	ships := self orderShips: aSetOfShips.
-
-	shipToMove := 1.
-	gameOver := false.
-	gameWinner := nil.
-]
-
 { #category : 'game controls' }
 ShipBattleGame >> move: aShip byParsecs: anAmountOfParsecs [
 
@@ -163,7 +133,7 @@ ShipBattleGame >> move: aShip byParsecs: anAmountOfParsecs [
 { #category : 'game controls' }
 ShipBattleGame >> moveAllShipsBackToStart [
 
-	ships do: [ :ship | ship moveBackwardTo: (board getSquareAt: 1) ]
+	ships do: [ :ship | ship moveTo: (board getSquareAt: 1) ]
 ]
 
 { #category : 'game controls' }
@@ -172,6 +142,13 @@ ShipBattleGame >> moveAllShipsBy: numberToMove exceptFor: exceptionShip [
 	ships do: [ :ship |
 		ship ~= exceptionShip ifTrue: [
 			ship moveBy: numberToMove onCircularBoard: board of: self ] ]
+]
+
+{ #category : 'game controls' }
+ShipBattleGame >> moveAllShipsTo: destination exceptFor: exceptionShip [
+
+	ships do: [ :ship |
+		ship ~= exceptionShip ifTrue: [ self moveShip: ship to: destination ] ]
 ]
 
 { #category : 'game controls' }

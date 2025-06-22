@@ -14,10 +14,62 @@ Class {
 }
 
 { #category : 'validation' }
+CircularBoard class >> validate: aSquareType in: squarePositions areWithinBoundsOf: aSize [
+
+	(squarePositions at: aSquareType ifAbsent: [ {  } ]) do: [
+		:squarePosition |
+		(squarePosition between: 1 and: aSize) ifFalse: [
+			Error signal:
+				'Position of ' , aSquareType , ' must be within Bounds of Board!' ] ]
+]
+
+{ #category : 'validation' }
+CircularBoard class >> validateMoonWalksin: squarePositions areWithinBoundsOf: aSize [
+
+	| moonWalkPositions |
+	moonWalkPositions := squarePositions
+		                     at: 'MoonWalks'
+		                     ifAbsent: [ ^ self ].
+
+	moonWalkPositions do: [ :moonWalkValues |
+		(moonWalkValues first between: 1 and: aSize) ifFalse: [ Error signal: 'Position of MoonWalks must be within Bounds of Board!' ] ]
+]
+
+{ #category : 'validation' }
 CircularBoard class >> validateRoundNumberIsPositive: aRoundNumber [
 
 	aRoundNumber < 1 ifTrue: [
 		Error signal: 'Round number for the board must be positive.' ]
+]
+
+{ #category : 'validation' }
+CircularBoard class >> validateSquarePositionsAreWithinBounds: squarePositions of: aSize [
+
+	self validate: 'BlackHoles' in: squarePositions areWithinBoundsOf: aSize.
+	self validate: 'HyperSpaceJumps' in: squarePositions areWithinBoundsOf: aSize. 
+	self validate: 'HyperJumps' in: squarePositions areWithinBoundsOf: aSize. 
+	self validate: 'AtomicBombs' in: squarePositions areWithinBoundsOf: aSize. 
+	
+	self validateWormHolesIn: squarePositions areWithinBoundsOf: aSize.
+	self validateMoonWalksin: squarePositions areWithinBoundsOf: aSize. 
+]
+
+{ #category : 'validation' }
+CircularBoard class >> validateWormHolesIn: squarePositions areWithinBoundsOf: aSize [
+
+	| wormHolePositions |
+	
+	wormHolePositions := squarePositions
+		                     at: 'WormHoles'
+		                     ifAbsent: [ ^ self ].
+		
+	wormHolePositions do: [ :wormHoleEnds |
+		Board
+			is: wormHoleEnds first
+			and: wormHoleEnds second
+			withinBoundsOf: aSize ]
+		
+	
 ]
 
 { #category : 'creation' }
@@ -41,27 +93,11 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber [
 
 { #category : 'creation' }
 CircularBoard class >> withSize: aSize rounds: aRoundNumber withSpecialSquaresAt: squarePositions [
-
-	self validateRoundNumberIsPositive: aRoundNumber.
-	Board validateSizeIsPositive: aSize.
-
+	
+	self validateSquarePositionsAreWithinBounds: squarePositions of: aSize.
 
 	^ (self withSize: aSize rounds: aRoundNumber)
 		  initializeWithSpecialSquaresAt: squarePositions
-]
-
-{ #category : 'creation' }
-CircularBoard class >> withSize: aSize rounds: aRoundNumber withWormHoleFrom: wormHoleOrigin to: wormHoleEnd [
-
-	self validateRoundNumberIsPositive: aRoundNumber.
-	Board validateSizeIsPositive: aSize.
-
-	self is: wormHoleOrigin and: wormHoleEnd withinBoundsOf: aSize.
-	self areEnds: wormHoleOrigin and: wormHoleEnd inGoal: aSize.
-
-	^ (self withSize: aSize rounds: aRoundNumber)
-		  initializeWithWormHoleFrom: wormHoleOrigin
-		  to: wormHoleEnd
 ]
 
 { #category : 'accessing' }
@@ -98,7 +134,21 @@ CircularBoard >> createHyperSpaceJumpsAt: aSquarePositions [
 CircularBoard >> createMoonWalksAt: squarePositions [
 
 	squarePositions do: [ :position |
-		map at: position put: (MoonWalk by: 3 at: position) ]
+		map
+			at: position first
+			put: (MoonWalk by: position second at: position first) ]
+]
+
+{ #category : 'accessing' }
+CircularBoard >> createWormHolesAt: squarePositions [
+
+	squarePositions do: [ :position |
+		| wormHoleEnds |
+		wormHoleEnds := Wormhole from: position first to: position second.
+
+		map at: position first put: wormHoleEnds first.
+
+		map at: position second put: wormHoleEnds second ]
 ]
 
 { #category : 'getter' }
@@ -129,7 +179,7 @@ CircularBoard >> initializeRandomSpecialSquares [
 		(40 >= result and: result > 20) ifTrue: [ hyperSpaceJumps add: i ] ].
 
 	resultForEachCell doWithIndex: [ :result :i |
-		(20 >= result and: result > 10) ifTrue: [ moonWalks add: i ] ].
+		(20 >= result and: result > 10) ifTrue: [ moonWalks add: {i. (1 to: 5) atRandom} ] ].  "{posicion. N del moonwalk}"
 
 	resultForEachCell doWithIndex: [ :result :i |
 		(10 >= result and: result > 2) ifTrue: [ hyperJumps add: i ] ].
@@ -137,12 +187,12 @@ CircularBoard >> initializeRandomSpecialSquares [
 	resultForEachCell doWithIndex: [ :result :i |
 		(2 >= result and: result > 0) ifTrue: [ atomicBombs add: i ] ].
 
-	self initializeWithSpecialSquaresAt: {
-			blackHoles.
-			hyperSpaceJumps.
-			moonWalks.
-			hyperJumps.
-			atomicBombs }
+	self initializeWithSpecialSquaresAt: (Dictionary newFrom: {
+				 ('BlackHoles' -> blackHoles).
+				 ('HyperSpaceJumps' -> hyperSpaceJumps).
+				 ('MoonWalks' -> moonWalks).
+				 ('HyperJumps' -> hyperJumps).
+				 ('AtomicBombs' -> atomicBombs) })
 ]
 
 { #category : 'initialization' }
@@ -158,11 +208,12 @@ CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [
 { #category : 'initialization' }
 CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [
 
-	self createBlackHolesAt: squarePositions first.
-	self createHyperSpaceJumpsAt: squarePositions second.
-	self createMoonWalksAt: squarePositions third.
-	self createHyperJumpsAt: squarePositions fourth.
-	self createAtomicBombsAt: squarePositions fifth
+	self createBlackHolesAt: (squarePositions at: 'BlackHoles' ifAbsent: [ {} ]).
+	self createHyperSpaceJumpsAt: (squarePositions at: 'HyperSpaceJumps' ifAbsent: [ {} ]).
+	self createMoonWalksAt: (squarePositions at: 'MoonWalks' ifAbsent: [ {} ]).
+	self createHyperJumpsAt: (squarePositions at: 'HyperJumps' ifAbsent: [ {} ]).
+	self createAtomicBombsAt: (squarePositions at: 'AtomicBombs' ifAbsent: [ {} ]).
+	self createWormHolesAt: (squarePositions at: 'WormHoles' ifAbsent: [ {} ])
 ]
 
 { #category : 'process' }

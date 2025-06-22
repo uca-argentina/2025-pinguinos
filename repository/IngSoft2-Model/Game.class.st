@@ -112,6 +112,12 @@ Game >> isGameOver [
 ]
 
 { #category : 'game controls' }
+Game >> moveShip: aShip to: destination [
+
+	aShip moveTo: (board getSquareAt: destination)
+]
+
+{ #category : 'game controls' }
 Game >> nextTurn [
 
 	| currentShip |
@@ -119,7 +125,7 @@ Game >> nextTurn [
 	self canIKeepPlaying.
 	
 	currentShip := ships at: shipToMove.
-	currentShip moveBy: diceSet roll on: board.
+	currentShip moveBy: diceSet roll on: board of: self.
 
 	self haveWeGotAWinner: currentShip.
 
