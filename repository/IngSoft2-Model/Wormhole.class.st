@@ -16,15 +16,17 @@ Wormhole class >> areEndsDistinct: wormHoleOrigin and: wormHoleEnd [
 ]
 
 { #category : 'instance creation' }
-Wormhole class >> from: origin to: end [
+Wormhole class >> from: anOriginPosition to: aDestiny [
 
-	self areEndsDistinct: origin and: end.
-	
-	Square validateXIsPositive: origin.
-	Square validateXIsPositive: end.
-	
-	Square validateXIsInteger: origin.
-	Square validateXIsInteger: end.
-	
-	^ { (self new) initializeTo: end from: origin . (self new) initializeTo: origin from: end }
+	self areEndsDistinct: anOriginPosition and: aDestiny.
+
+	Square validateXIsPositive: anOriginPosition.
+	Square validateXIsPositive: aDestiny.
+
+	Square validateXIsInteger: anOriginPosition.
+	Square validateXIsInteger: aDestiny.
+
+	^ {
+		  (self new initializeTo: aDestiny from: anOriginPosition).
+		  (self new initializeTo: anOriginPosition from: aDestiny) }
 ]

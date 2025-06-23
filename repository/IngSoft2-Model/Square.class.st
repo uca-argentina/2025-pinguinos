@@ -6,7 +6,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'status',
-		'x'
+		'origin'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -21,8 +21,9 @@ Square class >> validateX: x [
 
 { #category : 'validation' }
 Square class >> validateXIsInteger: anXPosition [
-	
-	anXPosition isInteger ifFalse: [ Error signal: 'X position must be an integer.' ]
+
+	anXPosition isInteger ifFalse: [
+		Error signal: 'X position must be an integer.' ]
 ]
 
 { #category : 'validation' }
@@ -37,7 +38,7 @@ Square class >> x: aXPosition [
 		
 	self validateX: aXPosition.
 		
-	^self new initializeX: aXPosition.
+	^self new initializeAtPosition: aXPosition.
 ]
 
 { #category : 'action' }
@@ -53,22 +54,22 @@ Square >> checkStatus [
 ]
 
 { #category : 'getter' }
-Square >> getX [
+Square >> getPosition [
 
-	^ x
+	^ origin
 ]
 
 { #category : 'initialization' }
-Square >> initializeX: anXPosition [
+Square >> initializeAtPosition: anXPosition [
 
-	x := anXPosition.
+	origin := anXPosition.
 	self setStatus: 'Free'.
 ]
 
 { #category : 'getter' }
 Square >> landingCoordinate [
 
-	^ x
+	^ origin
 ]
 
 { #category : 'setter' }

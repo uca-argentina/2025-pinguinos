@@ -17,15 +17,21 @@ MoverSquare class >> isAbstract [
 	^ self == MoverSquare
 ]
 
-{ #category : 'initialization' }
-MoverSquare >> initializeTo: otherEnd from: origin [
-	
-	super initializeX: origin.
-	destination := otherEnd.
+{ #category : 'action' }
+MoverSquare >> applyEffectTo: aShip in: aGame [
+
+	aGame moveShip: aShip to: destination.
 ]
 
 { #category : 'getter' }
-MoverSquare >> landingCoordinate [
+MoverSquare >> getDestination [
 
 	^ destination
+]
+
+{ #category : 'initialization' }
+MoverSquare >> initializeTo: aDestination from: anOriginPosition [
+	
+	super initializeAtPosition: anOriginPosition.
+	destination := aDestination.
 ]

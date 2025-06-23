@@ -17,6 +17,23 @@ WormholeTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMess
 ]
 
 { #category : 'tests' }
+WormholeTest >> testPlayerCantCreateWormHolesOutsideCircularBoard [
+
+	self
+		should: [
+			ShipBattleGame
+				inSize: 6
+				rounds: 2
+				with: { (LoadedDie withSides: 2) }
+				and: { (Ship named: 'Jorge') }
+				withSpecialSquaresAt:
+				(Dictionary newFrom: { ('WormHoles' -> { {20. 2} }) }) ]
+		raise: Error
+		withErrorMessage:
+		'WormHole must have both its ends leading to valid positions inside the limits of the board!'
+]
+
+{ #category : 'tests' }
 WormholeTest >> testWhenFirstPositionIsNegativeThenCreationFails [
 
 	self

@@ -15,41 +15,42 @@ Class {
 
 { #category : 'instance creation' }
 HyperJump class >> inBoardOfSize: aBoardSize at: aPosition [
-	
-	^ self new initializeInBoardOfSize: aBoardSize at: aPosition.
+
+	^ self new initializeInBoardOfSize: aBoardSize at: aPosition
 ]
 
 { #category : 'action' }
 HyperJump >> applyEffectTo: aShip in: aGame [
 
-	aGame move: aShip byParsecs: (self parsecsToMove).
+	aGame move: aShip byParsecs: self parsecsToMove
 ]
 
 { #category : 'initialization' }
 HyperJump >> initialize [
 
 	super initialize.
-	
+
 	parsecList := OrderedCollection new.
 	parsecListSize := 5.
-	currentIndex := 1.
+	currentIndex := 1
 ]
 
 { #category : 'initialization' }
 HyperJump >> initializeInBoardOfSize: aBoardParsecSize at: position [
-	
-	super initializeX: position.
-	
-	1 to: parsecListSize do: [ :i | parsecList add: (aBoardParsecSize / (i + 1)) ].
+
+	super initializeAtPosition: position.
+
+	1 to: parsecListSize do: [ :i |
+	parsecList add: aBoardParsecSize / (i + 1) ]
 ]
 
 { #category : 'accessing' }
 HyperJump >> parsecsToMove [
-	
+
 	| returnValue |
 	
 	returnValue := parsecList at: currentIndex.
 	currentIndex := currentIndex \\ parsecListSize + 1.
-	
-	 ^ returnValue
+
+	^ returnValue
 ]

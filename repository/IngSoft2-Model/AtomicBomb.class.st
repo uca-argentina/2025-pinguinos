@@ -16,14 +16,13 @@ AtomicBomb class >> at: aPosition [
 
 { #category : 'action' }
 AtomicBomb >> applyEffectTo: aShip in: aGame [
-	
+
 	aGame moveAllShipsBackToStart.
-	aGame breakShieldsOfAllShips.
-	
+	aGame breakShieldsOfAllShips
 ]
 
 { #category : 'initialization' }
 AtomicBomb >> initializeAt: aPosition [
 	
-	super initializeX: aPosition .
+	super initializeAtPosition: aPosition .
 ]
