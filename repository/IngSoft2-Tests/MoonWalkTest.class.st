@@ -41,15 +41,17 @@ MoonWalkTest >> testMoonWalkOf3AtPosition2ThenEveryOtherPlayerGetsSentToPosition
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julio').
 				 ('position' -> 2).
-				 ('lap' -> 1) }).
+				 ('lap' -> 1) .
+				('card count' -> 2)
+				}).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 6).
-				 ('lap' -> 0) }).
+				 ('lap' -> 0).('card count' -> 2) }).
 	expectedResult at: '3°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 4).
-				 ('lap' -> 0) }).
+				 ('lap' -> 0) .('card count' -> 2)}).
 
 	self assert: aGame boardState equals: expectedResult
 ]
@@ -95,11 +97,11 @@ MoonWalkTest >> testWhenAPlayerGetsMovedBackByAMoonWalkBackIntoAnotherMoonWalkTh
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 2).
-				 ('lap' -> 1) }).
+				 ('lap' -> 1).('card count' -> 2) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julio').
 				 ('position' -> 4).
-				 ('lap' -> 0) }).
+				 ('lap' -> 0) .('card count' -> 2)}).
 
 	self assert: aGame boardState equals: expectedResult
 ]
@@ -129,11 +131,11 @@ MoonWalkTest >> testWhenAPlayerGetsMovedBackByAMoonWalkBackIntoAnotherSpecialSqu
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 2).
-				 ('lap' -> 1) }).
+				 ('lap' -> 1) .('card count' -> 2)}).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julio').
 				 ('position' -> 4).
-				 ('lap' -> 0) }).
+				 ('lap' -> 0) .('card count' -> 2) }).
 
 	self assert: aGame boardState equals: expectedResult
 ]

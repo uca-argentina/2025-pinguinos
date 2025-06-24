@@ -59,15 +59,18 @@ AtomicBombTest >> testPlayerLandsOnAtomicBombAtPosition5ThenEveryoneReturnsToSqu
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 2) }).
+				 ('lap' -> 2).
+				('card count' -> 2) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 1).
-				 ('lap' -> 1) }).
+				 ('lap' -> 1).
+				('card count' -> 2) }).
 	expectedResult at: '3°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julio').
 				 ('position' -> 1).
-				 ('lap' -> 1) }).
+				 ('lap' -> 1).
+				('card count' -> 2) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 2.
