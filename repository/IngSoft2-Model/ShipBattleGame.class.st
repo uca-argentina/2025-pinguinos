@@ -146,13 +146,6 @@ ShipBattleGame >> moveAllShipsBy: numberToMove exceptFor: exceptionShip [
 ]
 
 { #category : 'game controls' }
-ShipBattleGame >> moveAllShipsTo: destination exceptFor: exceptionShip [
-
-	ships do: [ :ship |
-		ship ~= exceptionShip ifTrue: [ self moveShip: ship to: destination ] ]
-]
-
-{ #category : 'game controls' }
 ShipBattleGame >> nextTurn [
 
 	| currentShip |

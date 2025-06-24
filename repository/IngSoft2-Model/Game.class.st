@@ -17,12 +17,6 @@ Class {
 }
 
 { #category : 'instance creation' }
-Game class >> in: aBoard with: dice and: ships [
-
-	^self new initializeIn: aBoard with: dice and: ships
-]
-
-{ #category : 'instance creation' }
 Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aDiceSet and: aSetOfShips [
 
 	^ self new

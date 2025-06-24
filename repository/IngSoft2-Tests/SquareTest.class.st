@@ -17,28 +17,6 @@ SquareTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMessag
 ]
 
 { #category : 'running' }
-SquareTest >> testWhenSquareIsCreatedThenItIsFree [
-
-	| aSquare |
-	
-	aSquare:= Square x: 8.
-	
-	self assert: (aSquare checkStatus) equals: 'Free'
-]
-
-{ #category : 'asserting' }
-SquareTest >> testWhenSquareIsOccupiedThenItIsNotFree [
-
-	| aSquare |
-	
-	aSquare:= Square x: 8.
-	
-	aSquare occupy.
-	
-	self assert: (aSquare checkStatus) equals: 'Occupied'
-]
-
-{ #category : 'running' }
 SquareTest >> testWhenXIsNegativeThenCreationFails [
 
 	self
