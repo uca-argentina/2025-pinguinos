@@ -8,13 +8,17 @@ Class {
 { #category : 'tests' }
 CardTest >> testWhenCardGiverAtPosition2ThenShipGetsCardsAddedToTheirCount [
 
-	| aGame expectedResult |
+	| aGame expectedResult cardsToDraw |
+	
+	cardsToDraw := OrderedCollection with: SpeedCard new.
 	aGame := ShipBattleGame
 		         inSize: 6
 		         rounds: 2
 		         with: { (LoadedDie withSides: 1) }
-		         and: { (Ship named: 'Jorge') }
-		         withSpecialSquaresAt: (Dictionary newFrom: { ('CardGivers' -> { 2 }) }).
+		         and: { Ship named: 'Jorge' }
+		         withSpecialSquaresAt:
+		         (Dictionary newFrom: { ('CardGivers' -> { 2 })})
+					withDeck: (LoadedDeck cards: cardsToDraw).
 
 	aGame nextTurn.
 
@@ -27,13 +31,33 @@ CardTest >> testWhenCardGiverAtPosition2ThenShipGetsCardsAddedToTheirCount [
 				 ('lap' -> 1) .
 				 ('card count' -> 3)}).
 				
-	self assert: aGame boardState equals: expectedResult 
+	self assert: aGame boardStateWithCards equals: expectedResult 
 ]
 
 { #category : 'running' }
-CardTest >> testWhenShipIsCreatedItHasTwoRandomCards [
+CardTest >> testWhenShipIsCreatedByAGameThenItHasTwoRandomCards [
 
-	| aShip |
-	aShip := Ship new.
-   self assert: aShip cards size equals: 2.
+	| aGame expectedResult jorgeShip cardsToDraw |
+	
+
+	cardsToDraw := OrderedCollection with: SpeedCard new.
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         with: { (LoadedDie withSides: 3) }
+		         and: { jorgeShip }
+		         withSpecialSquaresAt:
+		         (Dictionary newFrom: { })
+					withDeck: (LoadedDeck cards: cardsToDraw).
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 1).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+
+	self assert: aGame boardStateWithCards equals: expectedResult
 ]

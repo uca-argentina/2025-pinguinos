@@ -52,33 +52,27 @@ HyperJumpTest >> testHyperJumpInternalListCyclesBackProperlyWhen6thPlayerTouches
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julian').
 				 ('position' -> 1).
-				 ('lap' -> 2) .
-				('card count' -> 2)}).
+				 ('lap' -> 2) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 2).
-				('card count' -> 2) }).
+				 ('lap' -> 2) }).
 	expectedResult at: '3°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julio').
 				 ('position' -> 6).
-				 ('lap' -> 1).
-				('card count' -> 2) }).
+				 ('lap' -> 1) }).
 	expectedResult at: '4°' put: (Dictionary newFrom: {
 				 ('name' -> 'Pepe').
 				 ('position' -> 5).
-				 ('lap' -> 1) .
-				('card count' -> 2)}).
+				 ('lap' -> 1) }).
 	expectedResult at: '5°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luis').
 				 ('position' -> 5).
-				 ('lap' -> 1).
-				('card count' -> 2) }).
+				 ('lap' -> 1) }).
 	expectedResult at: '6°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 5).
-				 ('lap' -> 1) .
-				('card count' -> 2)}).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult
 ]
@@ -108,13 +102,11 @@ HyperJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSent60ParsecsForward
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 2) .
-				('card count' -> 2)}).
+				 ('lap' -> 2) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julio').
 				 ('position' -> 6).
-				 ('lap' -> 1) .
-				('card count' -> 2)}).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult
 ]
@@ -140,8 +132,7 @@ HyperJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSent60ParsecsForward
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 2).
-				('card count' -> 2)}).
+				 ('lap' -> 2)}).
 
 	self assert: aGame boardState equals: expectedResult
 ]

@@ -22,6 +22,12 @@ Ship class >> named: aName [
 	^ self new initializeName: aName
 ]
 
+{ #category : 'adding' }
+Ship >> addCards: aSetOfCards [
+
+	cards:= aSetOfCards.
+]
+
 { #category : 'accessing' }
 Ship >> canIPlayTurn [
 
@@ -39,21 +45,23 @@ Ship >> completeLaps: aNumberOfLaps [
 	laps := laps + aNumberOfLaps
 ]
 
+{ #category : 'testing' }
+Ship >> hasAny: aCard [
+
+	(cards includes: aCard) ifFalse: [
+		Error signal: 'Card not available' ]
+]
+
 { #category : 'initialization' }
 Ship >> initialize [
 
-	| allCards |
 	super initialize.
 	position := 1.
 	laps := 1.
 	shields := 3.
 	turnsToSkip := 0.
 	
-	allCards := OrderedCollection with: Card.
-	cards := OrderedCollection new.
 
-	2 timesRepeat: [
-    cards add: (allCards atRandom)].
 ]
 
 { #category : 'initialization' }
@@ -93,12 +101,15 @@ Ship >> moveBy: aRolledNumber on: aBoard of: aGame [
 ]
 
 { #category : 'actions' }
-Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
+Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [ 
 
-	| intendedPosition resultingPosition resultingSquare completedLaps |
+	| intendedPosition resultingPosition resultingSquare completedLaps speedEffect |
 	
-	intendedPosition := position + aRolledNumber.
+	speedEffect := cards ifNotNil: [ (aGame manager) addMovement: self ] ifNil: [ 0 ].
+	
+	intendedPosition := position + aRolledNumber + speedEffect.
 
+	
 	resultingPosition := aCircularBoard resolveMovementOf:
 		                     intendedPosition.
 
@@ -146,6 +157,13 @@ Ship >> recoverShields [
 Ship >> remainingShields [
 
 	^ shields 
+]
+
+{ #category : 'removing' }
+Ship >> removeCard: aCard [
+
+	cards remove: aCard
+
 ]
 
 { #category : 'actions' }

@@ -12,6 +12,7 @@ Class {
 Deck >> drawCard [
 
 	| cardType |
-	cardType := {Card new}.
+	cardType := { SpeedCard new }.
+	
 	^ cardType atRandom
 ]

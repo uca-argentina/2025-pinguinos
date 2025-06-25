@@ -35,8 +35,7 @@ HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition2ThenPlayerGetsSentToPosition4
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 6).
-				 ('lap' -> 1) .
-				('card count' -> 2)}).
+				 ('lap' -> 1)}).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 2
@@ -62,8 +61,7 @@ HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition2ThenPlayerGetsSentToPosition4
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 6).
-				 ('lap' -> 1) .
-				('card count' -> 2)}).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 2
@@ -90,8 +88,7 @@ HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSentToPosition2
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 2).
-				 ('lap' -> 2).
-				('card count' -> 2) }).
+				 ('lap' -> 2) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 2
@@ -138,8 +135,7 @@ HyperSpaceJumpTest >> testHyperSpaceJumpAtPosition5ThenPlayerGetsSentAcrossTheGo
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 3).
-				 ('lap' -> 2).
-				('card count' -> 2) }).
+				 ('lap' -> 2)}).
 
 	self assert: aGame boardState equals: expectedResult
 ]

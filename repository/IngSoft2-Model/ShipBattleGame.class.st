@@ -4,6 +4,9 @@ The class which will manage a ship battle game on a circular board.
 Class {
 	#name : 'ShipBattleGame',
 	#superclass : 'Game',
+	#instVars : [
+		'cardManager'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -30,6 +33,18 @@ ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: a
 ]
 
 { #category : 'accessing' }
+ShipBattleGame class >> inSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions withDeck: aDeck [
+
+	^ self new
+		  initializeInSize: aSize
+		  rounds: aRoundNumber
+		  with: aDiceSet
+		  and: aSetOfShips
+		  withSpecialSquaresAt: squarePositions
+		  withDeck: aDeck.
+]
+
+{ #category : 'accessing' }
 ShipBattleGame >> boardState [
 
 	| currentGameState rankedList tempShipsList |
@@ -46,8 +61,7 @@ ShipBattleGame >> boardState [
 			put: (Dictionary newFrom: {
 						 ('name' -> ship name).
 						 ('position' -> ship position).
-						 ('lap' -> ship laps) .
-						 ('card count' -> ship cards size) }) ].
+						 ('lap' -> ship laps) })].
 
 	^ currentGameState
 ]
@@ -116,6 +130,30 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 	diceSet := DiceSet withDice: aDiceSet.
 
 	ships := self orderShips: aSetOfShips.
+
+	shipToMove := 1.
+	gameOver := false.
+	gameWinner := nil
+]
+
+{ #category : 'initialization' }
+ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet and: aSetOfShips withSpecialSquaresAt: squarePositions withDeck: aDeck [
+
+	board := CircularBoard
+		         withSize: aSize
+		         rounds: aRoundNumber
+		         withSpecialSquaresAt: squarePositions.
+
+	diceSet := DiceSet withDice: aDiceSet.
+
+	ships :=  aSetOfShips collect: [ :ship | ship addCards: (OrderedCollection 
+																					with: aDeck drawCard 
+																					with: aDeck drawCard) ].
+
+	cardManager := CardManager
+		               ships: ships
+		               board: board
+		               deck: aDeck.
 
 	shipToMove := 1.
 	gameOver := false.

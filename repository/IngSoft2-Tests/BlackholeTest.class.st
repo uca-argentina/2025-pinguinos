@@ -51,8 +51,7 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4AndLos
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 4).
-				 ('lap' -> 0) .
-				('card count' -> 2)}).
+				 ('lap' -> 0) }).
 
 	self assert: aGame boardState equals: expectedResult
 ]
@@ -77,7 +76,7 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4ThenLa
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 4).
-				 ('lap' -> 0) .('card count' -> 2)}).
+				 ('lap' -> 0) }).
 
 	self assert: aGame boardState equals: expectedResult
 ]

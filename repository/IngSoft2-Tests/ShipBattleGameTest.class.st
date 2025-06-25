@@ -64,11 +64,11 @@ ShipBattleGameTest >> testWhen2ShipsFightIfTheLoserHad0ShieldsThenHeLoses2Turns 
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 5).
-				 ('lap' -> 1).('card count' -> 2) }).
+				 ('lap' -> 1) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 1).('card count' -> 2) }).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 2.
@@ -97,11 +97,11 @@ ShipBattleGameTest >> testWhen2ShipsFightIfTheLoserHad0ShieldsThenHeLoses2Turns 
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 4).
-				 ('lap' -> 2).('card count' -> 2) }).
+				 ('lap' -> 2) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 1).('card count' -> 2) }).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 3.
@@ -120,11 +120,11 @@ ShipBattleGameTest >> testWhen2ShipsFightIfTheLoserHad0ShieldsThenHeLoses2Turns 
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 4).
-				 ('lap' -> 2) .('card count' -> 2)}).
+				 ('lap' -> 2) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 5).
-				 ('lap' -> 1) .('card count' -> 2)}).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult
 ]
@@ -155,11 +155,11 @@ ShipBattleGameTest >> testWhen2ShipsLandInSameSquareAndFightThenLoserCanSkipTurn
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 3).
-				 ('lap' -> 2).('card count' -> 2) }).
+				 ('lap' -> 2)}).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 1).('card count' -> 2) }).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 3
@@ -190,11 +190,11 @@ ShipBattleGameTest >> testWhen2ShipsLandInSameSquareTheFighterWinsCorrectly [
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 5).
-				 ('lap' -> 1).('card count' -> 2) }).
+				 ('lap' -> 1)}).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 1).('card count' -> 2) }).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 2.
@@ -226,11 +226,11 @@ ShipBattleGameTest >> testWhen2ShipsLandInSameSquareTheShipBeingFoughtCanWinCorr
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 5).
-				 ('lap' -> 1).('card count' -> 2) }).
+				 ('lap' -> 1) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 1).
-				 ('lap' -> 1) .('card count' -> 2)}).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: lucianoShip remainingShields equals: 2.
@@ -262,11 +262,11 @@ ShipBattleGameTest >> testWhen2ShipsLandInSameSquareTheyCanDrawCorrectly [
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 5).
-				 ('lap' -> 1) .('card count' -> 2)}).
+				 ('lap' -> 1) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 5).
-				 ('lap' -> 1) .('card count' -> 2) }).
+				 ('lap' -> 1)  }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 3.
@@ -510,11 +510,11 @@ ShipBattleGameTest >> testWhenShipFightsShipWithNoShieldsAndWinsLoserWillLose2Mo
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 1).
-				 ('lap' -> 2) .('card count' -> 2)}).
+				 ('lap' -> 2) }).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 1) .('card count' -> 2)}).
+				 ('lap' -> 1) }).
 
 	self assert: aGame boardState equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 0.
@@ -551,11 +551,11 @@ ShipBattleGameTest >> testWhenShipFightsShipWithNoShieldsAndWinsLoserWillLose2Mo
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 1).
-				 ('lap' -> 2).('card count' -> 2) }).
+				 ('lap' -> 2)}).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 5).
-				 ('lap' -> 1).('card count' -> 2)}).
+				 ('lap' -> 1)}).
 
 	self assert: aGame boardState equals: expectedResult
 ]
@@ -582,11 +582,11 @@ ShipBattleGameTest >> testWith2ShipsInPlayWeCanGetRankedPositionOfShipsCorrectly
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 4).
-				 ('lap' -> 2). ('card count' -> 2)}).
+				 ('lap' -> 2)}).
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Luciano').
 				 ('position' -> 5).
-				 ('lap' -> 1). ('card count' -> 2) }).
+				 ('lap' -> 1)}).
 
 	self assert: aGame boardState equals: expectedResult
 ]
