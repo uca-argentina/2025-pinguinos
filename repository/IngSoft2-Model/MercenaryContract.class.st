@@ -29,6 +29,12 @@ MercenaryContract >> getAllyOf: aShip [
 
 ]
 
+{ #category : 'getter' }
+MercenaryContract >> getContractedMercenary [
+
+	^ contractedShip 
+]
+
 { #category : 'initialization' }
 MercenaryContract >> initializeFrom: aShip with: aContractedShip usedBy: aCard [
 	

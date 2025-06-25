@@ -43,9 +43,21 @@ CardManager >> getAlliesOf: aShip [
 	
 	alliedShips := activeCardEffects collect: [ :cardEffect |
 		               cardEffect getAllyOf: aShip ].
-	alliedShips:= alliedShips select: [ :alliedShip | alliedShip isNotNil ].
+	alliedShips := alliedShips select: [ :alliedShip | alliedShip isNotNil ].
 
 	^ alliedShips
+]
+
+{ #category : 'getter' }
+CardManager >> getContractedShips [
+
+	| contractedShips |
+	
+	contractedShips := activeCardEffects collect: [ :cardEffect |
+		               cardEffect getContractedMercenary ].
+	contractedShips := contractedShips select: [ :alliedShip | alliedShip isNotNil ].
+
+	^ contractedShips
 ]
 
 { #category : 'initialization' }

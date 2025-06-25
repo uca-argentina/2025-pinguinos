@@ -19,3 +19,9 @@ PermanentEffects >> getAllyOf: aShip [
 	
 	^ nil
 ]
+
+{ #category : 'getter' }
+PermanentEffects >> getContractedMercenary [
+	
+	^ nil
+]

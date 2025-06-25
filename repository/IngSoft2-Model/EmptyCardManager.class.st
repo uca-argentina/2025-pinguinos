@@ -26,6 +26,12 @@ EmptyCardManager >> getAlliesOf: aShip [
 	^ OrderedCollection new.
 ]
 
+{ #category : 'getter' }
+EmptyCardManager >> getContractedShips [
+
+	^ OrderedCollection new
+]
+
 { #category : 'initialization' }
 EmptyCardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
 
