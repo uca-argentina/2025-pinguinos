@@ -234,7 +234,8 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 	cardManager := CardManager
 		               ships: ships
 		               board: board
-		               deck: aDeck.
+		               deck: aDeck
+							game: self.
 
 	shipToMove := 1.
 	gameOver := false.

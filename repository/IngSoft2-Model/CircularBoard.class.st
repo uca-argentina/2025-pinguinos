@@ -5,7 +5,8 @@ Class {
 	#name : 'CircularBoard',
 	#superclass : 'Board',
 	#instVars : [
-		'rounds'
+		'rounds',
+		'lastSquareEffectUsed'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -96,6 +97,12 @@ CircularBoard class >> withSize: aSize rounds: aRoundNumber withSpecialSquaresAt
 
 	^ (self withSize: aSize rounds: aRoundNumber)
 		  initializeWithSpecialSquaresAt: squarePositions
+]
+
+{ #category : 'process' }
+CircularBoard >> applyLastSquareEffectTo: aShip in: aGame [
+
+	lastSquareEffectUsed ifNotNil: [ lastSquareEffectUsed applyEffectTo: aShip in: aGame ]
 ]
 
 { #category : 'accessing' }
@@ -229,6 +236,12 @@ CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [
 	self createWormHolesAt: (squarePositions at: 'WormHoles' ifAbsent: [ {} ]).
 	self createEmptySquaresAt: (squarePositions at: 'EmptySquares' ifAbsent: [ {} ]).
 	self createCardGiversAt: (squarePositions at: 'CardGivers' ifAbsent: [ {} ]).
+]
+
+{ #category : 'accessing' }
+CircularBoard >> lastSquareEffectUsed [
+
+	^ lastSquareEffectUsed 
 ]
 
 { #category : 'process' }

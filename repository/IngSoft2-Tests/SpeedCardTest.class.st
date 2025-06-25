@@ -16,7 +16,7 @@ SpeedCardTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMes
 			equals: aMessage ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'basic tests' }
 SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
@@ -58,8 +58,8 @@ SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
-SpeedCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
+{ #category : 'basic tests' }
+SpeedCardTest >> testSpeedCardCannotBePlayedOutsideOfPlayersTurn [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
 	cardsToDraw := OrderedCollection with: SpeedCard new.
@@ -105,8 +105,8 @@ SpeedCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
-SpeedCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSquares [
+{ #category : 'basic tests' }
+SpeedCardTest >> testWhen2SpeedCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSquares [
 
 	| aGame expectedResult jorgeShip currentDeck aCard cardsToDraw |
 	
@@ -141,8 +141,8 @@ SpeedCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
-SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndItAffectsTheEntireRoll [
+{ #category : 'basic tests' }
+SpeedCardTest >> testWhenSpeedCardIsPlayedThenItIsUsedAndItAffectsTheEntireRoll [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
 	cardsToDraw := OrderedCollection with: SpeedCard new.
@@ -174,41 +174,8 @@ SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndItAffectsTheEnti
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
-SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndShipMoves1MoreSquare [
-	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
-	
-
-	cardsToDraw := OrderedCollection with: SpeedCard new.
-	jorgeShip := Ship named: 'Jorge'.
-
-	aGame := ShipBattleGame
-		         inSize: 6
-		         rounds: 2
-		         with: { (LoadedDie withSides: 3) }
-		         and: { jorgeShip }
-		         withSpecialSquaresAt:
-		         (Dictionary newFrom: { })
-					withDeck: (LoadedDeck cards: cardsToDraw).
-
-	aDeck := aGame cardsOf: jorgeShip.
-	aCard := aDeck first.
-	
-	aGame playCard: aCard by: jorgeShip. 
-	aGame nextTurn.
-	
-	expectedResult := OrderedDictionary new.
-	expectedResult at: '1°' put: (Dictionary newFrom: {
-				 ('name' -> 'Jorge').
-				 ('position' -> 5).
-				 ('lap' -> 1).
-				 ('card count' -> 1)}).
-
-	self assert: aGame boardStateWithCards equals: expectedResult
-]
-
-{ #category : 'as yet unclassified' }
-SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndShipMoves1MoreSquareInVariousTurns [
+{ #category : 'basic tests' }
+SpeedCardTest >> testWhenSpeedCardIsPlayedThenItIsUsedAndShipMoves1MoreSquareInVariousTurns [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
 	

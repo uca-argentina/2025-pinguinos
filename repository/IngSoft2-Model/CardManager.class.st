@@ -9,7 +9,8 @@ Class {
 		'deck',
 		'ships',
 		'board',
-		'discardPile'
+		'discardPile',
+		'game'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -19,6 +20,12 @@ Class {
 CardManager class >> ships: aSetOfShips board: aBoard deck: aDeck [
 
 	^ self new initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck
+]
+
+{ #category : 'creation' }
+CardManager class >> ships: aSetOfShips board: aBoard deck: aDeck game: aGame [
+
+	^ self new initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck inGame: aGame
 ]
 
 { #category : 'adding' }
@@ -35,6 +42,12 @@ CardManager >> addMovement: aShip [
 	extraMovement := 0.
 	^ extraMovement + (activeCardEffects collect: [ :cardEffect |
 		   cardEffect addMovement: aShip ]) sumNumbers
+]
+
+{ #category : 'card usage' }
+CardManager >> applyLastSquareEffectTo: aShip [
+
+	board applyLastSquareEffectTo: aShip in: game
 ]
 
 { #category : 'getter' }
@@ -75,6 +88,18 @@ CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDec
 	deck := aDeck.
 	ships := aSetOfShips.
 	board := aBoard.
+	discardPile := OrderedCollection new.
+	^ self
+]
+
+{ #category : 'initialization' }
+CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck inGame: aGame [
+
+	activeCardEffects := OrderedCollection new.
+	deck := aDeck.
+	ships := aSetOfShips.
+	board := aBoard.
+	game:= aGame.
 	discardPile := OrderedCollection new.
 	^ self
 ]
