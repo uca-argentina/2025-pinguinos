@@ -247,12 +247,19 @@ ShipBattleGame >> manager [
 ]
 
 { #category : 'game controls' }
+ShipBattleGame >> move: aShip byLightYears: anAmountOfLightYears [
+
+	| spacesToMove |
+	spacesToMove := anAmountOfLightYears convertToCellUnits floor.
+	aShip withNoEffectsMove: spacesToMove onCircularBoard: board
+]
+
+{ #category : 'game controls' }
 ShipBattleGame >> move: aShip byParsecs: anAmountOfParsecs [
 
 	| spacesToMove |
-	
-	spacesToMove := (anAmountOfParsecs / board getParsecRatio) floor.
-	aShip withNoEffectsMove: spacesToMove onCircularBoard: board
+	spacesToMove := anAmountOfParsecs convertToCellUnits floor.
+	aShip withNoEffectsMove: spacesToMove value onCircularBoard: board
 ]
 
 { #category : 'game controls' }

@@ -5,9 +5,7 @@ Class {
 	#name : 'CircularBoard',
 	#superclass : 'Board',
 	#instVars : [
-		'rounds',
-		'parsecBoardSize',
-		'parsecRatio'
+		'rounds'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -133,7 +131,7 @@ CircularBoard >> createHyperJumpsAt: aSquarePositions [
 	aSquarePositions do: [ :position |
 		map
 			at: position
-			put: (HyperJump inBoardOfSize: parsecBoardSize at: position) ]
+			put: (HyperJump inBoardOfSize: boardSize at: position) ]
 ]
 
 { #category : 'accessing' }
@@ -162,12 +160,6 @@ CircularBoard >> createWormHolesAt: squarePositions [
 		map at: position first put: wormHoleEnds first.
 
 		map at: position second put: wormHoleEnds second ]
-]
-
-{ #category : 'getter' }
-CircularBoard >> getParsecRatio [
-
-	^ parsecRatio
 ]
 
 { #category : 'initialization' }
@@ -224,8 +216,6 @@ CircularBoard >> initializeWithSize: aSize rounds: aRoundNumber [
 	super initializeWithSize: aSize. "Llamo a funcion de clase padre"
 
 	rounds := aRoundNumber.
-	parsecRatio := 20.
-	parsecBoardSize := aSize * parsecRatio
 ]
 
 { #category : 'initialization' }
