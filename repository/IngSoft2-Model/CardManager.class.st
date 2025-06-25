@@ -29,7 +29,10 @@ CardManager >> addEffect: aCardEffect [
 { #category : 'adding' }
 CardManager >> addMovement: aShip [
 
-	^ (activeCardEffects collect: [ :cardEffect |
+	| extraMovement |
+	
+	extraMovement := 0.
+	^ extraMovement + (activeCardEffects collect: [ :cardEffect |
 		   cardEffect addMovement: aShip ]) sumNumbers
 ]
 

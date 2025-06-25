@@ -150,6 +150,11 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 	diceSet := DiceSet withDice: aDiceSet.
 
 	ships := self orderShips: aSetOfShips.
+	
+	cardManager := EmptyCardManager 
+		               ships: ships
+		               board: board
+		               deck: nil.
 
 	shipToMove := 1.
 	gameOver := false.
@@ -167,6 +172,11 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 	diceSet := DiceSet withDice: aDiceSet.
 
 	ships := self orderShips: aSetOfShips.
+	
+	cardManager := EmptyCardManager 
+		               ships: ships
+		               board: board
+		               deck: nil.
 
 	shipToMove := 1.
 	gameOver := false.

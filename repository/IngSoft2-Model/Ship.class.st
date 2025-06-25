@@ -102,15 +102,15 @@ Ship >> moveBy: aRolledNumber on: aBoard of: aGame [
 ]
 
 { #category : 'actions' }
-Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [ 
+Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
 
 	| intendedPosition resultingPosition resultingSquare completedLaps speedEffect |
 	
-	speedEffect := cards ifNotEmpty: [ (aGame manager) addMovement: self ] ifEmpty: [ 0 ].
-	
+	speedEffect := aGame manager addMovement: self.
+
 	intendedPosition := position + aRolledNumber + speedEffect.
 
-	
+
 	resultingPosition := aCircularBoard resolveMovementOf:
 		                     intendedPosition.
 

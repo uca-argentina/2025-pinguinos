@@ -84,6 +84,42 @@ CardTypesTest >> testShipCannotPlayCardItDoesntHave [
 ]
 
 { #category : 'tests' }
+CardTypesTest >> testWhen2SpeedCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSquares [
+
+	| aGame expectedResult jorgeShip currentDeck aCard cardsToDraw |
+	
+	cardsToDraw := OrderedCollection with: SpeedCard new.
+	jorgeShip := Ship named: 'Jorge'.
+
+	aGame := ShipBattleGame
+		         inSize: 6
+		         rounds: 2
+		         with: { (LoadedDie withSides: 3) }
+		         and: { jorgeShip }
+		         withSpecialSquaresAt: (Dictionary newFrom: {  })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+
+	currentDeck := aGame cardsOf: jorgeShip.
+	aCard := currentDeck first.
+	aGame playCard: aCard by: jorgeShip.
+
+	currentDeck := aGame cardsOf: jorgeShip.
+	aCard := currentDeck first.
+	aGame playCard: aCard by: jorgeShip.
+
+	aGame nextTurn.
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 6).
+				 ('lap' -> 1).
+				 ('card count' -> 0) }).
+
+	self assert: aGame boardStateWithCards equals: expectedResult
+]
+
+{ #category : 'tests' }
 CardTypesTest >> testWhenCardIsPlayedThenItIsUsed [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
