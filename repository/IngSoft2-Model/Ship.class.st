@@ -60,6 +60,7 @@ Ship >> initialize [
 	laps := 1.
 	shields := 3.
 	turnsToSkip := 0.
+	cards := OrderedCollection new.
 	
 
 ]
@@ -105,7 +106,7 @@ Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
 
 	| intendedPosition resultingPosition resultingSquare completedLaps speedEffect |
 	
-	speedEffect := cards ifNotNil: [ (aGame manager) addMovement: self ] ifNil: [ 0 ].
+	speedEffect := cards ifNotEmpty: [ (aGame manager) addMovement: self ] ifEmpty: [ 0 ].
 	
 	intendedPosition := position + aRolledNumber + speedEffect.
 
