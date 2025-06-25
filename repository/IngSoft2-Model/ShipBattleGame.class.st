@@ -117,11 +117,11 @@ ShipBattleGame >> compareProgressOf2Ships: shipA and: shipB [
 ]
 
 { #category : 'game controls' }
-ShipBattleGame >> fightBetween: aggresorShip and: defendingShip [
+ShipBattleGame >> fightBetween: aggressorShip and: defendingShip [
 
 	| aggresorAllyShips defendingAllyShips aggresorShipsDiceRoll defendingShipsDiceRoll |
 	
-	aggresorAllyShips := cardManager getAlliesOf: aggresorShip.
+	aggresorAllyShips := cardManager getAlliesOf: aggressorShip.
 	defendingAllyShips := cardManager getAlliesOf: defendingShip.
 
 	aggresorShipsDiceRoll := diceSet roll + (aggresorAllyShips
@@ -140,9 +140,25 @@ ShipBattleGame >> fightBetween: aggresorShip and: defendingShip [
 			defendingAllyShips do: [ :defendingAllyShip |
 				defendingAllyShip loseShield ] ]
 		ifFalse: [
-			aggresorShip loseFight.
+			aggressorShip loseFight.
 			aggresorAllyShips do: [ :aggresorAllyShip |
 				aggresorAllyShip loseShield ] ]
+]
+
+{ #category : 'helper' }
+ShipBattleGame >> handleFights: anAggressorShip [
+
+	| defendingShip contractedShips shipsContractedByDefendingShip |
+	
+	contractedShips := cardManager getAlliesOf: anAggressorShip.
+	defendingShip := self whoDoIFight: anAggressorShip.
+
+	defendingShip ifNotNil: [
+		shipsContractedByDefendingShip := cardManager getAlliesOf: defendingShip.
+		
+		((contractedShips includes: defendingShip) or:
+			 (shipsContractedByDefendingShip includes: anAggressorShip))
+			ifFalse: [ self fightBetween: anAggressorShip and: defendingShip ] ]
 ]
 
 { #category : 'validation' }
@@ -284,7 +300,7 @@ ShipBattleGame >> playCard: aCard by: aShip target: aTarget [
 { #category : 'game controls' }
 ShipBattleGame >> playTurnOf: currentShip [
 
-	| shipToFight numberToMove |
+	| numberToMove |
 	
 	numberToMove := diceSet roll.
 	numberToMove := numberToMove + (cardManager addMovement: currentShip).
@@ -293,10 +309,7 @@ ShipBattleGame >> playTurnOf: currentShip [
 
 	self haveWeGotAWinner: currentShip.
 
-	shipToFight := self whoDoIFight: currentShip.
-
-	shipToFight ifNotNil: [
-		self fightBetween: currentShip and: shipToFight ]
+	self handleFights: currentShip. 
 ]
 
 { #category : 'game controls' }

@@ -64,6 +64,37 @@ MercenaryCardTest >> testMercenaryCardCannotBePlayedOutsideOfPlayersTurn [
 ]
 
 { #category : 'tests' }
+MercenaryCardTest >> testShipCannotContractItselfAsMercenary [
+
+	| aGame jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
+	
+	cardsToDraw := OrderedCollection with: MercenaryCard new.
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+	joseShip := Ship named: 'Jose'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: 3) }
+		         and: {
+				         jorgeShip.
+				         julianShip.
+				         joseShip }
+		         withSpecialSquaresAt: (Dictionary newFrom: {  })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+
+	aDeck := aGame cardsOf: jorgeShip.
+	aCard := aDeck first.
+
+	self
+		should: [ aGame playCard: aCard by: jorgeShip target: jorgeShip ]
+		raise: Error
+		withErrorMessage:
+		'A ship cannot contract itself as a mercenary!'
+]
+
+{ #category : 'tests' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardFightsAndLosesShieldsAreReducedFromHisAlliesTooAndOnlyContractorShipGetsMovedBack [
 
 	| aGame jorgeShip julianShip joseShip aDeck aCard cardsToDraw expectedResult |
@@ -116,6 +147,114 @@ MercenaryCardTest >> testWhenShipUsesMercenaryCardFightsAndLosesShieldsAreReduce
 ]
 
 { #category : 'tests' }
+MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContractedShipFightsWithHimIfTheContractorIsAttacked [
+
+	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
+	cardsToDraw := OrderedCollection with: MercenaryCard new.
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+	joseShip := Ship named: 'Jose'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: { 3. 2. 2. 2. 2. 1 }) } "Jorge mueve 3, Julian mueve 2, Jose mueve 2, En la pelea Jose saca 2, Julian saca 2, Jorge saca 1, 2<2+1"
+		         and: {
+				         jorgeShip.
+				         julianShip.
+				         joseShip }
+		         withSpecialSquaresAt: (Dictionary newFrom: {  })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+	
+	aGame nextTurn. "Jorge avanza hasta 4"
+	
+	aDeck := aGame cardsOf: julianShip.
+	aCard := aDeck first.
+
+	aGame playCard: aCard by: julianShip target: jorgeShip. "Julian contrata a Jorge como mercenario"
+	aGame nextTurn. "Julian avanza hasta 3"
+	
+	aGame nextTurn. "Jose avanza y pelea con Julian, el quien es defendido por Jorge, ellos ganan"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 4).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 3).
+				 ('lap' -> 1).
+				 ('card count' -> 1)}).
+	expectedResult at: '3°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jose').
+				 ('position' -> 1).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+
+	self assert: aGame boardStateWithCards equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 3.
+	self assert: julianShip remainingShields equals: 3.
+	self assert: joseShip remainingShields equals: 2.
+
+]
+
+{ #category : 'tests' }
+MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContractedShipFightsWithHimIfTheContractorIsAttackedAndTheyCanDraw [
+
+	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
+	cardsToDraw := OrderedCollection with: MercenaryCard new.
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+	joseShip := Ship named: 'Jose'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: { 3. 2. 2. 2. 1. 1 }) } "Jorge mueve 3, Julian mueve 2, Jose mueve 2, En la pelea Jose saca 2, Julian saca 1, Jorge saca 1, 2=2+1"
+		         and: {
+				         jorgeShip.
+				         julianShip.
+				         joseShip }
+		         withSpecialSquaresAt: (Dictionary newFrom: {  })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+	
+	aGame nextTurn. "Jorge avanza hasta 4"
+	
+	aDeck := aGame cardsOf: julianShip.
+	aCard := aDeck first.
+
+	aGame playCard: aCard by: julianShip target: jorgeShip. "Julian contrata a Jorge como mercenario"
+	aGame nextTurn. "Julian avanza hasta 3"
+	
+	aGame nextTurn. "Jose avanza y pelea con Julian, el quien es defendido por Jorge, ellos ganan"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 4).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jose').
+				 ('position' -> 3).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+	expectedResult at: '3°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 3).
+				 ('lap' -> 1).
+				 ('card count' -> 1)}).
+
+	self assert: aGame boardStateWithCards equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 3.
+	self assert: julianShip remainingShields equals: 3.
+	self assert: joseShip remainingShields equals: 3.
+
+]
+
+{ #category : 'tests' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContractedShipFightsWithHimLoserGetsMovedBackAndAlliesLoseShieldsToo [
 
 	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
@@ -162,6 +301,115 @@ MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContracted
 
 	self assert: aGame boardStateWithCards equals: expectedResult.
 	self assert: jorgeShip remainingShields equals: 2.
+	self assert: julianShip remainingShields equals: 3.
+	self assert: joseShip remainingShields equals: 3.
+
+]
+
+{ #category : 'tests' }
+MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheyDontFightIfTheyLandOnSameSquare [
+
+	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
+	cardsToDraw := OrderedCollection with: MercenaryCard new.
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+	joseShip := Ship named: 'Jose'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: { 3. 2. 2. 2. 2. 1 }) } "Jorge mueve 3, Julian mueve 2, Jose mueve 2, En la pelea Jose sacaria 2, y Julian sacaria 3 2<3"
+		         and: {
+				         jorgeShip.
+				         julianShip.
+				         joseShip }
+		         withSpecialSquaresAt: (Dictionary newFrom: {  })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+	
+	aGame nextTurn. "Jorge avanza hasta 4"
+	
+	aGame nextTurn. "Julian avanza hasta 3"
+	
+	aDeck := aGame cardsOf: joseShip .
+	aCard := aDeck first.
+
+	aGame playCard: aCard by: joseShip target: julianShip. "Jose contrata a Julian como mercenario"
+	aGame nextTurn. "Jose avanza hasta 3 y no pelea con Julian"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 4).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jose').
+				 ('position' -> 3).
+				 ('lap' -> 1).
+				 ('card count' -> 1)}).
+	expectedResult at: '3°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 3).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+
+	self assert: aGame boardStateWithCards equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 3.
+	self assert: julianShip remainingShields equals: 3.
+	self assert: joseShip remainingShields equals: 3.
+
+]
+
+{ #category : 'tests' }
+MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheyDontFightIfTheyLandOnSameSquareEvenWhenContracteeIsTheOneStartingTheFight [
+
+	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
+	
+	cardsToDraw := OrderedCollection with: MercenaryCard new.
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+	joseShip := Ship named: 'Jose'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: { 3. 2. 2. 2. 2. 1 }) } "Jorge mueve 3, Julian mueve 2, Jose mueve 2, En la pelea Jose sacaria 2, y Julian sacaria 3 2<3"
+		         and: {
+				         jorgeShip.
+				         julianShip.
+				         joseShip }
+		         withSpecialSquaresAt: (Dictionary newFrom: {  })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+	
+	aGame nextTurn. "Jorge avanza hasta 4"
+	
+	aDeck := aGame cardsOf: julianShip.
+	aCard := aDeck first.
+
+	aGame playCard: aCard by: julianShip target: joseShip. "Julian contrata a Jose como mercenario"
+	aGame nextTurn. "Julian avanza hasta 3"
+	
+	aGame nextTurn. "Jose avanza hasta 3 y no pelea con Julian"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 4).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jose').
+				 ('position' -> 3).
+				 ('lap' -> 1).
+				 ('card count' -> 2)}).
+	expectedResult at: '3°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 3).
+				 ('lap' -> 1).
+				 ('card count' -> 1)}).
+
+	self assert: aGame boardStateWithCards equals: expectedResult.
+	self assert: jorgeShip remainingShields equals: 3.
 	self assert: julianShip remainingShields equals: 3.
 	self assert: joseShip remainingShields equals: 3.
 

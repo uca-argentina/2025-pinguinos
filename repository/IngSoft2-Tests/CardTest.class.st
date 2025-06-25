@@ -31,14 +31,12 @@ CardTest >> testShipCannotPlayCardItDoesntHave [
 		         and: { jorgeShip }
 		         withSpecialSquaresAt: (Dictionary newFrom: {  })
 		         withDeck: (LoadedDeck cards: cardsToDraw).
-	
+
 	self
-		should: [ aGame playCard: SpeedCard new by: jorgeShip. ]
+		should: [ aGame playCard: SpeedCard new by: jorgeShip ]
 		raise: Error
 		withErrorMessage:
-		'This ship cannot play this card because it does not have it!'.
-
-	
+		'This ship cannot play this card because it does not have it!'
 ]
 
 { #category : 'tests' }
