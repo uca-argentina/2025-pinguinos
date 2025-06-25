@@ -6,7 +6,8 @@ Class {
 	#superclass : 'PermanentEffects',
 	#instVars : [
 		'targetShip',
-		'usedBy'
+		'usedBy',
+		'applyToEveryone'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,17 +19,33 @@ OneMoreSquare class >> to: aTargetShip usedBy: aCard [
 	^ self new initializeWith: aTargetShip usedBy: aCard
 ]
 
+{ #category : 'creation' }
+OneMoreSquare class >> toAnyUsedBy: aCard [
+
+	^ self new initializeToAnyUsedBy: aCard
+]
+
 { #category : 'one more square' }
 OneMoreSquare >> addMovement: aShip [
 
-	^ targetShip name = aShip name
+	^ (applyToEveryone or: targetShip name = aShip name)
 		  ifTrue: [ 1 ]
 		  ifFalse: [ 0 ]
 ]
 
 { #category : 'initialization' }
-OneMoreSquare >> initializeWith: aTargetShip usedBy: aCard [
+OneMoreSquare >> initializeToAnyUsedBy: aCard [
 
+	applyToEveryone := true.
+	targetShip := NullShip new.
+	usedBy := aCard.
+	^ self
+]
+
+{ #category : 'initialization' }
+OneMoreSquare >> initializeWith: aTargetShip usedBy: aCard [
+	
+	applyToEveryone := false.
 	targetShip := aTargetShip.
 	usedBy := aCard.
 	^ self

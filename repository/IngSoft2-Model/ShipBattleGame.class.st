@@ -182,7 +182,7 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 
 	ships := self orderShips: aSetOfShips.
 	
-	cardManager := EmptyCardManager 
+	cardManager := NullCardManager 
 		               ships: ships
 		               board: board
 		               deck: nil.
@@ -204,7 +204,7 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 
 	ships := self orderShips: aSetOfShips.
 	
-	cardManager := EmptyCardManager 
+	cardManager := NullCardManager 
 		               ships: ships
 		               board: board
 		               deck: nil.

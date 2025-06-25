@@ -1,12 +1,12 @@
 Class {
-	#name : 'SpeedCardTest',
+	#name : 'AccelerationCardTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
-SpeedCardTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMessage [
+AccelerationCardTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMessage [
 
 	self
 		should: anErrorBlock 
@@ -16,12 +16,12 @@ SpeedCardTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMes
 			equals: aMessage ]
 ]
 
-{ #category : 'as yet unclassified' }
-SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
+{ #category : 'tests' }
+AccelerationCardTest >> testAShipCanUseAccelerationCardCorrectlyOnEveryShip [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
 	
-	cardsToDraw := OrderedCollection with: SpeedCard new.
+	cardsToDraw := OrderedCollection with: AccelerationCard new.
 	jorgeShip := Ship named: 'Jorge'.
 	julianShip := Ship named: 'Julian'.
 
@@ -37,7 +37,7 @@ SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
 
 	aDeck := aGame cardsOf: jorgeShip.
 	aCard := aDeck first.
-	aGame playCard: aCard by: jorgeShip target: julianShip.
+	aGame playCard: aCard by: jorgeShip.
 	
 	aGame nextTurn. "Mueve jorge"
 	aGame nextTurn. "Mueve julian"
@@ -51,7 +51,7 @@ SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
 
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
-				 ('position' -> 4).
+				 ('position' -> 5).
 				 ('lap' -> 1).
 				 ('card count' -> 1) }).
 
@@ -59,10 +59,10 @@ SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
 ]
 
 { #category : 'tests' }
-SpeedCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
+AccelerationCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
-	cardsToDraw := OrderedCollection with: SpeedCard new.
+	cardsToDraw := OrderedCollection with: AccelerationCard new.
 	jorgeShip := Ship named: 'Jorge'.
 	julianShip := Ship named: 'Julian'.
 
@@ -106,18 +106,21 @@ SpeedCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
 ]
 
 { #category : 'tests' }
-SpeedCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSquares [
+AccelerationCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSquares [
 
-	| aGame expectedResult jorgeShip currentDeck aCard cardsToDraw |
+	| aGame expectedResult jorgeShip julianShip currentDeck aCard cardsToDraw |
 	
-	cardsToDraw := OrderedCollection with: SpeedCard new.
+	cardsToDraw := OrderedCollection with: AccelerationCard new.
 	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
 
 	aGame := ShipBattleGame
 		         inSize: 6
 		         rounds: 2
 		         with: { (LoadedDie withSides: 3) }
-		         and: { jorgeShip }
+		         and: {
+				         jorgeShip.
+				         julianShip }
 		         withSpecialSquaresAt: (Dictionary newFrom: {  })
 		         withDeck: (LoadedDeck cards: cardsToDraw).
 
@@ -130,9 +133,15 @@ SpeedCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2
 	aGame playCard: aCard by: jorgeShip.
 
 	aGame nextTurn.
+	aGame nextTurn.
 
 	expectedResult := OrderedDictionary new.
 	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 6).
+				 ('lap' -> 1).
+				 ('card count' -> 2) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 6).
 				 ('lap' -> 1).
@@ -142,10 +151,10 @@ SpeedCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2
 ]
 
 { #category : 'tests' }
-SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndItAffectsTheEntireRoll [
+AccelerationCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndItAffectsTheEntireRoll [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
-	cardsToDraw := OrderedCollection with: SpeedCard new.
+	cardsToDraw := OrderedCollection with: AccelerationCard new.
 	jorgeShip := Ship named: 'Jorge'.
 
 	aGame := ShipBattleGame
@@ -174,45 +183,12 @@ SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndItAffectsTheEnti
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
-SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndShipMoves1MoreSquare [
-	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
-	
-
-	cardsToDraw := OrderedCollection with: SpeedCard new.
-	jorgeShip := Ship named: 'Jorge'.
-
-	aGame := ShipBattleGame
-		         inSize: 6
-		         rounds: 2
-		         with: { (LoadedDie withSides: 3) }
-		         and: { jorgeShip }
-		         withSpecialSquaresAt:
-		         (Dictionary newFrom: { })
-					withDeck: (LoadedDeck cards: cardsToDraw).
-
-	aDeck := aGame cardsOf: jorgeShip.
-	aCard := aDeck first.
-	
-	aGame playCard: aCard by: jorgeShip. 
-	aGame nextTurn.
-	
-	expectedResult := OrderedDictionary new.
-	expectedResult at: '1°' put: (Dictionary newFrom: {
-				 ('name' -> 'Jorge').
-				 ('position' -> 5).
-				 ('lap' -> 1).
-				 ('card count' -> 1)}).
-
-	self assert: aGame boardStateWithCards equals: expectedResult
-]
-
 { #category : 'tests' }
-SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndShipMoves1MoreSquareInVariousTurns [
+AccelerationCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndShipMoves1MoreSquareInVariousTurns [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
 	
-	cardsToDraw := OrderedCollection with: SpeedCard new.
+	cardsToDraw := OrderedCollection with: AccelerationCard new.
 	jorgeShip := Ship named: 'Jorge'.
 
 	aGame := ShipBattleGame

@@ -2,44 +2,44 @@
 A type of CardManager that does nothing.
 "
 Class {
-	#name : 'EmptyCardManager',
+	#name : 'NullCardManager',
 	#superclass : 'CardManager',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'adding' }
-EmptyCardManager >> addEffect: aCardEffect [
+NullCardManager >> addEffect: aCardEffect [
 
 	^ self
 ]
 
 { #category : 'adding' }
-EmptyCardManager >> addMovement: aShip [
+NullCardManager >> addMovement: aShip [
 
 	^ 0
 ]
 
 { #category : 'getter' }
-EmptyCardManager >> getAlliesOf: aShip [
+NullCardManager >> getAlliesOf: aShip [
 
 	^ OrderedCollection new.
 ]
 
 { #category : 'getter' }
-EmptyCardManager >> getContractedShips [
+NullCardManager >> getContractedShips [
 
 	^ OrderedCollection new
 ]
 
 { #category : 'initialization' }
-EmptyCardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
+NullCardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
 
 	^ self
 ]
 
 { #category : 'card usage' }
-EmptyCardManager >> playCard: aCard by: aShip target: aTarget [
+NullCardManager >> playCard: aCard by: aShip target: aTarget [
 
 	^ self
 ]
