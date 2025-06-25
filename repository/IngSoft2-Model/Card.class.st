@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : 'testing' }
+Card >> isRepeatable [
+
+	self subclassResponsibility 
+]
+
+{ #category : 'testing' }
 Card >> isTurnRestricted [
 
 	self subclassResponsibility 

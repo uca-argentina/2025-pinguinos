@@ -22,6 +22,12 @@ MercenaryCard >> isContractor: aContractorShip theContractee: aContractedShip [
 ]
 
 { #category : 'testing' }
+MercenaryCard >> isRepeatable [
+
+	^ true
+]
+
+{ #category : 'testing' }
 MercenaryCard >> isTurnRestricted [
 
 	^ true

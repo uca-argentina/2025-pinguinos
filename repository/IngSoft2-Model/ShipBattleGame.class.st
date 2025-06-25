@@ -192,7 +192,7 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 
 	shipToMove := 1.
 	gameOver := false.
-	gameWinner := nil
+	gameWinner := nil.
 ]
 
 { #category : 'initialization' }
@@ -214,7 +214,7 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 
 	shipToMove := 1.
 	gameOver := false.
-	gameWinner := nil
+	gameWinner := nil.
 ]
 
 { #category : 'initialization' }
@@ -238,7 +238,7 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 
 	shipToMove := 1.
 	gameOver := false.
-	gameWinner := nil
+	gameWinner := nil.
 ]
 
 { #category : 'accessing' }
@@ -297,7 +297,7 @@ ShipBattleGame >> playCard: aCard by: aShip target: aTarget [
 	self canIKeepPlaying.
 	self can: aShip playThisCard: aCard.
 	
-	cardManager playCard: aCard by: aShip target: aTarget
+	cardManager playCard: aCard by: aShip target: aTarget.
 ]
 
 { #category : 'game controls' }

@@ -1,5 +1,5 @@
 "
-Implementation of Cancellation card, from the permanent type of cards.
+Implementation of Cancellation card, from the instantaneous type of cards.
 "
 Class {
 	#name : 'CancellationCard',
@@ -7,6 +7,12 @@ Class {
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'testing' }
+CancellationCard >> isRepeatable [
+
+	^ true
+]
 
 { #category : 'testing' }
 CancellationCard >> isTurnRestricted [

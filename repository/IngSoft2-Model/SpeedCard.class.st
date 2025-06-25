@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : 'testing' }
+SpeedCard >> isRepeatable [
+
+	^ true
+]
+
+{ #category : 'testing' }
 SpeedCard >> isTurnRestricted [
 
 	^ true

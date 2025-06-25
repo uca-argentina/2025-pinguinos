@@ -8,7 +8,8 @@ Class {
 		'activeCardEffects',
 		'deck',
 		'ships',
-		'board'
+		'board',
+		'discardPile'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -60,6 +61,13 @@ CardManager >> getContractedShips [
 	^ contractedShips
 ]
 
+{ #category : 'getter' }
+CardManager >> getLastUsedCards [
+	
+	^ discardPile 
+	
+]
+
 { #category : 'initialization' }
 CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
 
@@ -67,6 +75,7 @@ CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDec
 	deck := aDeck.
 	ships := aSetOfShips.
 	board := aBoard.
+	discardPile := OrderedCollection new.
 	^ self
 ]
 
@@ -76,7 +85,8 @@ CardManager >> playCard: aCard by: aShip target: aTarget [
 	aShip hasAny: aCard.
 	aCard managedBy: self from: aShip target: aTarget.
 
-	aShip removeCard: aCard
+	aShip removeCard: aCard.
+	discardPile add: aCard.
 ]
 
 { #category : 'adding' }

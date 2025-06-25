@@ -32,6 +32,12 @@ NullCardManager >> getContractedShips [
 	^ OrderedCollection new
 ]
 
+{ #category : 'getter' }
+NullCardManager >> getLastUsedCards [ 
+
+	^ OrderedCollection new
+]
+
 { #category : 'initialization' }
 NullCardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
 
