@@ -8,6 +8,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'testing' }
+SpeedCard >> isTurnRestricted [
+
+	^ true
+]
+
 { #category : 'action handling' }
 SpeedCard >> managedBy: aCardManager from: anActivatorShip target: aTargetShip [
 

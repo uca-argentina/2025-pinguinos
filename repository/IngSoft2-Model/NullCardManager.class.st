@@ -43,3 +43,9 @@ NullCardManager >> playCard: aCard by: aShip target: aTarget [
 
 	^ self
 ]
+
+{ #category : 'adding' }
+NullCardManager >> removeEffectOf: aCard [
+	
+	^ self
+]

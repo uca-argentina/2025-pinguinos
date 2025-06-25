@@ -5,7 +5,6 @@ Class {
 	#name : 'MercenaryContract',
 	#superclass : 'PermanentEffects',
 	#instVars : [
-		'usedBy',
 		'contractorShip',
 		'contractedShip'
 	],

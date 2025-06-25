@@ -67,7 +67,8 @@ CardTest >> testWhenCardGiverAtPosition2ThenShipGetsCardsAddedToTheirCount [
 				 ('lap' -> 1).
 				 ('card count' -> 3) }).
 
-	self assert: aGame boardStateWithCards equals: expectedResult
+	self assert: aGame boardStateWithCards equals: expectedResult.
+	self assert: (aGame cardsOf: aShip) size equals: 3
 ]
 
 { #category : 'tests' }

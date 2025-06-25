@@ -78,3 +78,18 @@ CardManager >> playCard: aCard by: aShip target: aTarget [
 
 	aShip removeCard: aCard
 ]
+
+{ #category : 'adding' }
+CardManager >> removeEffectOf: aCard [
+
+	| filteredEffectList |
+	
+	filteredEffectList := activeCardEffects reject: [ :activeCardEffect |
+		                      activeCardEffect getCardThatAppliedEffect
+		                      = aCard ].
+	
+	filteredEffectList size = activeCardEffects size ifTrue: [
+		Error signal:
+			'The selected card is not active at the moment, so it cannot be removed!' ].
+	activeCardEffects := filteredEffectList
+]

@@ -21,6 +21,12 @@ MercenaryCard >> isContractor: aContractorShip theContractee: aContractedShip [
 	aContractorShip = aContractedShip ifTrue: [ Error signal: 'A ship cannot contract itself as a mercenary!' ]
 ]
 
+{ #category : 'testing' }
+MercenaryCard >> isTurnRestricted [
+
+	^ true
+]
+
 { #category : 'action handling' }
 MercenaryCard >> managedBy: aCardManager from: aContractorShip target: aContractedShip [
 

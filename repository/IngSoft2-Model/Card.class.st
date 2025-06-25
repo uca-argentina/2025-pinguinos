@@ -8,6 +8,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'testing' }
+Card >> isTurnRestricted [
+
+	self subclassResponsibility 
+]
+
 { #category : 'action handling' }
 Card >> managedBy: aCardManager from: anActivatorShip target: aTargetShip [
 

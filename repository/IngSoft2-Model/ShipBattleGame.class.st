@@ -98,7 +98,10 @@ ShipBattleGame >> breakShieldsOfAllShips [
 { #category : 'testing' }
 ShipBattleGame >> can: aShip playThisCard: aCard [
 
-	(ships at: shipToMove) = aShip ifFalse: [ Error signal: 'This ship cannot play this card because it is not his turn!' ]
+	((ships at: shipToMove) ~= aShip and: aCard isTurnRestricted)
+		ifTrue: [
+			Error signal:
+				'This ship cannot play this card because it is not his turn!' ]
 ]
 
 { #category : 'accessing' }

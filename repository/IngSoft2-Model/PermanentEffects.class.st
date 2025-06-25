@@ -4,6 +4,9 @@ Implementation of various permanent card effects, which will be stored for using
 Class {
 	#name : 'PermanentEffects',
 	#superclass : 'Object',
+	#instVars : [
+		'usedBy'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -18,6 +21,12 @@ PermanentEffects >> addMovement: aShip [
 PermanentEffects >> getAllyOf: aShip [
 	
 	^ nil
+]
+
+{ #category : 'getter' }
+PermanentEffects >> getCardThatAppliedEffect [
+
+	^ usedBy 
 ]
 
 { #category : 'getter' }

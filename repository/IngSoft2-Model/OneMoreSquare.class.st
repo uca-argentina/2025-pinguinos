@@ -6,7 +6,6 @@ Class {
 	#superclass : 'PermanentEffects',
 	#instVars : [
 		'targetShip',
-		'usedBy',
 		'applyToEveryone'
 	],
 	#category : 'IngSoft2-Model',

@@ -1,5 +1,5 @@
 "
-Implementation of mercenary card, from the permanent type of cards.
+Implementation of Acceleration card, from the permanent type of cards.
 "
 Class {
 	#name : 'AccelerationCard',
@@ -7,6 +7,12 @@ Class {
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'testing' }
+AccelerationCard >> isTurnRestricted [
+
+	^ true
+]
 
 { #category : 'action handling' }
 AccelerationCard >> managedBy: aCardManager from: anActivatorShip target: aTargetShip [

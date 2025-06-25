@@ -58,7 +58,7 @@ SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
@@ -105,7 +105,7 @@ SpeedCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSquares [
 
 	| aGame expectedResult jorgeShip currentDeck aCard cardsToDraw |
@@ -141,7 +141,7 @@ SpeedCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndItAffectsTheEntireRoll [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
@@ -207,7 +207,7 @@ SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndShipMoves1MoreSq
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndShipMoves1MoreSquareInVariousTurns [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
