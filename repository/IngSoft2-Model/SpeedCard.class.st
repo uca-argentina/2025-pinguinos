@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'action handling' }
-SpeedCard >> managedBy: aCardManager target: aTargetShip [
+SpeedCard >> managedBy: aCardManager from: anActivatorShip target: aTargetShip [
 
 	aCardManager addEffect:
 		(OneMoreSquare to: aTargetShip usedBy: self)

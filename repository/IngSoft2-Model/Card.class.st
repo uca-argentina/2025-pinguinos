@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'action handling' }
-Card >> managedBy: aCardManager target: aTarget [
+Card >> managedBy: aCardManager from: anActivatorShip target: aTargetShip [
 
 	self subclassResponsibility
 ]

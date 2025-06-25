@@ -20,6 +20,12 @@ EmptyCardManager >> addMovement: aShip [
 	^ 0
 ]
 
+{ #category : 'getter' }
+EmptyCardManager >> getAlliesOf: aShip [
+
+	^ OrderedCollection new.
+]
+
 { #category : 'initialization' }
 EmptyCardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
 

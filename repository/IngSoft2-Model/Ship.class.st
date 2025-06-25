@@ -81,14 +81,15 @@ Ship >> laps [
 Ship >> loseFight [
 
 	position := 1.
-	shields >= 1 ifTrue: [ self loseShield ].
+	self loseShield.
 	shields = 0 ifTrue: [ turnsToSkip := turnsToSkip + 2 ]
 ]
 
 { #category : 'actions' }
 Ship >> loseShield [
 	
-	 shields := shields - 1.
+	 shields >= 1 ifTrue: [ shields := shields - 1 ].
+	 
 ]
 
 { #category : 'actions' }
@@ -104,11 +105,9 @@ Ship >> moveBy: aRolledNumber on: aBoard of: aGame [
 { #category : 'actions' }
 Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
 
-	| intendedPosition resultingPosition resultingSquare completedLaps speedEffect |
-	
-	speedEffect := aGame manager addMovement: self.
+	| intendedPosition resultingPosition resultingSquare completedLaps |
 
-	intendedPosition := position + aRolledNumber + speedEffect.
+	intendedPosition := position + aRolledNumber.
 
 
 	resultingPosition := aCircularBoard resolveMovementOf:

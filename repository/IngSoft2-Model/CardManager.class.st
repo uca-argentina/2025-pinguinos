@@ -36,6 +36,18 @@ CardManager >> addMovement: aShip [
 		   cardEffect addMovement: aShip ]) sumNumbers
 ]
 
+{ #category : 'getter' }
+CardManager >> getAlliesOf: aShip [
+
+	| alliedShips |
+	
+	alliedShips := activeCardEffects collect: [ :cardEffect |
+		               cardEffect getAllyOf: aShip ].
+	alliedShips:= alliedShips select: [ :alliedShip | alliedShip isNotNil ].
+
+	^ alliedShips
+]
+
 { #category : 'initialization' }
 CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
 
@@ -50,7 +62,7 @@ CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDec
 CardManager >> playCard: aCard by: aShip target: aTarget [
 
 	aShip hasAny: aCard.
-	aCard managedBy: self target: aTarget.
+	aCard managedBy: self from: aShip target: aTarget.
 
 	aShip removeCard: aCard
 ]

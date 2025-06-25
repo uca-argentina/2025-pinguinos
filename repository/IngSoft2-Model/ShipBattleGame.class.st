@@ -117,17 +117,32 @@ ShipBattleGame >> compareProgressOf2Ships: shipA and: shipB [
 ]
 
 { #category : 'game controls' }
-ShipBattleGame >> fightBetween: fightingShip and: shipToFight [
+ShipBattleGame >> fightBetween: aggresorShip and: defendingShip [
 
-	| shipToFightDiceRoll fightingShipDiceRoll |
+	| aggresorAllyShips defendingAllyShips aggresorShipsDiceRoll defendingShipsDiceRoll |
 	
-	fightingShipDiceRoll := diceSet roll. "Primero tira el que llega al cuadrado"
-	shipToFightDiceRoll := diceSet roll.
+	aggresorAllyShips := cardManager getAlliesOf: aggresorShip.
+	defendingAllyShips := cardManager getAlliesOf: defendingShip.
 
-	fightingShipDiceRoll = shipToFightDiceRoll ifTrue: [ ^ nil ]. "Si hay empate no pasa nada"
-	fightingShipDiceRoll > shipToFightDiceRoll
-		ifTrue: [ shipToFight loseFight ]
-		ifFalse: [ fightingShip loseFight ]
+	aggresorShipsDiceRoll := diceSet roll + (aggresorAllyShips
+		                          inject: 0
+		                          into: [ :runningTotal :aShip |
+		                          runningTotal + diceSet roll ]). "Primero tira el equipo del que llega al cuadrado"
+	defendingShipsDiceRoll := diceSet roll + (defendingAllyShips
+		                           inject: 0
+		                           into: [ :runningTotal :aShip |
+		                           runningTotal + diceSet roll ]).
+
+	aggresorShipsDiceRoll = defendingShipsDiceRoll ifTrue: [ ^ nil ]. "Si hay empate no pasa nada"
+	aggresorShipsDiceRoll > defendingShipsDiceRoll
+		ifTrue: [
+			defendingShip loseFight.
+			defendingAllyShips do: [ :defendingAllyShip |
+				defendingAllyShip loseShield ] ]
+		ifFalse: [
+			aggresorShip loseFight.
+			aggresorAllyShips do: [ :aggresorAllyShip |
+				aggresorAllyShip loseShield ] ]
 ]
 
 { #category : 'validation' }
@@ -269,9 +284,12 @@ ShipBattleGame >> playCard: aCard by: aShip target: aTarget [
 { #category : 'game controls' }
 ShipBattleGame >> playTurnOf: currentShip [
 
-	| shipToFight |
+	| shipToFight numberToMove |
 	
-	currentShip moveBy: diceSet roll onCircularBoard: board of: self.
+	numberToMove := diceSet roll.
+	numberToMove := numberToMove + (cardManager addMovement: currentShip).
+
+	currentShip moveBy: numberToMove onCircularBoard: board of: self.
 
 	self haveWeGotAWinner: currentShip.
 
