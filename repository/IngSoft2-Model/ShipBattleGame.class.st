@@ -66,10 +66,41 @@ ShipBattleGame >> boardState [
 	^ currentGameState
 ]
 
+{ #category : 'accessing' }
+ShipBattleGame >> boardStateWithCards [
+
+	| currentGameState rankedList tempShipsList |
+	
+	currentGameState := OrderedDictionary new.
+	tempShipsList := ships copy.
+
+	rankedList := tempShipsList sort: [ :shipA :shipB |
+		              self compareProgressOf2Ships: shipA and: shipB ].
+
+	rankedList doWithIndex: [ :ship :i |
+		currentGameState
+			at: i printString , '°'
+			put: (Dictionary newFrom: {
+						 ('name' -> ship name).
+						 ('position' -> ship position).
+						 ('lap' -> ship laps) .
+						 ('card count' -> ship cards size) })].
+
+	^ currentGameState
+]
+
 { #category : 'game controls' }
 ShipBattleGame >> breakShieldsOfAllShips [
 
 	ships do: [ :ship | ship loseShield ]
+]
+
+{ #category : 'accessing' }
+ShipBattleGame >> cardsOf: aShip [
+
+	| aSearchedShip |
+	aSearchedShip :=	ships detect: [ :ship | ship = aShip ].
+	^ aSearchedShip cards copy
 ]
 
 { #category : 'comparing' }
@@ -160,6 +191,11 @@ ShipBattleGame >> initializeInSize: aSize rounds: aRoundNumber with: aDiceSet an
 	gameWinner := nil
 ]
 
+{ #category : 'accessing' }
+ShipBattleGame >> manager [
+	^ cardManager 
+]
+
 { #category : 'game controls' }
 ShipBattleGame >> move: aShip byParsecs: anAmountOfParsecs [
 
@@ -197,6 +233,20 @@ ShipBattleGame >> nextTurn [
 		ifFalse: [ currentShip turnSkipped ].
 
 	shipToMove := shipToMove \\ ships size + 1
+]
+
+{ #category : 'card usage' }
+ShipBattleGame >> playCard: aCard by: aShip [ 
+
+	self playCard: aCard by: aShip target: aShip
+]
+
+{ #category : 'card usage' }
+ShipBattleGame >> playCard: aCard by: aShip target: aTarget [
+	
+	self canIKeepPlaying.
+	
+	cardManager playCard: aCard by: aShip target: aTarget
 ]
 
 { #category : 'game controls' }

@@ -7,3 +7,10 @@ Class {
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'action handling' }
+SpeedCard >> managedBy: aCardManager target: aTargetShip [
+
+	aCardManager addEffect:
+		(OneMoreSquare to: aTargetShip usedBy: self)
+]

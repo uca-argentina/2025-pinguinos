@@ -7,3 +7,9 @@ Class {
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'action handling' }
+Card >> managedBy: aCardManager target: aTarget [
+
+	self subclassResponsibility
+]

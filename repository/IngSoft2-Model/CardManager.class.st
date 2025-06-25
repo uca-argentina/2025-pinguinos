@@ -14,6 +14,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'creation' }
+CardManager class >> ships: aSetOfShips board: aBoard deck: aDeck [
+
+	^ self new initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck
+]
+
 { #category : 'adding' }
 CardManager >> addEffect: aCardEffect [
 
@@ -25,4 +31,23 @@ CardManager >> addMovement: aShip [
 
 	^ (activeCardEffects collect: [ :cardEffect |
 		   cardEffect addMovement: aShip ]) sumNumbers
+]
+
+{ #category : 'initialization' }
+CardManager >> initializeWithShips: aSetOfShips withBoard: aBoard withDeck: aDeck [
+
+	activeCardEffects := OrderedCollection new.
+	deck := aDeck.
+	ships := aSetOfShips.
+	board := aBoard.
+	^ self
+]
+
+{ #category : 'card usage' }
+CardManager >> playCard: aCard by: aShip target: aTarget [
+
+	aShip hasAny: aCard.
+	aCard managedBy: self target: aTarget.
+
+	aShip removeCard: aCard
 ]

@@ -11,6 +11,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'creation' }
+LoadedDeck class >> cards: cardsToDraw [
+
+	^ self new initializeWith: cardsToDraw
+]
+
 { #category : 'actions' }
 LoadedDeck >> drawCard [
 
