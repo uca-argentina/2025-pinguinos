@@ -116,7 +116,7 @@ Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
 	resultingSquare := resultingPosition first.
 	completedLaps := resultingPosition second.
 
-	aCircularBoard lastEffectUsed: resultingSquare .
+	aCircularBoard lastEffectUsed: resultingSquare.
 	
 	self moveTo: resultingSquare.
 	

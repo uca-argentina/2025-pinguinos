@@ -239,6 +239,17 @@ CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [
 ]
 
 { #category : 'accessing' }
+CircularBoard >> lastEffectUsed: aSpecialSquare [
+
+	| onlySpecialSquares |
+	onlySpecialSquares := { AtomicBomb. MoonWalk. CardGiver. HyperJump. Wormhole. Blackhole. HyperSpaceJump }.
+
+	(onlySpecialSquares anySatisfy: [ :class | aSpecialSquare isKindOf: class ])
+		ifTrue: [ lastSquareEffectUsed := aSpecialSquare ].
+
+]
+
+{ #category : 'accessing' }
 CircularBoard >> lastSquareEffectUsed [
 
 	^ lastSquareEffectUsed 
