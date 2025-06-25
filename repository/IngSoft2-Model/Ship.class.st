@@ -49,7 +49,7 @@ Ship >> completeLaps: aNumberOfLaps [
 Ship >> hasAny: aCard [
 
 	(cards includes: aCard) ifFalse: [
-		Error signal: 'Card not available' ]
+		Error signal: 'This ship cannot play this card because it does not have it!' ]
 ]
 
 { #category : 'initialization' }

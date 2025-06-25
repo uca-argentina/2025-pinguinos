@@ -95,6 +95,12 @@ ShipBattleGame >> breakShieldsOfAllShips [
 	ships do: [ :ship | ship loseShield ]
 ]
 
+{ #category : 'testing' }
+ShipBattleGame >> can: aShip playThisCard: aCard [
+
+	(ships at: shipToMove) = aShip ifFalse: [ Error signal: 'This ship cannot play this card because it is not his turn!' ]
+]
+
 { #category : 'accessing' }
 ShipBattleGame >> cardsOf: aShip [
 
@@ -245,6 +251,7 @@ ShipBattleGame >> playCard: aCard by: aShip [
 ShipBattleGame >> playCard: aCard by: aShip target: aTarget [
 	
 	self canIKeepPlaying.
+	self can: aShip playThisCard: aCard.
 	
 	cardManager playCard: aCard by: aShip target: aTarget
 ]

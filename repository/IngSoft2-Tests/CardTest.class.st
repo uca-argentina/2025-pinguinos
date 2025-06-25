@@ -8,30 +8,32 @@ Class {
 { #category : 'tests' }
 CardTest >> testWhenCardGiverAtPosition2ThenShipGetsCardsAddedToTheirCount [
 
-	| aGame expectedResult cardsToDraw |
+	| aGame expectedResult cardsToDraw aShip |
 	
+	aShip := Ship named: 'Jorge'.
+
 	cardsToDraw := OrderedCollection with: SpeedCard new.
 	aGame := ShipBattleGame
 		         inSize: 6
 		         rounds: 2
 		         with: { (LoadedDie withSides: 1) }
-		         and: { Ship named: 'Jorge' }
+		         and: { aShip }
 		         withSpecialSquaresAt:
-		         (Dictionary newFrom: { ('CardGivers' -> { 2 })})
-					withDeck: (LoadedDeck cards: cardsToDraw).
+		         (Dictionary newFrom: { ('CardGivers' -> { 2 }) })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+
+	self assert: aShip cards size equals: 2.
 
 	aGame nextTurn.
-
-   "self assert: 'Jorge' cards size equals: 2."
 
 	expectedResult := OrderedDictionary new.
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 2).
-				 ('lap' -> 1) .
-				 ('card count' -> 3)}).
-				
-	self assert: aGame boardStateWithCards equals: expectedResult 
+				 ('lap' -> 1).
+				 ('card count' -> 3) }).
+
+	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
 { #category : 'running' }

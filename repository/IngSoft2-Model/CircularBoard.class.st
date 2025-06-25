@@ -185,10 +185,10 @@ CircularBoard >> initializeRandomSpecialSquares [
 	
 	"Tiro un numero random por cada casillero "
 	resultForEachCell := OrderedCollection new.
-	boardSize timesRepeat: [ resultForEachCell add: (1 to: 108) atRandom ].
+	boardSize timesRepeat: [ resultForEachCell add: (1 to: 100) atRandom ].
 
 	resultForEachCell doWithIndex: [ :result :i |
-		(108 >= result and: result > 70) ifTrue: [ emptySquares add: i ] ].
+		(100 >= result and: result > 70) ifTrue: [ emptySquares add: i ] ].
 
 	resultForEachCell doWithIndex: [ :result :i |
 		(70 >= result and: result > 60) ifTrue: [ cardGivers add: i ] ].
