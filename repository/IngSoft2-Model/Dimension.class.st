@@ -30,7 +30,8 @@ Dimension class >> conversionRates [
 
 { #category : 'instance creation' }
 Dimension class >> of: value [
-
+	
+	self checkSignOfValue: value.
 	^ self new initializeWith: value
 ]
 
@@ -42,7 +43,7 @@ Dimension class >> setRates [
 					                     ('LightYear' -> 60).
 					                     ('Parsec' -> 20) })).
 			                   ('LightYear' -> (Dictionary newFrom: {
-					                     ('CellUnit' -> 4).
+					                     ('CellUnit' -> (1 / 60)).
 					                     ('Parsec' -> (1 / 3)) })).
 			                   ('Parsec' -> (Dictionary newFrom: {
 					                     ('CellUnit' -> (1 / 20)).
@@ -59,6 +60,11 @@ Dimension >> + aNumber [
 Dimension >> / aNumber [
 
 	^ (self class of: (self value / aNumber))
+]
+
+{ #category : 'comparing' }
+Dimension >> = aUnit [
+    ^ self class = aUnit class and: [ value = aUnit value ].
 ]
 
 { #category : 'converting' }
@@ -83,6 +89,12 @@ Dimension >> convertToParsecs [
 Dimension >> floor [
 
 	^ (self class of: (self value floor))
+]
+
+{ #category : 'initialization' }
+Dimension >> initialize [
+
+	Dimension setRates. "Me aseguro que siempre funcione aun cuando no se llame esto"
 ]
 
 { #category : 'initialization' }

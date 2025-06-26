@@ -76,7 +76,6 @@ Board >> initializeWithSize: aSize [
 
 	1 to: boardSize do: [ :x | map add: (Square x: x) ].
 	
-	Dimension setRates.
 ]
 
 { #category : 'initialization' }
