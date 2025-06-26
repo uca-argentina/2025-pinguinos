@@ -116,7 +116,8 @@ CircularBoard >> createAtomicBombsAt: squarePositions [
 CircularBoard >> createBlackHolesAt: aSquarePositions [
 
 	aSquarePositions do: [ :position |
-		map at: position put: (Blackhole at: position in: self) ]
+"		map at: position put: (Blackhole at: position in: self) ]"
+		map at: position put: (Blackhole x: position )]
 ]
 
 { #category : 'accessing' }
@@ -145,7 +146,7 @@ CircularBoard >> createHyperJumpsAt: aSquarePositions [
 CircularBoard >> createHyperSpaceJumpsAt: aSquarePositions [
 
 	aSquarePositions do: [ :position |
-		map at: position put: (HyperSpaceJump at: position in: self) ]
+		map at: position put: (HyperSpaceJump x: position) ]
 ]
 
 { #category : 'accessing' }
@@ -242,10 +243,11 @@ CircularBoard >> initializeWithSpecialSquaresAt: squarePositions [
 CircularBoard >> lastEffectUsed: aSpecialSquare [
 
 	| onlySpecialSquares |
-	onlySpecialSquares := { AtomicBomb. MoonWalk. CardGiver. HyperJump. Wormhole. Blackhole. HyperSpaceJump }.
+	onlySpecialSquares := { AtomicBomb. MoonWalk. CardGiver. HyperJump. Wormhole .Blackhole .HyperSpaceJump}.
 
 	(onlySpecialSquares anySatisfy: [ :class | aSpecialSquare isKindOf: class ])
-		ifTrue: [ lastSquareEffectUsed := aSpecialSquare ].
+		ifTrue: [ lastSquareEffectUsed := aSpecialSquare].
+		
 
 ]
 
@@ -269,6 +271,12 @@ CircularBoard >> resolveMovementOf: anIntendedPosition [
 	^ {
 		  (map at: finalPosition).
 		  completedLaps } "Devuelvo tupla de ubicacion final a la que debe ir el Ship y vuelta en la que esta"
+]
+
+{ #category : 'accessing' }
+CircularBoard >> size [
+
+	^ boardSize 
 ]
 
 { #category : 'validation' }

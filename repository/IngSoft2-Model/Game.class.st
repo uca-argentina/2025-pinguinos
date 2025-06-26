@@ -27,6 +27,12 @@ Game class >> inSize: aSize withWormHoleFrom: aSquare to: anotherSquare with: aD
 		  and: aSetOfShips
 ]
 
+{ #category : 'getter' }
+Game >> boardSize [
+
+	^ board size
+]
+
 { #category : 'accessing' }
 Game >> boardState [
 

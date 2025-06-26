@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfIngSoft2 }
+Package { #name : 'BaselineOfIngSoft2' }
