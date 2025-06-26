@@ -16,6 +16,8 @@ EmptySquare class >> at: aPosition [
 
 { #category : 'action' }
 EmptySquare >> applyEffectTo: aShip in: aGame [
+		
+	 ^ self
 ]
 
 { #category : 'accessing' }

@@ -14,6 +14,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'validating' }
+Dimension class >> checkSignOfValue: value [
+
+	(value < 0) ifTrue: [ Error signal: 'Cannot create a unit of negative value!' ]
+]
+
 { #category : 'instance creation' }
 Dimension class >> conversionRateFrom: aUnit to: anotherUnit [
 
