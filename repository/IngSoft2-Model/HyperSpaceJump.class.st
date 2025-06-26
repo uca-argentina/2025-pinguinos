@@ -3,24 +3,26 @@ HyperSpaceJump in grid for the game; to be occupied with a ship, which comes out
 "
 Class {
 	#name : 'HyperSpaceJump',
-	#superclass : 'MoverSquare',
+	#superclass : 'Square',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
-HyperSpaceJump class >> at: aSquare in: aBoard [
-
-	| aDestiny |
-	
-	aDestiny := (aBoard getSquareAt: aSquare + 4) getPosition.
-	^ self new initializeTo: aDestiny from: aSquare
-]
-
 { #category : 'action' }
 HyperSpaceJump >> applyEffectTo: aShip in: aGame [
 
-	super applyEffectTo: aShip in: aGame.
-	destination <= origin ifTrue: [ aShip completeLaps: 1 ].
+
+	| boardSize originalPosition aDestination |
+	boardSize := aGame boardSize.
+	originalPosition := aShip position.
+	aDestination := originalPosition + 4.
+
+	(aDestination > boardSize) ifTrue: [
+		aShip completeLaps: 1.
+		aDestination := aDestination - boardSize
+	].
+
+	aGame moveShip: aShip to: aDestination.
 	aShip loseShield.
+
 ]

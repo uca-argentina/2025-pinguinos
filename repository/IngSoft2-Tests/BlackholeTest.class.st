@@ -46,7 +46,6 @@ BlackholeTest >> testWhenBlackholeAtPosition2ThenPlayerGetsSentToPosition4AndLos
 
 	aGame nextTurn.
 
-
 	expectedResult := OrderedDictionary new.
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').

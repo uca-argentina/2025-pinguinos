@@ -17,16 +17,6 @@ MoonWalk class >> by: aNumberOfSquares at: aPosition [
 	^ self new initializeWith: aNumberOfSquares at: aPosition
 ]
 
-{ #category : 'instance creation' }
-MoonWalk class >> by: aNumberOfSquares at: aPosition in: aBoard [
-
-	| exit |
-	
-	exit := (aBoard getSquareAt: aPosition - aNumberOfSquares) getPosition.
-
-	^ self new initializeTo: exit from: aPosition
-]
-
 { #category : 'action' }
 MoonWalk >> applyEffectTo: aShip in: aGame [
 

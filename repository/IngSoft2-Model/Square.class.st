@@ -63,23 +63,11 @@ Square >> getPosition [
 Square >> initializeAtPosition: anXPosition [
 
 	origin := anXPosition.
-	self setStatus: 'Free'.
+
 ]
 
 { #category : 'getter' }
 Square >> landingCoordinate [
 
 	^ origin
-]
-
-{ #category : 'setter' }
-Square >> occupy [ 
-	
-	status:= 'Occupied'.
-]
-
-{ #category : 'setter' }
-Square >> setStatus: aStatus [
-
-	status:= aStatus.
 ]

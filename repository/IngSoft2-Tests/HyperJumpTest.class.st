@@ -132,7 +132,7 @@ HyperJumpTest >> testHyperSpaceJumpAtPosition4ThenPlayerGetsSent60ParsecsForward
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Jorge').
 				 ('position' -> 1).
-				 ('lap' -> 2) }).
+				 ('lap' -> 2)}).
 
 	self assert: aGame boardState equals: expectedResult
 ]

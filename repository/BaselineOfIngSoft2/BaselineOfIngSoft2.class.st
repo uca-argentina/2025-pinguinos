@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfIngSoft2,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfIngSoft2
+	#name : 'BaselineOfIngSoft2',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfIngSoft2',
+	#package : 'BaselineOfIngSoft2'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIngSoft2 >> baseline: spec [
 
 	<baseline>
@@ -20,7 +21,7 @@ BaselineOfIngSoft2 >> baseline: spec [
 				group: 'development' with: #('IngSoft2-Tests') ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfIngSoft2 >> projectClass [
 
 	^ MetacelloCypressBaselineProject

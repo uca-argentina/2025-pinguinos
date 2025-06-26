@@ -9,7 +9,8 @@ Class {
 		'shipName',
 		'laps',
 		'shields',
-		'turnsToSkip'
+		'turnsToSkip',
+		'cards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -21,16 +22,34 @@ Ship class >> named: aName [
 	^ self new initializeName: aName
 ]
 
+{ #category : 'adding' }
+Ship >> addCards: aSetOfCards [
+
+	cards:= aSetOfCards.
+]
+
 { #category : 'accessing' }
 Ship >> canIPlayTurn [
 
 	^ turnsToSkip = 0
 ]
 
+{ #category : 'accessing' }
+Ship >> cards [
+	^ cards.
+]
+
 { #category : 'actions' }
 Ship >> completeLaps: aNumberOfLaps [
 
 	laps := laps + aNumberOfLaps
+]
+
+{ #category : 'testing' }
+Ship >> hasAny: aCard [
+
+	(cards includes: aCard) ifFalse: [
+		Error signal: 'This ship cannot play this card because it does not have it!' ]
 ]
 
 { #category : 'initialization' }
@@ -41,6 +60,9 @@ Ship >> initialize [
 	laps := 1.
 	shields := 3.
 	turnsToSkip := 0.
+	cards := OrderedCollection new.
+	
+
 ]
 
 { #category : 'initialization' }
@@ -59,14 +81,15 @@ Ship >> laps [
 Ship >> loseFight [
 
 	position := 1.
-	shields >= 1 ifTrue: [ self loseShield ].
+	self loseShield.
 	shields = 0 ifTrue: [ turnsToSkip := turnsToSkip + 2 ]
 ]
 
 { #category : 'actions' }
 Ship >> loseShield [
 	
-	 shields := shields - 1.
+	 shields >= 1 ifTrue: [ shields := shields - 1 ].
+	 
 ]
 
 { #category : 'actions' }
@@ -83,8 +106,9 @@ Ship >> moveBy: aRolledNumber on: aBoard of: aGame [
 Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
 
 	| intendedPosition resultingPosition resultingSquare completedLaps |
-	
+
 	intendedPosition := position + aRolledNumber.
+
 
 	resultingPosition := aCircularBoard resolveMovementOf:
 		                     intendedPosition.
@@ -92,7 +116,10 @@ Ship >> moveBy: aRolledNumber onCircularBoard: aCircularBoard of: aGame [
 	resultingSquare := resultingPosition first.
 	completedLaps := resultingPosition second.
 
+	aCircularBoard lastEffectUsed: resultingSquare.
+	
 	self moveTo: resultingSquare.
+	
 	intendedPosition >= position ifTrue: [
 		resultingSquare applyEffectTo: self in: aGame ].
 
@@ -118,6 +145,12 @@ Ship >> position [
 ]
 
 { #category : 'actions' }
+Ship >> receive: aCard [
+
+	cards add: aCard
+]
+
+{ #category : 'actions' }
 Ship >> recoverShields [
 
 	shields := 3.
@@ -127,6 +160,13 @@ Ship >> recoverShields [
 Ship >> remainingShields [
 
 	^ shields 
+]
+
+{ #category : 'removing' }
+Ship >> removeCard: aCard [
+
+	cards remove: aCard
+
 ]
 
 { #category : 'actions' }

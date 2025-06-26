@@ -36,12 +36,15 @@ HyperJump >> initialize [
 ]
 
 { #category : 'initialization' }
-HyperJump >> initializeInBoardOfSize: aBoardParsecSize at: position [
+HyperJump >> initializeInBoardOfSize: aBoardSize at: position [
 
+	| boardSizeInParsecs |
+	
 	super initializeAtPosition: position.
-
+	boardSizeInParsecs := (CellUnit of: aBoardSize) convertToParsecs.
+	
 	1 to: parsecListSize do: [ :i |
-	parsecList add: aBoardParsecSize / (i + 1) ]
+	parsecList add: boardSizeInParsecs / (i + 1) ]
 ]
 
 { #category : 'accessing' }

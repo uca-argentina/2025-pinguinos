@@ -14,12 +14,13 @@ RandomDistributionOfSpecialSquaresTest >> testAfterCreatingABoardOfSize100WithSe
 	numberOfBoards := 1000.
 
 	"dict['nombre clase'] = { numero de ocurrencias . probabilidad de aparecer de cada clase de cuadrado }"
-	classCounts at: 'Square' put: { 0. 40 }.
+	classCounts at: 'EmptySquare' put: { 0. 30 }.
 	classCounts at: 'Blackhole' put: { 0. 20 }.
 	classCounts at: 'HyperSpaceJump' put: { 0. 20 }.
 	classCounts at: 'MoonWalk' put: { 0. 10 }.
 	classCounts at: 'HyperJump' put: { 0. 8 }.
 	classCounts at: 'AtomicBomb' put: { 0. 2 }.
+	classCounts at: 'CardGiver' put: { 0. 10 }.
 
 	boards := OrderedCollection new.
 	aBoard := CircularBoard
