@@ -201,15 +201,15 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleItsEffect
 				 ('position' -> 4).
 				 ('lap' -> 1).
 				 ('card count' -> 1) }).
-
-	expectedResult at: '3°' put: (Dictionary newFrom: {
-				 ('name' -> 'Julian').
+				
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Bob').
 				 ('position' -> 7).
 				 ('lap' -> 0).
 				 ('card count' -> 2) }).
 				
-	expectedResult at: '2°' put: (Dictionary newFrom: {
-				 ('name' -> 'Bob').
+	expectedResult at: '3°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
 				 ('position' -> 7).
 				 ('lap' -> 0).
 				 ('card count' -> 2) }).
@@ -244,17 +244,17 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleOtherBlac
 	aGame nextTurn. "Mueve jorge"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '2°' put: (Dictionary newFrom: {
-				 ('name' -> 'Jorge').
-				 ('position' -> 10).
-				 ('lap' -> 0).
-				 ('card count' -> 1) }).
-
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julian').
 				 ('position' -> 1).
 				 ('lap' -> 1).
 				 ('card count' -> 2) }).
+
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 10).
+				 ('lap' -> 0).
+				 ('card count' -> 1) }).
 
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
@@ -287,17 +287,17 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnBlackHoleThriceIts
 	aGame nextTurn. "Mueve jorge"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '2°' put: (Dictionary newFrom: {
-				 ('name' -> 'Jorge').
-				 ('position' -> 10).
-				 ('lap' -> 0).
-				 ('card count' -> 0) }).
-
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julian').
 				 ('position' -> 1).
 				 ('lap' -> 1).
 				 ('card count' -> 2) }).
+				
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 10).
+				 ('lap' -> 0).
+				 ('card count' -> 0) }).
 
 	self assert: aGame boardStateWithCards equals: expectedResult.
 
@@ -500,12 +500,6 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnHyperJumpItsEffect
 	aGame nextTurn. "Mueve jorge"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '3°' put: (Dictionary newFrom: {
-				 ('name' -> 'Jorge').
-				 ('position' -> 4).
-				 ('lap' -> 1).
-				 ('card count' -> 1) }).
-
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Bob').
 				 ('position' -> 6).
@@ -517,6 +511,12 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnHyperJumpItsEffect
 				 ('position' -> 6).
 				 ('lap' -> 1).
 				 ('card count' -> 2) }).
+				
+	expectedResult at: '3°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 4).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
 
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
@@ -690,23 +690,23 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnMoonWalkItsEffectI
 	aGame nextTurn. "Mueve jorge"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '3°' put: (Dictionary newFrom: {
-				 ('name' -> 'Jorge').
-				 ('position' -> 9).
-				 ('lap' -> 0).
-				 ('card count' -> 1) }).
-
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Bob').
+				 ('position' -> 1).
+				 ('lap' -> 1).
+				 ('card count' -> 2) }).
+	
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julian').
 				 ('position' -> 1).
 				 ('lap' -> 1).
 				 ('card count' -> 2) }).
 				
-	expectedResult at: '1°' put: (Dictionary newFrom: {
-				 ('name' -> 'Bob').
-				 ('position' -> 1).
-				 ('lap' -> 1).
-				 ('card count' -> 2) }).
+	expectedResult at: '3°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 9).
+				 ('lap' -> 0).
+				 ('card count' -> 1) }).
 
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
@@ -783,11 +783,11 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnWormHoleItsEffectI
 	aGame nextTurn. "Mueve jorge"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '3°' put: (Dictionary newFrom: {
-				 ('name' -> 'Jorge').
-				 ('position' -> 4).
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Bob').
+				 ('position' -> 8).
 				 ('lap' -> 1).
-				 ('card count' -> 1) }).
+				 ('card count' -> 2) }).
 
 	expectedResult at: '2°' put: (Dictionary newFrom: {
 				 ('name' -> 'Julian').
@@ -795,11 +795,11 @@ ReversePolarityCardTest >> testAfterUsingReversePolarityCardOnWormHoleItsEffectI
 				 ('lap' -> 1).
 				 ('card count' -> 2) }).
 
-	expectedResult at: '1°' put: (Dictionary newFrom: {
-				 ('name' -> 'Bob').
-				 ('position' -> 8).
+	expectedResult at: '3°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 4).
 				 ('lap' -> 1).
-				 ('card count' -> 2) }).
+				 ('card count' -> 1) }).
 
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]

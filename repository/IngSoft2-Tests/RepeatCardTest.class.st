@@ -330,17 +330,17 @@ RepeatCardTest >> testWhenLastEffectWasWormholeAndUseTheRepeatCardThenShouldAppl
 	aGame playCard: aRepeatCard by: jorgeShip target: juanShip . "Jorge juega RepeatCard"
 
 	expectedResult := OrderedDictionary new.
-	expectedResult at: '2°' put: (Dictionary newFrom: {
-				 ('name' -> 'Jorge').
-				 ('position' -> 15).
-				 ('lap' -> 1).
-				 ('card count' -> 1) }).
 	expectedResult at: '1°' put: (Dictionary newFrom: {
 				 ('name' -> 'Juan').
 				 ('position' -> 15).
 				 ('lap' -> 1).
 				 ('card count' -> 2) }).
-
+				
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 15).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
 
 	self assert: aGame boardStateWithCards equals: expectedResult
 	

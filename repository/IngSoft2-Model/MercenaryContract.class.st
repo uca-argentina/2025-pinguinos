@@ -3,7 +3,7 @@ Implementation of speed card effect, which gives the ship an extra square positi
 "
 Class {
 	#name : 'MercenaryContract',
-	#superclass : 'PermanentEffects',
+	#superclass : 'PermanentEffect',
 	#instVars : [
 		'contractorShip',
 		'contractedShip'

@@ -3,9 +3,10 @@ Implementation of speed card effect, which gives the ship n extra square positio
 "
 Class {
 	#name : 'AdditionalSquares',
-	#superclass : 'PermanentEffects',
+	#superclass : 'PermanentEffect',
 	#instVars : [
-		'numberOfSquares'
+		'numberOfSquares',
+		'additionalSquaresState'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,8 +21,20 @@ AdditionalSquares class >> isAbstract [
 { #category : 'one more square' }
 AdditionalSquares >> addMovement: aShip [
 	
-	^ self subclassResponsibility
+	^ additionalSquaresState addMovementFrom: self to: aShip
 	
+]
+
+{ #category : 'adding' }
+AdditionalSquares >> addNormalMovementTo: aShip [
+
+	^ self subclassResponsibility 	
+]
+
+{ #category : 'adding' }
+AdditionalSquares >> addReverseMovementTo: aShip [
+
+	^ self subclassResponsibility 	
 ]
 
 { #category : 'initialization' }
@@ -32,5 +45,13 @@ AdditionalSquares >> initializeOf: aNumber usedBy: aCard [
 	numberOfSquares := aNumber.
 	usedBy := aCard.
 	
+	additionalSquaresState := NormalAdditionalSquaresState new.
+	
 	^ self
+]
+
+{ #category : 'action' }
+AdditionalSquares >> reverseEffect [
+	
+	additionalSquaresState := additionalSquaresState reverse.
 ]
