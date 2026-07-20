@@ -5,8 +5,7 @@ Class {
 	#name : 'AdditionalSquares',
 	#superclass : 'PermanentEffect',
 	#instVars : [
-		'numberOfSquares',
-		'additionalSquaresState'
+		'numberOfSquares'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -21,7 +20,7 @@ AdditionalSquares class >> isAbstract [
 { #category : 'one more square' }
 AdditionalSquares >> addMovement: aShip [
 	
-	^ additionalSquaresState addMovementFrom: self to: aShip
+	^ permanentEffectState addMovementFrom: self to: aShip
 	
 ]
 
@@ -45,13 +44,5 @@ AdditionalSquares >> initializeOf: aNumber usedBy: aCard [
 	numberOfSquares := aNumber.
 	usedBy := aCard.
 	
-	additionalSquaresState := NormalAdditionalSquaresState new.
-	
 	^ self
-]
-
-{ #category : 'action' }
-AdditionalSquares >> reverseEffect [
-	
-	additionalSquaresState := additionalSquaresState reverse.
 ]

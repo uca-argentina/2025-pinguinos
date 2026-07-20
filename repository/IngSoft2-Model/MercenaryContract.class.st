@@ -6,8 +6,7 @@ Class {
 	#superclass : 'PermanentEffect',
 	#instVars : [
 		'contractorShip',
-		'contractedShip',
-		'mercenaryContractState'
+		'contractedShip'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -36,7 +35,7 @@ MercenaryContract >> applyReverseContractTo: aShip against: anOpponent [
 { #category : 'getter' }
 MercenaryContract >> getAllyOf: aShip against: anOpponent [
 
-	^ mercenaryContractState getAllyOf: aShip against: anOpponent from: self.
+	^ permanentEffectState getAllyOf: aShip against: anOpponent from: self.
 ]
 
 { #category : 'getter' }
@@ -53,13 +52,6 @@ MercenaryContract >> initializeFrom: aShip with: aContractedShip usedBy: aCard [
 	contractorShip := aShip.
 	contractedShip := aContractedShip.
 	usedBy := aCard.
-	mercenaryContractState := NormalMercenaryContractState new.
-	
-	^ self
-]
 
-{ #category : 'action' }
-MercenaryContract >> reverseEffect [
-	
-	mercenaryContractState := mercenaryContractState reverse.
+	^ self
 ]
