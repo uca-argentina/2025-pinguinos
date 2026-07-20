@@ -16,7 +16,7 @@ SpeedCardTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: aMes
 			equals: aMessage ]
 ]
 
-{ #category : 'basic tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
@@ -58,7 +58,7 @@ SpeedCardTest >> testAShipCanUseSpeedCardCorrectlyOnOtherShip [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'basic tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testSpeedCardCannotBePlayedOutsideOfPlayersTurn [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
@@ -105,7 +105,7 @@ SpeedCardTest >> testSpeedCardCannotBePlayedOutsideOfPlayersTurn [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'basic tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testWhen2SpeedCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSquares [
 
 	| aGame expectedResult jorgeShip currentDeck aCard cardsToDraw |
@@ -141,7 +141,7 @@ SpeedCardTest >> testWhen2SpeedCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSqu
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'basic tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testWhenSpeedCardIsPlayedThenItIsUsedAndItAffectsTheEntireRoll [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
@@ -174,7 +174,7 @@ SpeedCardTest >> testWhenSpeedCardIsPlayedThenItIsUsedAndItAffectsTheEntireRoll 
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'basic tests' }
+{ #category : 'as yet unclassified' }
 SpeedCardTest >> testWhenSpeedCardIsPlayedThenItIsUsedAndShipMoves1MoreSquareInVariousTurns [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |

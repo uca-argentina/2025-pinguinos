@@ -92,6 +92,14 @@ Game >> isGameOver [
 ]
 
 { #category : 'game controls' }
+Game >> moveEveryShipExcept: anExceptionShip to: destination [
+
+	ships do: [ :ship |
+		ship ~= anExceptionShip ifTrue: [
+			ship moveTo: (board getSquareAt: destination) ] ]
+]
+
+{ #category : 'game controls' }
 Game >> moveShip: aShip to: destination [
 
 	aShip moveTo: (board getSquareAt: destination)

@@ -170,7 +170,7 @@ Ship >> turnSkipped [
 ]
 
 { #category : 'actions' }
-Ship >> withNoEffectsMove: aRolledNumber onCircularBoard: aCircularBoard [
+Ship >> withNoEffectsMoveBy: aRolledNumber onCircularBoard: aCircularBoard [
 
 	| intendedPosition resultingPosition resultingSquare completedLaps |
 	

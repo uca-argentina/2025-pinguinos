@@ -18,12 +18,20 @@ AdditionalSquaresForOne class >> of: aNumber to: aTargetShip usedBy: aCard [
 	^ self new initializeOf: aNumber usedBy: aCard withTarget: aTargetShip 
 ]
 
-{ #category : 'one more square' }
-AdditionalSquaresForOne >> addMovement: aShip [
+{ #category : 'adding' }
+AdditionalSquaresForOne >> addNormalMovementTo: aShip [
+	
+	targetShip = aShip ifFalse: [ ^ 0 ].
+	
+	^ numberOfSquares
+]
 
-	^ targetShip = aShip 
-		  ifTrue: [ numberOfSquares ]
-		  ifFalse: [ 0 ]
+{ #category : 'adding' }
+AdditionalSquaresForOne >> addReverseMovementTo: aShip [
+
+	targetShip = aShip ifFalse: [ ^ 0 ].
+	
+	^ numberOfSquares negated
 ]
 
 { #category : 'initialization' }

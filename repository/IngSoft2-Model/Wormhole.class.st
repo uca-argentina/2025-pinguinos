@@ -23,21 +23,41 @@ Wormhole class >> from: anOriginPosition to: aDestiny [
 
 	self areEndsDistinct: anOriginPosition and: aDestiny.
 
-	Square validateXIsPositive: anOriginPosition.
-	Square validateXIsPositive: aDestiny.
+	self validateXIsPositive: anOriginPosition.
+	self validateXIsPositive: aDestiny.
 
-	Square validateXIsInteger: anOriginPosition.
-	Square validateXIsInteger: aDestiny.
+	self validateXIsInteger: anOriginPosition.
+	self validateXIsInteger: aDestiny.
 
 	^ {
 		  (self new initializeTo: aDestiny from: anOriginPosition).
 		  (self new initializeTo: anOriginPosition from: aDestiny) }
 ]
 
-{ #category : 'action' }
-Wormhole >> applyEffectTo: aShip in: aGame [
+{ #category : 'validation' }
+Wormhole class >> validateXIsInteger: anXPosition [
 
-	aGame moveShip: aShip to: destination.
+	anXPosition isInteger ifFalse: [
+		Error signal: 'X position must be an integer.' ]
+]
+
+{ #category : 'validation' }
+Wormhole class >> validateXIsPositive: aXPosition [
+
+	aXPosition < 0 ifTrue: [
+		Error signal: 'X position must be positive.' ]
+]
+
+{ #category : 'action' }
+Wormhole >> applyNormalEffectTo: aShip in: aGame [
+
+	aGame moveShip: aShip to: destination
+]
+
+{ #category : 'action' }
+Wormhole >> applyReverseEffectTo: aShip in: aGame [
+
+	aGame moveEveryShipExcept: aShip to: destination
 ]
 
 { #category : 'getter' }
@@ -49,6 +69,6 @@ Wormhole >> getDestination [
 { #category : 'initialization' }
 Wormhole >> initializeTo: aDestination from: anOriginPosition [
 	
-	super initializeAtPosition: anOriginPosition.
+	super initializeAt: anOriginPosition.
 	destination := aDestination.
 ]

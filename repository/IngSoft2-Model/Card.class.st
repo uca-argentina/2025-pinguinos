@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : 'testing' }
+Card class >> isAbstract [
+
+	^ self == Card
+]
+
+{ #category : 'testing' }
 Card >> isRepeatable [
 
 	self subclassResponsibility 

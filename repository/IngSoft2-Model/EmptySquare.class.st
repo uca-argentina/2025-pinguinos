@@ -15,13 +15,7 @@ EmptySquare class >> at: aPosition [
 ]
 
 { #category : 'action' }
-EmptySquare >> applyEffectTo: aShip in: aGame [
-		
-	 ^ self
-]
+EmptySquare >> reversePolarity [
 
-{ #category : 'accessing' }
-EmptySquare >> initializeAt: aPosition [
-	
-	super initializeAtPosition: aPosition.
+	Error signal: 'Cannot reverse the polarity of an empty square!'
 ]

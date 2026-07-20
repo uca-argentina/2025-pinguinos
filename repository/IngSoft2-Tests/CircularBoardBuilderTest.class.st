@@ -74,7 +74,7 @@ CircularBoardBuilderTest >> testCanBuildBoardOfSize40Parsecs [
 	aBoard := aBoardBuilder build.
 
 	self assert: aBoard size equals: 2.
-	self assert: (aBoard getSquareAt: 5) class equals: Square.
+	self assert: (aBoard getSquareAt: 5) class equals: EmptySquare.
 ]
 
 { #category : 'tests' }
@@ -88,7 +88,7 @@ CircularBoardBuilderTest >> testCanBuildBoardOfSize5 [
 	aBoard := aBoardBuilder build.
 
 	self assert: aBoard size equals: 5.
-	self assert: (aBoard getSquareAt: 5) class equals: Square.
+	self assert: (aBoard getSquareAt: 5) class equals: EmptySquare.
 ]
 
 { #category : 'tests' }
@@ -114,7 +114,7 @@ CircularBoardBuilderTest >> testCanBuildBoardWithACustomSetOfSquarePositions [
 	
 	aBoard := aBoardBuilder build.
 	
-	self assert: (aBoard getSquareAt: 1) class equals: Square.
+	self assert: (aBoard getSquareAt: 1) class equals: EmptySquare.
 	self assert: (aBoard getSquareAt: 8) class equals: EmptySquare.
 	self assert: (aBoard getSquareAt: 10) class equals: EmptySquare.
 	self assert: (aBoard getSquareAt: 30) class equals: BlackHole.

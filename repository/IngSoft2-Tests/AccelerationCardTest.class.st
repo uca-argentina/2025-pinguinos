@@ -16,7 +16,7 @@ AccelerationCardTest >> should: anErrorBlock raise: anErrorClass withErrorMessag
 			equals: aMessage ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 AccelerationCardTest >> testAShipCanUseAccelerationCardCorrectlyOnEveryShip [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
@@ -58,7 +58,7 @@ AccelerationCardTest >> testAShipCanUseAccelerationCardCorrectlyOnEveryShip [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 AccelerationCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
@@ -105,7 +105,7 @@ AccelerationCardTest >> testAccelerationCardCannotBePlayedOutsideOfPlayersTurn [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 AccelerationCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShipMoves2MoreSquares [
 
 	| aGame expectedResult jorgeShip julianShip currentDeck aCard cardsToDraw |
@@ -150,7 +150,7 @@ AccelerationCardTest >> testWhen2AccelerationCardsArePlayedThenTheyAreUsedAndShi
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 AccelerationCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndItAffectsTheEntireRoll [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |
@@ -183,7 +183,7 @@ AccelerationCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndItAffects
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 AccelerationCardTest >> testWhenAccelerationCardIsPlayedThenItIsUsedAndShipMoves1MoreSquareInVariousTurns [
 
 	| aGame expectedResult jorgeShip aDeck aCard cardsToDraw |

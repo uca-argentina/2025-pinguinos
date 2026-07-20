@@ -16,7 +16,7 @@ MercenaryCardTest >> should: anErrorBlock raise: anErrorClass withErrorMessage: 
 			equals: aMessage ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> test2ShipsCanContractOneAnotherAsMercenaries [
 
 	| aGame jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
@@ -53,7 +53,7 @@ MercenaryCardTest >> test2ShipsCanContractOneAnotherAsMercenaries [
 	
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testMercenaryCardCannotBePlayedOutsideOfPlayersTurn [
 
 	| aGame expectedResult jorgeShip julianShip aDeck aCard cardsToDraw |
@@ -100,7 +100,7 @@ MercenaryCardTest >> testMercenaryCardCannotBePlayedOutsideOfPlayersTurn [
 	self assert: aGame boardStateWithCards equals: expectedResult
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testShipCannotContractAShipThatHasAlreadyBeenContracted [
 
 	| aGame jorgeShip julianShip joseShip pabloShip aDeck aCard cardsToDraw |
@@ -142,7 +142,7 @@ MercenaryCardTest >> testShipCannotContractAShipThatHasAlreadyBeenContracted [
 		'A ship cannot contract as mercenary a ship that has already been contracted by someone else!'
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testShipCannotContractItselfAsMercenary [
 
 	| aGame jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
@@ -173,7 +173,7 @@ MercenaryCardTest >> testShipCannotContractItselfAsMercenary [
 		'A ship cannot contract itself as a mercenary!'
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardFightsAndLosesShieldsAreReducedFromHisAlliesTooAndOnlyContractorShipGetsMovedBack [
 
 	| aGame jorgeShip julianShip joseShip aDeck aCard cardsToDraw expectedResult |
@@ -225,7 +225,7 @@ MercenaryCardTest >> testWhenShipUsesMercenaryCardFightsAndLosesShieldsAreReduce
 	self assert: joseShip remainingShields equals: 2
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardOn2TargetShipsThenTheContractedShipsFightWithHimIfTheContractorIsAttacked [
 
 	| aGame expectedResult jorgeShip julianShip joseShip pabloShip aDeck aCard cardsToDraw |
@@ -290,7 +290,7 @@ MercenaryCardTest >> testWhenShipUsesMercenaryCardOn2TargetShipsThenTheContracte
 	self assert: pabloShip remainingShields equals: 2
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContractedShipFightsWithHimIfTheContractorIsAttacked [
 
 	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
@@ -344,7 +344,7 @@ MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContracted
 
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContractedShipFightsWithHimIfTheContractorIsAttackedAndTheyCanDraw [
 
 	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
@@ -398,7 +398,7 @@ MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContracted
 
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContractedShipFightsWithHimLoserGetsMovedBackAndAlliesLoseShieldsToo [
 
 	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
@@ -450,7 +450,7 @@ MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheContracted
 
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheyDontFightIfTheyLandOnSameSquare [
 
 	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |
@@ -504,7 +504,7 @@ MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheyDontFight
 
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 MercenaryCardTest >> testWhenShipUsesMercenaryCardOnATargetShipThenTheyDontFightIfTheyLandOnSameSquareEvenWhenContracteeIsTheOneStartingTheFight [
 
 	| aGame expectedResult jorgeShip julianShip joseShip aDeck aCard cardsToDraw |

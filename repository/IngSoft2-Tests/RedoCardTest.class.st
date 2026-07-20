@@ -293,6 +293,120 @@ RedoCardTest >> testRedoCardCanBeUsedCorrectlyOnLastPlayedMercenaryCard [
 ]
 
 { #category : 'tests' }
+RedoCardTest >> testRedoCardCanBeUsedCorrectlyOnLastPlayedReversalCard [
+
+	| aGame jorgeShip julianShip aDeck aSpeedCard aReversalCard aRedoCard cardsToDraw expectedResult |
+	cardsToDraw := OrderedCollection new.
+
+	cardsToDraw add: SpeedCard new. "Jorge"
+	cardsToDraw add: SpeedCard new. "Jorge"
+	
+	cardsToDraw add: RedoCard new. "Julian"
+	cardsToDraw add: ReversalCard new. "Julian"
+
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: { 2. 5 }) }
+		         and: {
+				         jorgeShip.
+				         julianShip }
+		         withSpecialSquaresAt:
+		         (Dictionary newFrom: { })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+
+	aDeck := aGame cardsOf: jorgeShip.
+	aSpeedCard := aDeck second.
+
+	aGame playCard: aSpeedCard by: jorgeShip. "Jorge juega speedcard"
+
+	aDeck := aGame cardsOf: julianShip.
+	aRedoCard := aDeck first.
+	aReversalCard := aDeck second.
+
+	aGame playCard: aReversalCard by: julianShip target: aSpeedCard.
+	
+	aGame nextTurn. "jorge mueve 2-1=1 a 2"
+	
+	aGame playCard: aRedoCard by: julianShip target: aSpeedCard. 
+
+	aGame nextTurn. "julian mueve a 6"
+	
+	aGame nextTurn. "jorge mueve 2+1=3 a 5"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 6).
+				 ('lap' -> 1).
+				 ('card count' -> 0) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 5).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
+
+	self assert: aGame boardStateWithCards equals: expectedResult
+]
+
+{ #category : 'tests' }
+RedoCardTest >> testRedoCardCanBeUsedCorrectlyOnLastPlayedReversePolarityCard [
+
+	| aGame jorgeShip julianShip aDeck aSpeedCard aReversePolarityCard aRedoCard cardsToDraw expectedResult |
+	cardsToDraw := OrderedCollection new.
+
+	cardsToDraw add: ReversePolarityCard new. "Jorge"
+	cardsToDraw add: SpeedCard new. "Jorge"
+	cardsToDraw add: RedoCard new. "Julian"
+	cardsToDraw add: RedoCard new. "Julian"
+
+	jorgeShip := Ship named: 'Jorge'.
+	julianShip := Ship named: 'Julian'.
+
+	aGame := ShipBattleGame
+		         inSize: 10
+		         rounds: 2
+		         with: { (LoadedDie withSides: { 2. 5 }) }
+		         and: {
+				         jorgeShip.
+				         julianShip }
+		         withSpecialSquaresAt:
+		         (Dictionary newFrom: { ('BlackHoles' -> { 4. 6 }) })
+		         withDeck: (LoadedDeck cards: cardsToDraw).
+
+	aDeck := aGame cardsOf: jorgeShip.
+	aReversePolarityCard := aDeck first.
+	aSpeedCard := aDeck second.
+
+	aGame playCard: aReversePolarityCard by: jorgeShip targetPosition: 4. "Jorge juega ReversePolarity en el blackhole"
+	aGame nextTurn. "jorge mueve a 3"
+
+	aDeck := aGame cardsOf: julianShip.
+	aRedoCard := aDeck first.
+
+	aGame playCard: aRedoCard by: julianShip targetPosition: 6. "julian juega redo card sobre y por ende reversepolarity y revierte al blakhole de 6"
+
+	aGame nextTurn. "julian mueve al blackhole en 6"
+
+	expectedResult := OrderedDictionary new.
+	expectedResult at: '1°' put: (Dictionary newFrom: {
+				 ('name' -> 'Julian').
+				 ('position' -> 6).
+				 ('lap' -> 1).
+				 ('card count' -> 1) }).
+	expectedResult at: '2°' put: (Dictionary newFrom: {
+				 ('name' -> 'Jorge').
+				 ('position' -> 9).
+				 ('lap' -> 0).
+				 ('card count' -> 1) }).
+
+	self assert: aGame boardStateWithCards equals: expectedResult
+]
+
+{ #category : 'tests' }
 RedoCardTest >> testRedoCardCanBeUsedCorrectlyOnLastPlayedSpeedCard [
 
 	| aGame jorgeShip julianShip aDeck aSpeedCard aRedoCard cardsToDraw expectedResult |

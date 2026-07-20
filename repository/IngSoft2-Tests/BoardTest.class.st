@@ -121,16 +121,6 @@ BoardTest >> testWhenBoardIsCreatedWithSize8ThenSizeIs8 [
 	self assert: (aBoard size) equals: 8.
 ]
 
-{ #category : 'tests' }
-BoardTest >> testWhenBoardIsCreatedWithSquareListThenSquareIsOccupied [
-
-	| aBoard |
-	
-	aBoard := Board withSize: 8.
-	
-	self deny: (aBoard squareStatus: 6) equals: 'Occupied'
-]
-
 { #category : 'running' }
 BoardTest >> testWhenXIsNegativeThenCreationFails [
 

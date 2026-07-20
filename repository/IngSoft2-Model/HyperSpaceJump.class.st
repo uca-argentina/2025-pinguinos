@@ -8,10 +8,22 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'accessing' }
+HyperSpaceJump class >> at: aPosition [
+	
+	^ self new initializeAt: aPosition.
+]
+
 { #category : 'action' }
-HyperSpaceJump >> applyEffectTo: aShip in: aGame [
+HyperSpaceJump >> applyNormalEffectTo: aShip in: aGame [
 
 	aGame moveAndIgnoreNewEffectsShip: aShip by: 4.
-	aShip loseShield.
+	aShip loseShield
+]
 
+{ #category : 'action' }
+HyperSpaceJump >> applyReverseEffectTo: aShip in: aGame [
+
+	aGame moveAndIgnoreNewEffectsAllShipsBy: 4 exceptFor: aShip.
+	aGame breakShieldsOfAllShipsExceptFor: aShip
 ]

@@ -58,13 +58,18 @@ CardManager >> applyLastSquareEffectTo: aShip [
 	board applyLastSquareEffectTo: aShip in: game
 ]
 
+{ #category : 'actions' }
+CardManager >> drawCard [
+	^ deck drawCard 
+]
+
 { #category : 'getter' }
-CardManager >> getAlliesOf: aShip [
+CardManager >> getAlliesOf: aShip against: anOpponent [
 
 	| alliedShips |
 	
 	alliedShips := activeCardEffects collect: [ :cardEffect |
-		               cardEffect getAllyOf: aShip ].
+		               cardEffect getAllyOf: aShip against: anOpponent ].
 	alliedShips := alliedShips select: [ :alliedShip | alliedShip isNotNil ].
 
 	^ alliedShips
@@ -129,15 +134,32 @@ CardManager >> playCard: aCard by: aShip target: aTarget [
 CardManager >> removeEffectOf: aCard [
 
 	| filteredEffectList |
-	
 	filteredEffectList := activeCardEffects reject: [ :activeCardEffect |
 		                      activeCardEffect getCardThatAppliedEffect
-		                      = aCard ].
-	
+		                      == aCard ].
+
 	filteredEffectList size = activeCardEffects size ifTrue: [
 		Error signal:
 			'The selected card is not active at the moment, so it cannot be removed!' ].
 	activeCardEffects := filteredEffectList
+]
+
+{ #category : 'adding' }
+CardManager >> reverseEffectOf: aCard [
+
+	| filteredEffectList |
+	filteredEffectList := activeCardEffects select: [ :activeCardEffect |
+		                      activeCardEffect getCardThatAppliedEffect
+		                      == aCard ].
+
+	filteredEffectList ifEmpty: [
+		Error signal:
+			'The selected card is not active at the moment, so it cannot be reversed!' ].
+	filteredEffectList size ~= 1 ifTrue: [
+		Error signal:
+			'The selected card has more than 1 effect active at the moment!' ].
+
+	filteredEffectList first reverseEffect
 ]
 
 { #category : 'validation' }
