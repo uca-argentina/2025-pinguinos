@@ -5,8 +5,7 @@ Class {
 	#name : 'PermanentEffect',
 	#superclass : 'Object',
 	#instVars : [
-		'usedBy',
-		'isReversed'
+		'usedBy'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -36,16 +35,8 @@ PermanentEffect >> getContractedMercenary [
 	^ nil
 ]
 
-{ #category : 'initialization' }
-PermanentEffect >> initialize [
-
-	super initialize.
-	isReversed := false
-]
-
 { #category : 'action' }
 PermanentEffect >> reverseEffect [
 
-	isReversed := isReversed not.
-	
+	^ self subclassResponsibility
 ]
